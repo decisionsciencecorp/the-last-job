@@ -176,6 +176,12 @@
     transition: border-color .15s;
 }
 
+.job-card.locked {
+    opacity: .75;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
 .job-card:has(input:checked) {
     border-color: var(--accent2);
     box-shadow: 0 0 0 1px #1f6feb55 inset;

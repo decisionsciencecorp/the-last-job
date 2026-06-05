@@ -320,6 +320,23 @@ $rules = new Rules();
 check('content: ICE roster expanded (>=12)', count($rules->loadJson('netrun/ice.json')) >= 12);
 check('content: program roster expanded (>=9)', count($rules->loadJson('netrun/programs.json')) >= 9);
 check('content: multiple jobs loaded (>=4)', count($rules->jobs()) >= 4);
+check('content: job unlock gates by street cred',
+    $rules->isJobUnlocked('job.pawnshop', 0)
+    && !$rules->isJobUnlocked('job.arasaka-substation', 2)
+    && $rules->isJobUnlocked('job.arasaka-substation', 3)
+    && !$rules->isJobUnlocked('job.militech-datafort', 5)
+    && $rules->isJobUnlocked('job.militech-datafort', 6)
+    && !$rules->isJobUnlocked('job.the-last-job', 8)
+    && $rules->isJobUnlocked('job.the-last-job', 9)
+);
+
+$cred6Jobs = array_map(static fn ($j) => $j->id, $rules->jobsForStreetCred(6));
+check('content: jobsForStreetCred filters endgame until legend',
+    in_array('job.pawnshop', $cred6Jobs, true)
+    && in_array('job.arasaka-substation', $cred6Jobs, true)
+    && in_array('job.militech-datafort', $cred6Jobs, true)
+    && !in_array('job.the-last-job', $cred6Jobs, true)
+);
 
 $allJobsRun = true;
 $allTerminal = true;

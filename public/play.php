@@ -19,6 +19,7 @@ $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $jobId = isset($_GET['job']) ? (string) $_GET['job'] : 'job.arasaka-substation';
 $narrate = isset($_GET['narrate']);
+$streetCred = isset($_GET['street_cred']) ? max(0, (int) $_GET['street_cred']) : 4;
 $rolesCatalog = $rules->roles();
 $roleIds = array_keys($rolesCatalog);
 $defaultRoles = CrewBuilder::DEFAULT_ROLES;
@@ -35,11 +36,23 @@ for ($i = 0; $i < 4; $i++) {
 
 $jobs = $rules->jobs();
 $crew = (new CrewBuilder($rules, new Rng($seed)))->build($rolePick);
-$economy = new Economy(500, 4);
+$economy = new Economy(500, $streetCred);
 $report = null;
 $error = null;
 $narrator = null;
 $narratorError = null;
+$jobUnlocked = [];
+foreach ($jobs as $j) {
+    $jobUnlocked[$j->id] = $rules->isJobUnlocked($j->id, $streetCred);
+}
+if (!isset($_GET['run']) && empty($jobUnlocked[$jobId] ?? false)) {
+    foreach ($jobs as $candidate) {
+        if ($jobUnlocked[$candidate->id] ?? false) {
+            $jobId = $candidate->id;
+            break;
+        }
+    }
+}
 
 if ($narrate) {
     try {
@@ -53,14 +66,19 @@ if ($narrate) {
 }
 
 if (isset($_GET['run'])) {
-    try {
-        $report = (new JobRunner($rules))->run($crew, $rules->job($jobId), new Rng($seed * 7 + 1), $economy);
-        if ($report !== null && $narrator !== null) {
-            $runId = NpcIntentBroker::runId($seed, $jobId);
-            $report = $narrator->enrichReport($report, $runId);
+    if (empty($jobUnlocked[$jobId] ?? false)) {
+        $needed = $rules->job($jobId)->minRepTier;
+        $error = "Street cred {$streetCred} is too low for this contract (need {$needed}).";
+    } else {
+        try {
+            $report = (new JobRunner($rules))->run($crew, $rules->job($jobId), new Rng($seed * 7 + 1), $economy);
+            if ($report !== null && $narrator !== null) {
+                $runId = NpcIntentBroker::runId($seed, $jobId);
+                $report = $narrator->enrichReport($report, $runId);
+            }
+        } catch (Throwable $e) {
+            $error = $e->getMessage();
         }
-    } catch (Throwable $e) {
-        $error = $e->getMessage();
     }
 }
 
@@ -80,6 +98,9 @@ layout_header('Job board', 'play');
         <label>Seed
             <input type="number" name="seed" value="<?= layout_h((string) $seed) ?>" min="1">
         </label>
+        <label>Street cred
+            <input type="number" name="street_cred" value="<?= layout_h((string) $streetCred) ?>" min="0">
+        </label>
         <label>
             <input type="checkbox" name="narrate" value="1"<?= $narrate ? ' checked' : '' ?>>
             NPC dialogue (Letta — cached per run)
@@ -89,9 +110,10 @@ layout_header('Job board', 'play');
     <h2>Contracts</h2>
     <div class="job-grid">
         <?php foreach ($jobs as $j): ?>
-            <label class="job-card">
+            <?php $locked = !($jobUnlocked[$j->id] ?? false); ?>
+            <label class="job-card<?= $locked ? ' locked' : '' ?>">
                 <h3>
-                    <input type="radio" name="job" value="<?= layout_h($j->id) ?>"<?= $j->id === $jobId ? ' checked' : '' ?>>
+                    <input type="radio" name="job" value="<?= layout_h($j->id) ?>"<?= $j->id === $jobId ? ' checked' : '' ?><?= $locked ? ' disabled' : '' ?>>
                     <?= layout_h($j->name) ?>
                 </h3>
                 <div class="meta-row">
@@ -99,7 +121,11 @@ layout_header('Job board', 'play');
                     <span><?= (int) $j->payoutEddies ?> eddies</span>
                     <span>Rep +<?= (int) $j->streetCredReward ?></span>
                     <span>Clock <?= (int) $j->difficultyTicks ?> ticks</span>
+                    <span>Need cred <?= (int) $j->minRepTier ?></span>
                 </div>
+                <?php if ($locked): ?>
+                    <p class="status-warn" style="margin:.35rem 0 0;">Locked — needs street cred <?= (int) $j->minRepTier ?></p>
+                <?php endif; ?>
                 <?php if ($j->tags !== []): ?>
                     <div class="job-tags">
                         <?php foreach ($j->tags as $tag): ?>

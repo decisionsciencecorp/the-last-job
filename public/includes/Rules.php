@@ -73,6 +73,21 @@ final class Rules
         return array_map(static fn ($r) => Job::fromArray($r), array_values($this->jobs));
     }
 
+    /** @return Job[] */
+    public function jobsForStreetCred(int $streetCred): array
+    {
+        $cred = max(0, $streetCred);
+        return array_values(array_filter(
+            $this->jobs(),
+            static fn (Job $job): bool => $job->minRepTier <= $cred
+        ));
+    }
+
+    public function isJobUnlocked(string $jobId, int $streetCred): bool
+    {
+        return $this->job($jobId)->minRepTier <= max(0, $streetCred);
+    }
+
     /** @return array<string,mixed> */
     public function cyberwareItem(string $id): array
     {
