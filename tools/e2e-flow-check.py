@@ -10,10 +10,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from typing import Iterable
-from urllib.error import HTTPError
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urljoin, urlparse
 from urllib.request import Request, urlopen
 
@@ -68,23 +69,31 @@ class SurfaceParser(HTMLParser):
             self._select = None
 
 
-def fetch(url: str, timeout: int = 20) -> tuple[int, str, str, str]:
+def fetch(url: str, timeout: int = 30, attempts: int = 3) -> tuple[int, str, str, str]:
     request = Request(url, headers={"User-Agent": "TheLastJob-e2e-flow-check/1.0"})
-    try:
-        with urlopen(request, timeout=timeout) as response:
+    last_error: Exception | None = None
+    for attempt in range(1, attempts + 1):
+        try:
+            with urlopen(request, timeout=timeout) as response:
+                return (
+                    response.status,
+                    response.geturl(),
+                    response.headers.get("content-type", ""),
+                    response.read(1_200_000).decode("utf-8", "replace"),
+                )
+        except HTTPError as error:
             return (
-                response.status,
-                response.geturl(),
-                response.headers.get("content-type", ""),
-                response.read(1_200_000).decode("utf-8", "replace"),
+                error.code,
+                url,
+                error.headers.get("content-type", ""),
+                error.read(1_200_000).decode("utf-8", "replace"),
             )
-    except HTTPError as error:
-        return (
-            error.code,
-            url,
-            error.headers.get("content-type", ""),
-            error.read(1_200_000).decode("utf-8", "replace"),
-        )
+        except (TimeoutError, URLError, OSError) as error:
+            last_error = error
+            if attempt < attempts:
+                time.sleep(1.5 * attempt)
+
+    return 0, url, "", repr(last_error)
 
 
 def assert_page(url: str, *, must_contain: str | None = None, allow_status: set[int] | None = None) -> str:
