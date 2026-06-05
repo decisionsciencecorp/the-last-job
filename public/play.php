@@ -30,9 +30,15 @@ $campaignState = $_SESSION['campaign_state'] ?? ['eddies' => 500, 'street_cred' 
 if (!is_array($campaignState) || !isset($campaignState['eddies'], $campaignState['street_cred'])) {
     $campaignState = ['eddies' => 500, 'street_cred' => 4, 'last_run_key' => null];
 }
+$runHistory = $_SESSION['run_history'] ?? [];
+if (!is_array($runHistory)) {
+    $runHistory = [];
+}
 if (isset($_GET['reset_campaign'])) {
     $campaignState = ['eddies' => 500, 'street_cred' => 4, 'last_run_key' => null];
     $_SESSION['campaign_state'] = $campaignState;
+    $runHistory = [];
+    $_SESSION['run_history'] = [];
     $campaignNotice = 'Campaign wallet reset.';
 }
 $streetCred = $useCampaign ? max(0, (int) $campaignState['street_cred']) : $manualStreetCred;
@@ -107,6 +113,22 @@ if (isset($_GET['run'])) {
                     $campaignNotice = 'Run rewards already counted for this exact seed/job/crew combo.';
                 }
             }
+            if ($report !== null) {
+                $entry = [
+                    'at' => gmdate('c'),
+                    'job' => $report['job_name'] ?? $jobId,
+                    'success' => !empty($report['success']),
+                    'seed' => $seed,
+                    'payout' => (int) ($report['payout_eddies'] ?? 0),
+                    'cred' => (int) ($report['street_cred_gained'] ?? 0),
+                    'outcome' => (string) (($report['netrun']['outcome'] ?? '') ?: 'unknown'),
+                ];
+                $runHistory[] = $entry;
+                if (count($runHistory) > 12) {
+                    $runHistory = array_slice($runHistory, -12);
+                }
+                $_SESSION['run_history'] = $runHistory;
+            }
         } catch (Throwable $e) {
             $error = $e->getMessage();
         }
@@ -131,6 +153,22 @@ layout_header('Job board', 'play');
         <p class="status-ok" style="margin:.35rem 0 0;"><?= layout_h($campaignNotice) ?></p>
     <?php endif; ?>
 </div>
+<?php if ($runHistory !== []): ?>
+<div class="clock-panel" style="margin:1rem 0;">
+    <strong>Recent runs (session)</strong>
+    <ul class="beats" style="margin-top:.5rem;">
+    <?php foreach (array_reverse($runHistory) as $row): ?>
+        <li>
+            <?= layout_h((string) ($row['job'] ?? 'Job')) ?> · seed <?= (int) ($row['seed'] ?? 0) ?>
+            — <span class="<?= !empty($row['success']) ? 'status-ok' : 'status-bad' ?>"><?= !empty($row['success']) ? 'SUCCESS' : 'FAIL' ?></span>
+            · payout <?= (int) ($row['payout'] ?? 0) ?>eb
+            · cred +<?= (int) ($row['cred'] ?? 0) ?>
+            · net <?= layout_h((string) ($row['outcome'] ?? 'unknown')) ?>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>
 
 <form method="get">
     <input type="hidden" name="campaign" value="0">
