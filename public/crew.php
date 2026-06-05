@@ -15,6 +15,8 @@ use function LastJob\layout_h;
 $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $roll = isset($_GET['roll']);
+$campaign = isset($_GET['campaign']) ? (int) $_GET['campaign'] : 1;
+$streetCred = isset($_GET['street_cred']) ? max(0, (int) $_GET['street_cred']) : 4;
 $rolesCatalog = $rules->roles();
 $roleIds = array_keys($rolesCatalog);
 $defaultRoles = CrewBuilder::DEFAULT_ROLES;
@@ -51,6 +53,8 @@ layout_header('Build your crew', 'crew');
 <p class="lead">Roll lifepaths, pick roles, and load chrome — humanity and EMP update deterministically from the same seed.</p>
 
 <form class="form-grid" method="get">
+    <input type="hidden" name="campaign" value="<?= $campaign === 0 ? 0 : 1 ?>">
+    <input type="hidden" name="street_cred" value="<?= (int) $streetCred ?>">
     <label>Seed
         <input type="number" name="seed" value="<?= layout_h((string) $seed) ?>" min="1">
     </label>
@@ -71,7 +75,7 @@ layout_header('Build your crew', 'crew');
 
 <?php if ($crew !== null): ?>
     <?php
-    $playParams = ['seed' => $seed];
+    $playParams = ['seed' => $seed, 'campaign' => $campaign === 0 ? 0 : 1, 'street_cred' => $streetCred];
     for ($i = 0; $i < 4; $i++) {
         $playParams['role' . $i] = $rolePick[$i];
     }
@@ -83,6 +87,8 @@ layout_header('Build your crew', 'crew');
 
     <form method="get">
         <input type="hidden" name="seed" value="<?= (int) $seed ?>">
+        <input type="hidden" name="campaign" value="<?= $campaign === 0 ? 0 : 1 ?>">
+        <input type="hidden" name="street_cred" value="<?= (int) $streetCred ?>">
         <input type="hidden" name="roll" value="1">
         <?php for ($i = 0; $i < 4; $i++): ?>
             <input type="hidden" name="role<?= $i ?>" value="<?= layout_h($rolePick[$i]) ?>">

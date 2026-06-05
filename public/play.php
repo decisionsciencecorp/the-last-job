@@ -191,7 +191,7 @@ layout_header('Job board', 'play');
 
     <div class="actions-row">
         <button type="submit" name="run" value="1">Jack in and run</button>
-        <a class="btn btn-secondary" href="/crew.php?seed=<?= (int) $seed ?>&roll=1<?= '&amp;role0=' . layout_h($rolePick[0]) . '&amp;role1=' . layout_h($rolePick[1]) . '&amp;role2=' . layout_h($rolePick[2]) . '&amp;role3=' . layout_h($rolePick[3]) ?>">Edit crew for this seed</a>
+        <a class="btn btn-secondary" href="/crew.php?seed=<?= (int) $seed ?>&roll=1&campaign=<?= $useCampaign ? 1 : 0 ?>&street_cred=<?= (int) $streetCred ?><?= '&amp;role0=' . layout_h($rolePick[0]) . '&amp;role1=' . layout_h($rolePick[1]) . '&amp;role2=' . layout_h($rolePick[2]) . '&amp;role3=' . layout_h($rolePick[3]) ?>">Edit crew for this seed</a>
     </div>
 </form>
 
