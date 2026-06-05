@@ -1,0 +1,68 @@
+[
+  {
+    "id": "prog.sword",
+    "category": "netrun_program",
+    "subcategory": "attacker",
+    "source": "CP-RED-Jumpstart-Ch6",
+    "name": "Sword",
+    "slot_cost": 1,
+    "kind": "attack",
+    "bonus": 3,
+    "dmg": "3d6",
+    "effect": "Close-range anti-program attack. High damage to a single ICE.",
+    "flavor": "Monofilament for the mind."
+  },
+  {
+    "id": "prog.virus",
+    "category": "netrun_program",
+    "subcategory": "attacker",
+    "source": "CP-RED-Jumpstart-Ch6",
+    "name": "Virus",
+    "slot_cost": 1,
+    "kind": "attack",
+    "bonus": 1,
+    "dmg": "1d6",
+    "effect": "Lower burst but applies damage-over-time to the target ICE.",
+    "flavor": "It teaches the ICE to eat itself."
+  },
+  {
+    "id": "prog.armor",
+    "category": "netrun_program",
+    "subcategory": "defender",
+    "source": "CP-RED-Jumpstart-Ch6",
+    "name": "Armor",
+    "slot_cost": 1,
+    "kind": "defense",
+    "bonus": 0,
+    "dmg": "0",
+    "reduce": 4,
+    "effect": "Reduces incoming ICE damage by a flat amount while loaded.",
+    "flavor": "A skin of cached nonsense between you and the burn."
+  },
+  {
+    "id": "prog.see_through",
+    "category": "netrun_program",
+    "subcategory": "recon",
+    "source": "CP-RED-Jumpstart-Ch6",
+    "name": "See-Through",
+    "slot_cost": 1,
+    "kind": "recon",
+    "bonus": 2,
+    "dmg": "0",
+    "effect": "Reveals the contents of the next floor before descending (improves initiative vs hidden ICE).",
+    "flavor": "The architecture goes glass."
+  },
+  {
+    "id": "prog.stealth",
+    "category": "netrun_program",
+    "subcategory": "utility",
+    "source": "CP-RED-Jumpstart-Ch6",
+    "name": "Stealth",
+    "slot_cost": 1,
+    "kind": "stealth",
+    "bonus": 4,
+    "dmg": "0",
+    "effect": "Attempt to bypass an ICE without engaging (opposed vs ICE perception).",
+    "flavor": "You were never on this floor."
+  }
+]

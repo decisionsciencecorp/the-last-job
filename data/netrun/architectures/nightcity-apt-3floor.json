@@ -1,0 +1,28 @@
+{
+  "id": "arch.nightcity-apt-3floor",
+  "name": "Night City Apartment Block - Private NET",
+  "source": "CP-RED-Jumpstart Conversion Guide (prebuilt NET architecture)",
+  "security_clock": 12,
+  "flavor": "A landlord's data fortress: petty, layered, and meaner than it looks.",
+  "floors": [
+    {
+      "index": 1,
+      "ice": ["ice.tracker.hound"],
+      "datavault": null
+    },
+    {
+      "index": 2,
+      "ice": ["ice.barrier.password", "ice.hellbolt.strike"],
+      "datavault": null
+    },
+    {
+      "index": 3,
+      "ice": ["ice.black.killer"],
+      "datavault": {
+        "id": "vault.tenant-records",
+        "name": "Tenant Records + Skim Ledger",
+        "value_eddies": 4500
+      }
+    }
+  ]
+}
