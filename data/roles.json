@@ -1,0 +1,6 @@
+[
+  {"id":"role.solo","category":"role","name":"Solo","stat_priority":["REF","BODY","COOL"],"ability":"Combat Awareness","ability_effect":"Adds a rising bonus to combat initiative, attack, and damage as Street Cred grows.","flavor":"Muscle, reflex, and the will to use both. Runs point."},
+  {"id":"role.netrunner","category":"role","name":"Netrunner","stat_priority":["INT","REF","TECH"],"ability":"Interface","ability_effect":"Number of NET Actions per round; required to enter and fight in the NET architecture.","flavor":"Jacks in and walks the floors while the meat waits."},
+  {"id":"role.tech","category":"role","name":"Tech","stat_priority":["TECH","INT","DEX"],"ability":"Maker","ability_effect":"Fabricate, repair, upgrade gear and cyberware; hotwire the getaway.","flavor":"Keeps the crew's chrome running and the van moving."},
+  {"id":"role.fixer","category":"role","name":"Fixer","stat_priority":["COOL","INT","EMP"],"ability":"Operator","ability_effect":"Sources jobs, contacts, and backup; better fences and intel as Street Cred grows.","flavor":"The planner and the talker. The one who got you the job."}
+]

@@ -17,6 +17,7 @@ use LastJob\Rng;
 use LastJob\Rules;
 use LastJob\Netrun\NetrunEngine;
 use LastJob\Netrun\Netrunner;
+use LastJob\Lifepath\CrewBuilder;
 
 $pass = 0;
 $fail = 0;
@@ -94,6 +95,56 @@ $pdo2 = $rules->bootstrapSqlite($tmp); // run again
 $ice2 = (int) $pdo2->query('SELECT COUNT(*) FROM netrun_ice')->fetchColumn();
 check('sqlite: bootstrap is idempotent (stable row count)', $ice1 > 0 && $ice1 === $ice2, "ice1={$ice1} ice2={$ice2}");
 @unlink($tmp);
+
+// 6. Crew generation determinism (lifepath -> crew).
+function crewCards(int $seed): array
+{
+    $rules = new Rules();
+    $crew = (new CrewBuilder($rules, new Rng($seed)))->build();
+    return array_map(static fn ($m) => $m->toPublicArray(), $crew);
+}
+$crewA = crewCards(2077);
+$crewB = crewCards(2077);
+check('crew: same seed -> identical crew', $crewA === $crewB);
+
+$crewC = crewCards(2078);
+check('crew: different seed -> different crew', $crewA !== $crewC);
+
+$rolesOk = array_map(static fn ($c) => $c['role'], $crewA) === ['Solo', 'Netrunner', 'Tech', 'Fixer'];
+check('crew: default crew is the core four roles', $rolesOk);
+
+$statsValid = true;
+foreach ($crewA as $c) {
+    foreach ($c['stats'] as $v) {
+        if ($v < 1 || $v > 10) {
+            $statsValid = false;
+            break 2;
+        }
+    }
+}
+check('crew: all stats clamped to [1,10]', $statsValid);
+
+// 7. SECRECY GUARDRAIL (Athena hard rule): player card never leaks the agenda.
+$rules = new Rules();
+$crew = (new CrewBuilder($rules, new Rng(2077)))->build();
+$leak = false;
+foreach ($crew as $m) {
+    $publicBlob = strtolower(json_encode($m->toPublicArray(), JSON_UNESCAPED_SLASHES) ?: '');
+    $agenda = $m->sealedAgenda();
+    $needles = [strtolower((string) $agenda['result']), strtolower((string) $agenda['consequence'])];
+    foreach ($needles as $needle) {
+        if ($needle !== '' && str_contains($publicBlob, $needle)) {
+            $leak = true;
+            break 2;
+        }
+    }
+    // The sealed accessor must actually carry the agenda (sanity).
+    if (empty($agenda['result'])) {
+        $leak = true;
+        break;
+    }
+}
+check('secrecy: hidden agenda never appears in the player-facing card', !$leak);
 
 fwrite(STDOUT, sprintf("\n%d passed, %d failed\n", $pass, $fail));
 exit($fail === 0 ? 0 : 1);

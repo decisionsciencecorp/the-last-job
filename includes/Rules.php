@@ -16,12 +16,68 @@ final class Rules
     private array $ice = [];
     /** @var array<string,array<string,mixed>> */
     private array $programs = [];
+    /** @var array<string,array<int,array<string,mixed>>> lifepath table -> rows */
+    private array $lifepath = [];
+    /** @var array<int,array<string,mixed>> */
+    private array $roles = [];
+    /** @var array<int,array<string,mixed>> */
+    private array $agendas = [];
+
+    private const LIFEPATH_TABLES = [
+        'cultural_origin', 'personality', 'family', 'key_life_event', 'lovers',
+    ];
 
     public function __construct(?string $dataDir = null)
     {
         $this->dataDir = $dataDir ?? dirname(__DIR__) . '/data';
         $this->ice = $this->indexById($this->loadJson('netrun/ice.json'));
         $this->programs = $this->indexById($this->loadJson('netrun/programs.json'));
+        foreach (self::LIFEPATH_TABLES as $table) {
+            $this->lifepath[$table] = $this->loadJson("lifepath/{$table}.json");
+        }
+        $this->roles = $this->loadJson('roles.json');
+        $this->agendas = $this->loadJson('hidden_agendas.json');
+    }
+
+    /**
+     * Return the full d-table for a lifepath subcategory.
+     * @return array<int,array<string,mixed>>
+     */
+    public function lifepathTable(string $table): array
+    {
+        if (!isset($this->lifepath[$table])) {
+            throw new \RuntimeException("Unknown lifepath table: {$table}");
+        }
+        return $this->lifepath[$table];
+    }
+
+    /** @return string[] */
+    public function lifepathTables(): array
+    {
+        return self::LIFEPATH_TABLES;
+    }
+
+    /** @return array<int,array<string,mixed>> */
+    public function roles(): array
+    {
+        return $this->roles;
+    }
+
+    /** @return array<string,mixed> */
+    public function role(string $id): array
+    {
+        foreach ($this->roles as $r) {
+            if (($r['id'] ?? null) === $id) {
+                return $r;
+            }
+        }
+        throw new \RuntimeException("Unknown role: {$id}");
+    }
+
+    /** @return array<int,array<string,mixed>> */
+    public function hiddenAgendas(): array
+    {
+        return $this->agendas;
     }
 
     /** @return array<int,array<string,mixed>> */
@@ -146,6 +202,58 @@ final class Rules
                 ':effect' => $row['effect'] ?? null,
                 ':flavor' => $row['flavor'] ?? null,
                 ':source' => $row['source'] ?? null,
+            ]);
+        }
+
+        // Lifepath tables: one generic key/value-ish table keyed by rule id.
+        $pdo->exec('CREATE TABLE IF NOT EXISTS lifepath_entry (
+            id TEXT PRIMARY KEY,
+            subcategory TEXT NOT NULL,
+            die_roll INTEGER,
+            result TEXT,
+            payload TEXT
+        )');
+        $lpStmt = $pdo->prepare('INSERT OR REPLACE INTO lifepath_entry
+            (id,subcategory,die_roll,result,payload)
+            VALUES (:id,:subcategory,:die_roll,:result,:payload)');
+        foreach (self::LIFEPATH_TABLES as $table) {
+            foreach ($this->lifepath[$table] as $row) {
+                $lpStmt->execute([
+                    ':id' => $row['id'],
+                    ':subcategory' => $table,
+                    ':die_roll' => $row['die_roll'] ?? null,
+                    ':result' => $row['result'] ?? null,
+                    ':payload' => json_encode($row, JSON_UNESCAPED_SLASHES),
+                ]);
+            }
+        }
+
+        // Roles + hidden agendas.
+        $pdo->exec('CREATE TABLE IF NOT EXISTS role (
+            id TEXT PRIMARY KEY, name TEXT, ability TEXT, payload TEXT
+        )');
+        $roleStmt = $pdo->prepare('INSERT OR REPLACE INTO role (id,name,ability,payload)
+            VALUES (:id,:name,:ability,:payload)');
+        foreach ($this->roles as $row) {
+            $roleStmt->execute([
+                ':id' => $row['id'],
+                ':name' => $row['name'] ?? null,
+                ':ability' => $row['ability'] ?? null,
+                ':payload' => json_encode($row, JSON_UNESCAPED_SLASHES),
+            ]);
+        }
+
+        $pdo->exec('CREATE TABLE IF NOT EXISTS hidden_agenda (
+            id TEXT PRIMARY KEY, type TEXT, result TEXT, payload TEXT
+        )');
+        $agStmt = $pdo->prepare('INSERT OR REPLACE INTO hidden_agenda (id,type,result,payload)
+            VALUES (:id,:type,:result,:payload)');
+        foreach ($this->agendas as $row) {
+            $agStmt->execute([
+                ':id' => $row['id'],
+                ':type' => $row['type'] ?? null,
+                ':result' => $row['result'] ?? null,
+                ':payload' => json_encode($row, JSON_UNESCAPED_SLASHES),
             ]);
         }
 
