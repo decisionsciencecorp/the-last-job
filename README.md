@@ -18,31 +18,56 @@ deterministic rules engine lives here (PHP + SQLite, LEMP-deployable); NPC
 - **Deploy = LEMP/multihost** via the standard `sites/<domain>.env` + `sync.sh`
   + cron pipeline. App code is app-level PHP only (no `.htaccess`).
 
-## Slice #1 — Netrunner vs NET (this commit)
+## What's built (deterministic engine)
 
-The smallest end-to-end vertical slice that proves the engine: a single
-netrunner descends a multi-floor NET architecture, fighting ICE, on a mission
-clock. Fully deterministic — same seed produces an identical run log.
+Every slice is fully deterministic — a given seed reproduces an identical
+result — and covered by the dependency-free test suite (`php tests/run-tests.php`,
+currently **34/34**).
+
+- **Slice #1 — Netrunner vs NET.** A netrunner descends a multi-floor NET
+  architecture, fighting/sneaking past ICE on a security clock; flatline =
+  meat death; vault extraction pays out.
+- **Slice #1.5 — Lifepath → crew.** Full 1d10 lifepath tables roll up a crew
+  (core four: Solo/Netrunner/Tech/Fixer) with stats, contacts, enemies, and a
+  **sealed hidden agenda** the player card can never leak.
+- **Slice #2 — Skill checks + humanity.** CP RED 1d10 + STAT+SKILL vs DV with
+  crit rules; cyberware tree with humanity-loss dice and the
+  stable → at_risk → cyberpsychotic curve.
+- **Slice #3 — Job loop.** Crew resolves on-site obstacles while the netrunner
+  cracks the NET on a **shared mission clock**; aftermath pays eddies + street
+  cred and **surfaces any hidden agendas whose trigger fired** (loyalty/betrayal).
 
 ```bash
 # Build/refresh the SQLite rules DB from canonical JSON (idempotent)
 php tools/bootstrap_db.php
 
-# Run a deterministic netrun demo
-php bin/netrun-demo.php --seed=1337 --arch=nightcity-apt-3floor
+# Demos (all deterministic)
+php bin/netrun-demo.php --seed=1337                 # netrun
+php bin/crew-demo.php   --seed=2077 [--sealed]      # lifepath -> crew
+php bin/chrome-demo.php --seed=1337 --emp=8         # humanity / cyberpsychosis
+php bin/job-demo.php    --seed=2077 --job=job.arasaka-substation  # full heist
 
-# Run the determinism test suite
+# Test suite (no external deps)
 php tests/run-tests.php
 ```
+
+NPC *intent/dialogue* (the Letta agent layer) plugs in on top of these
+deterministic outcomes once the agent box is provisioned (#637/#633).
 
 ## Layout
 
 ```
-data/netrun/            canonical JSON rules (ice, programs, NET architectures)
-includes/               engine source (Rng, Dice, Rules, netrun/*)
+data/netrun/            ICE, programs, NET architectures
+data/lifepath/          5 lifepath tables (cultural_origin, personality, ...)
+data/cyberware.json     8-category cyberware tree (humanity-loss dice)
+data/roles.json         core-four role definitions
+data/hidden_agendas.json sealed agendas + machine-readable trigger_on
+data/jobs/              job/contract definitions
+includes/               engine (Rng, Dice, Rules, SkillCheck, Humanity,
+                          Economy, MissionClock, Job, JobRunner, Lifepath/*, Netrun/*)
 tools/bootstrap_db.php   idempotent JSON -> SQLite loader
-bin/netrun-demo.php      CLI runner for a netrun
-tests/                  determinism tests (no external deps)
+bin/                    CLI demos
+tests/                  determinism + secrecy tests
 public/                 web entrypoints (UI lands in a later slice)
 db/                     runtime SQLite (gitignored)
 ```
