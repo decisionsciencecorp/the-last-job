@@ -18,6 +18,8 @@ use LastJob\Dice;
 use LastJob\Rules;
 use LastJob\SkillCheck;
 use LastJob\Humanity;
+use LastJob\Economy;
+use LastJob\JobRunner;
 use LastJob\Netrun\NetrunEngine;
 use LastJob\Netrun\Netrunner;
 use LastJob\Lifepath\CrewBuilder;
@@ -246,6 +248,68 @@ $rules->bootstrapSqlite($tmp2);
 $cw2 = (int) (new Rules())->bootstrapSqlite($tmp2)->query('SELECT COUNT(*) FROM cyberware')->fetchColumn();
 check('sqlite: cyberware bootstrap idempotent', $cw1 > 0 && $cw1 === $cw2, "cw1={$cw1} cw2={$cw2}");
 @unlink($tmp2);
+
+// 11. Economy + mission clock.
+$econ = new Economy(1000, 4);
+$econ->payout(2000, 2);
+$spendOk = $econ->spend(500);
+$overspend = $econ->spend(999999);
+check('economy: payout + spend + cred tier', $econ->eddies() === 2500 && $spendOk && !$overspend && $econ->streetCred() === 6 && $econ->repTier() === 'reputable');
+
+$clock = new \LastJob\MissionClock(5);
+$clock->tick(3);
+$clock->tick(3);
+check('clock: caps at total, reports expired', $clock->remaining() === 0 && $clock->expired() && $clock->spent() === 6);
+
+// 12. JobRunner: end-to-end determinism + economy effect + agenda secrecy.
+$rules = new Rules();
+function runJob(int $seed, Rules $rules, string $jobId): array
+{
+    $crew = (new CrewBuilder($rules, new Rng($seed)))->build();
+    $econ = new Economy(500, 4);
+    $report = (new JobRunner($rules))->run($crew, $rules->job($jobId), new Rng($seed * 7 + 1), $econ);
+    // Strip nothing - report is the full deterministic artifact.
+    return $report;
+}
+$r1 = runJob(2077, $rules, 'job.arasaka-substation');
+$r2 = runJob(2077, $rules, 'job.arasaka-substation');
+check('jobrunner: same crew+job+seed -> identical report', $r1 === $r2);
+check('jobrunner: different seed -> different report', $r1 !== runJob(2078, $rules, 'job.arasaka-substation'));
+
+check('jobrunner: report carries a known success flag', is_bool($r1['success']));
+check('jobrunner: netrun outcome is a known terminal state', in_array($r1['netrun']['outcome'],
+    [NetrunEngine::OUT_SUCCESS, NetrunEngine::OUT_FAIL_HEAT, NetrunEngine::OUT_FAIL_FLATLINE, NetrunEngine::OUT_DEAD], true));
+
+// Payout only on success; wallet matches.
+$paidConsistent = $r1['success']
+    ? ($r1['economy']['eddies'] === 500 + $r1['payout_eddies'] && $r1['payout_eddies'] > 0)
+    : ($r1['economy']['eddies'] === 500 && $r1['payout_eddies'] === 0);
+check('jobrunner: payout applied iff success', $paidConsistent);
+
+// corp+enemy job always fires those conditions.
+check('jobrunner: corp/enemy job fires corp_job + enemy_present',
+    in_array('corp_job', $r1['fired_conditions'], true) && in_array('enemy_present', $r1['fired_conditions'], true));
+
+// Agenda secrecy at the report layer: every triggered agenda must correspond to
+// a fired condition (or 'always'); nothing leaks without a trigger.
+$triggerSound = true;
+foreach ($r1['agendas_triggered'] as $a) {
+    $on = (string) $a['trigger_on'];
+    if ($on !== 'always' && !in_array($on, $r1['fired_conditions'], true)) {
+        $triggerSound = false;
+        break;
+    }
+}
+check('jobrunner: agendas surface only on a fired trigger (or always)', $triggerSound);
+
+// A 'never' agenda must never appear in any triggered list.
+$neverLeaked = false;
+foreach ($r1['agendas_triggered'] as $a) {
+    if ((string) $a['trigger_on'] === 'never') {
+        $neverLeaked = true;
+    }
+}
+check('jobrunner: never-trigger agendas stay sealed', !$neverLeaked);
 
 fwrite(STDOUT, sprintf("\n%d passed, %d failed\n", $pass, $fail));
 exit($fail === 0 ? 0 : 1);

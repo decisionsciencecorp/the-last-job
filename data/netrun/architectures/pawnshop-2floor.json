@@ -1,0 +1,9 @@
+{
+  "id": "arch.pawnshop-2floor",
+  "name": "Pawnshop Backroom NET",
+  "security_clock": 10,
+  "floors": [
+    { "index": 1, "ice": ["ice.barrier.password"] },
+    { "index": 2, "ice": ["ice.tracker.hound"], "datavault": { "id": "vault.ledger", "name": "Off-Books Ledger", "value_eddies": 1200 } }
+  ]
+}

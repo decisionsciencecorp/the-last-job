@@ -1,0 +1,15 @@
+{
+  "id": "job.pawnshop",
+  "name": "Pawnshop Smash-and-Grab",
+  "fixer": "Regina Jones",
+  "payout_eddies": 1500,
+  "street_cred_reward": 1,
+  "difficulty_ticks": 10,
+  "arch": "pawnshop-2floor",
+  "tags": ["lowstakes"],
+  "min_street_cred": 0,
+  "obstacles": [
+    {"id": "ob.distract", "name": "Distract the clerk", "stat": "COOL", "dv": 13, "ticks": 1, "role_pref": "Fixer"},
+    {"id": "ob.case", "name": "Crack the display case", "stat": "TECH", "dv": 14, "ticks": 2, "role_pref": "Tech"}
+  ]
+}

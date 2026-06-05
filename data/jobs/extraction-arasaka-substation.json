@@ -1,0 +1,16 @@
+{
+  "id": "job.arasaka-substation",
+  "name": "Arasaka Substation Extraction",
+  "fixer": "Dexter DeShawn",
+  "payout_eddies": 6000,
+  "street_cred_reward": 3,
+  "difficulty_ticks": 14,
+  "arch": "nightcity-apt-3floor",
+  "tags": ["corp", "enemy", "extraction"],
+  "min_street_cred": 3,
+  "obstacles": [
+    {"id": "ob.gate", "name": "Talk past the gate auth", "stat": "COOL", "dv": 15, "ticks": 2, "role_pref": "Fixer"},
+    {"id": "ob.maglock", "name": "Bypass the maglock", "stat": "TECH", "dv": 16, "ticks": 2, "role_pref": "Tech"},
+    {"id": "ob.patrol", "name": "Drop the roving patrol quietly", "stat": "REF", "dv": 15, "ticks": 2, "role_pref": "Solo"}
+  ]
+}

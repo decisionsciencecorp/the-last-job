@@ -24,6 +24,8 @@ final class Rules
     private array $agendas = [];
     /** @var array<string,array<string,mixed>> */
     private array $cyberware = [];
+    /** @var array<string,array<string,mixed>> */
+    private array $jobs = [];
 
     private const LIFEPATH_TABLES = [
         'cultural_origin', 'personality', 'family', 'key_life_event', 'lovers',
@@ -40,6 +42,35 @@ final class Rules
         $this->roles = $this->loadJson('roles.json');
         $this->agendas = $this->loadJson('hidden_agendas.json');
         $this->cyberware = $this->indexById($this->loadJson('cyberware.json'));
+        $this->jobs = $this->loadJobs();
+    }
+
+    /** @return array<string,array<string,mixed>> */
+    private function loadJobs(): array
+    {
+        $out = [];
+        foreach (glob($this->dataDir . '/jobs/*.json') ?: [] as $path) {
+            $row = json_decode((string) file_get_contents($path), true);
+            if (is_array($row) && isset($row['id'])) {
+                $out[(string) $row['id']] = $row;
+            }
+        }
+        ksort($out); // stable order for deterministic listings
+        return $out;
+    }
+
+    public function job(string $id): Job
+    {
+        if (!isset($this->jobs[$id])) {
+            throw new \RuntimeException("Unknown job: {$id}");
+        }
+        return Job::fromArray($this->jobs[$id]);
+    }
+
+    /** @return Job[] */
+    public function jobs(): array
+    {
+        return array_map(static fn ($r) => Job::fromArray($r), array_values($this->jobs));
     }
 
     /** @return array<string,mixed> */
