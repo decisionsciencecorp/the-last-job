@@ -374,6 +374,22 @@ foreach ($threads as $thread) {
 }
 check('content: intel dossier threads carry evidence and questions', $threadsHaveEvidence);
 
+$knownThreads = array_flip($threadIds);
+$jobThreadRefsOk = true;
+foreach ($rules->jobs() as $job) {
+    if ($job->intelThreads === []) {
+        $jobThreadRefsOk = false;
+        break;
+    }
+    foreach ($job->intelThreads as $threadId) {
+        if (!isset($knownThreads[$threadId])) {
+            $jobThreadRefsOk = false;
+            break 2;
+        }
+    }
+}
+check('content: every job links to valid intel threads', $jobThreadRefsOk);
+
 // 14. Flavor layer: deterministic, ticker distinct, district filter.
 $flavor = new \LastJob\Flavor($rules);
 $fq1 = $flavor->fixerQuote(new Rng(5));

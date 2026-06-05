@@ -28,7 +28,7 @@ layout_header('Intel dossier', 'intel');
 
 <section class="intel-grid" aria-label="Active intel threads">
     <?php foreach ($threads as $thread): ?>
-        <article class="intel-card">
+        <article class="intel-card" id="<?= layout_h((string) $thread['id']) ?>">
             <div class="meta-row">
                 <span><?= layout_h((string) ($thread['status'] ?? 'unknown')) ?></span>
                 <span><?= layout_h((string) ($thread['threat'] ?? 'unknown')) ?></span>

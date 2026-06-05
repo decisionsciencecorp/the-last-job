@@ -15,6 +15,16 @@ use function LastJob\layout_header;
 use function LastJob\layout_footer;
 use function LastJob\layout_h;
 
+function intel_thread_label(string $id): string
+{
+    return [
+        'thread.engram' => 'Engram ghosts',
+        'thread.kill-list' => 'Militech futures',
+        'thread.tower' => 'Tower memory',
+        'thread.crew' => 'Crew pressure',
+    ][$id] ?? $id;
+}
+
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -234,6 +244,14 @@ layout_header('Job board', 'play');
                     <div class="job-tags">
                         <?php foreach ($j->tags as $tag): ?>
                             <span><?= layout_h($tag) ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($j->intelThreads !== []): ?>
+                    <div class="intel-links" aria-label="Related intel threads">
+                        <strong>Intel:</strong>
+                        <?php foreach ($j->intelThreads as $threadId): ?>
+                            <a href="/intel.php#<?= layout_h($threadId) ?>"><?= layout_h(intel_thread_label($threadId)) ?></a>
                         <?php endforeach; ?>
                     </div>
                 <?php endif; ?>

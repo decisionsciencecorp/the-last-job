@@ -8,6 +8,7 @@
   "arch": "nightcity-apt-3floor",
   "tags": ["corp", "enemy", "extraction"],
   "min_street_cred": 3,
+  "intel_threads": ["thread.engram", "thread.tower"],
   "briefing": "Dexter DeShawn has a name, a floor plan, and a voice recording of an Arasaka engineer whispering that she wants out before her own project eats her alive. She is trapped inside a downtown power substation that officially does not employ anyone after midnight.",
   "stakes": "The target knows where Arasaka buried a prototype personality engram. If she disappears clean, the crew gets paid. If she screams, half the city's black clinics start burning by dawn.",
   "complication": "The extraction window is tied to rolling brownouts. Every minute you waste, the building wakes up one subsystem at a time.",

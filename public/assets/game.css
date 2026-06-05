@@ -284,6 +284,33 @@
     color: var(--muted);
 }
 
+.intel-links {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .65rem;
+    font-size: .82rem;
+}
+
+.intel-links strong {
+    color: var(--accent);
+}
+
+.intel-links a {
+    border: 1px solid rgba(255, 46, 136, .35);
+    border-radius: 999px;
+    color: var(--accent2);
+    padding: .18rem .5rem;
+    text-decoration: none;
+    background: rgba(255, 46, 136, .08);
+}
+
+.intel-links a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
 .job-briefing,
 .job-stakes,
 .job-complication {

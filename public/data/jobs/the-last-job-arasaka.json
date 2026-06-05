@@ -8,6 +8,7 @@
   "arch": "arasaka-tower-5floor",
   "tags": ["corp", "enemy", "endgame"],
   "min_street_cred": 9,
+  "intel_threads": ["thread.engram", "thread.kill-list", "thread.tower", "thread.crew"],
   "briefing": "No fixer. No client. No clean exit clause. The crew has assembled enough truth, debt, and grief to point all of it at Arasaka Tower. The target is buried below executive floors in a vault that was never built on any version of the blueprints.",
   "stakes": "Inside is the thing every job has been orbiting: proof that Arasaka has been training dead minds to wear living faces. Walk out with it and Night City changes for one news cycle. Die inside and the city will sell memorial candles before breakfast.",
   "complication": "The Tower remembers everyone who ever tried this. Doors open with dead voices. Elevators stop on floors that no longer exist. The closer you get, the more the crew's private reasons for being here start fighting the plan.",

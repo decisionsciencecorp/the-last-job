@@ -8,6 +8,7 @@
   "arch": "militech-datafort-4floor",
   "tags": ["corp", "enemy", "datafort"],
   "min_street_cred": 6,
+  "intel_threads": ["thread.kill-list", "thread.tower"],
   "briefing": "Rogue has a job with the smell of old war on it: a Militech data fortress running in a forgotten arbitration office under City Center. The client wants one file. Rogue wants to know why Militech is willing to kill a judge, a priest, and three netrunners to keep it cold.",
   "stakes": "The file is a kill-list seed: names not yet dead, crimes not yet committed, futures already priced. Pull it and the crew can sell the truth, bury it, or use it to blackmail the kind of people who buy elections.",
   "complication": "The fortress is baited with patriotic nostalgia and dead-soldier ghosts. The ICE does not just cut; it accuses.",

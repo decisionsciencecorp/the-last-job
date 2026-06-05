@@ -8,6 +8,7 @@
   "arch": "pawnshop-2floor",
   "tags": ["lowstakes"],
   "min_street_cred": 0,
+  "intel_threads": ["thread.engram", "thread.crew"],
   "briefing": "Regina's tip sounds too small for the hour: a pawnshop in Kabuki, one nervous clerk, one locked case, one data shard hidden inside a dead rockerboy's guitar pickup. She will not say who wants it, only that two other crews asked and both stopped answering.",
   "stakes": "This is the kind of little job that buys food, ammo, and one more week of pretending the crew is not already circling something much bigger.",
   "complication": "The shop is a shrine to old Night City ghosts. Crack the wrong case and every cheap relic in the room starts screaming on the local mesh.",

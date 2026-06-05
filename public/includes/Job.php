@@ -29,6 +29,7 @@ final class Job
         public string $complication = '',
         public string $successDebrief = '',
         public string $failureDebrief = '',
+        public array $intelThreads = [],
     ) {
     }
 
@@ -51,6 +52,7 @@ final class Job
             complication: (string) ($row['complication'] ?? ''),
             successDebrief: (string) ($row['success_debrief'] ?? ''),
             failureDebrief: (string) ($row['failure_debrief'] ?? ''),
+            intelThreads: array_values(array_map('strval', $row['intel_threads'] ?? [])),
         );
     }
 
