@@ -1,0 +1,11 @@
+{
+  "id": "arch.militech-datafort-4floor",
+  "name": "Militech Data Fortress",
+  "security_clock": 18,
+  "floors": [
+    { "index": 1, "ice": ["ice.barrier.wall", "ice.wisp.scout"] },
+    { "index": 2, "ice": ["ice.acid.asp", "ice.tracker.hound"] },
+    { "index": 3, "ice": ["ice.daemon.scorpion", "ice.hellbolt.strike"] },
+    { "index": 4, "ice": ["ice.black.hellhound"], "datavault": { "id": "vault.weapons-program", "name": "Black Weapons Program", "value_eddies": 9000 } }
+  ]
+}

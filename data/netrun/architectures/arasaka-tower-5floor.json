@@ -1,0 +1,12 @@
+{
+  "id": "arch.arasaka-tower-5floor",
+  "name": "Arasaka Tower Core - The Last Job",
+  "security_clock": 24,
+  "floors": [
+    { "index": 1, "ice": ["ice.barrier.wall", "ice.tracker.bloodhound"] },
+    { "index": 2, "ice": ["ice.daemon.warden", "ice.acid.asp"] },
+    { "index": 3, "ice": ["ice.daemon.scorpion", "ice.hellbolt.strike"] },
+    { "index": 4, "ice": ["ice.black.kraken"] },
+    { "index": 5, "ice": ["ice.black.dragon"], "datavault": { "id": "vault.soulkiller", "name": "The Soulkiller Archive", "value_eddies": 25000 } }
+  ]
+}

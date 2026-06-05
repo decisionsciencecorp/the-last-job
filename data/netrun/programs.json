@@ -64,5 +64,71 @@
     "dmg": "0",
     "effect": "Attempt to bypass an ICE without engaging (opposed vs ICE perception).",
     "flavor": "You were never on this floor."
+  },
+  {
+    "id": "prog.banhammer",
+    "category": "netrun_program",
+    "subcategory": "attacker",
+    "source": "CP-RED-Core-Ch6",
+    "name": "Banhammer",
+    "slot_cost": 2,
+    "kind": "attack",
+    "bonus": 4,
+    "dmg": "4d6",
+    "effect": "Heavy two-slot anti-program weapon; cracks high-DEF black ICE.",
+    "flavor": "Brings the whole vault down on one process."
+  },
+  {
+    "id": "prog.worm",
+    "category": "netrun_program",
+    "subcategory": "attacker",
+    "source": "CP-RED-Core-Ch6",
+    "name": "Worm",
+    "slot_cost": 1,
+    "kind": "attack",
+    "bonus": 5,
+    "dmg": "2d6",
+    "effect": "Specialist barrier-breaker; big to-hit bonus, modest damage.",
+    "flavor": "Finds the one bad assumption in the wall and lives there."
+  },
+  {
+    "id": "prog.shield",
+    "category": "netrun_program",
+    "subcategory": "defender",
+    "source": "CP-RED-Core-Ch6",
+    "name": "Shield",
+    "slot_cost": 2,
+    "kind": "defense",
+    "bonus": 0,
+    "dmg": "0",
+    "reduce": 7,
+    "effect": "Heavy two-slot damage reduction; survival deck for black-ICE dives.",
+    "flavor": "A bunker you carry into the fire."
+  },
+  {
+    "id": "prog.eraser",
+    "category": "netrun_program",
+    "subcategory": "utility",
+    "source": "CP-RED-Core-Ch6",
+    "name": "Eraser",
+    "slot_cost": 1,
+    "kind": "utility",
+    "bonus": 3,
+    "dmg": "0",
+    "effect": "Scrubs your trail; can lower the alarm/heat built up on a floor.",
+    "flavor": "You leave the system cleaner than you found it. Cleaner than you were."
+  },
+  {
+    "id": "prog.speedy",
+    "category": "netrun_program",
+    "subcategory": "utility",
+    "source": "CP-RED-Core-Ch6",
+    "name": "Speedy Gonzalvez",
+    "slot_cost": 1,
+    "kind": "utility",
+    "bonus": 2,
+    "dmg": "0",
+    "effect": "Extra NET action speed; better initiative against waiting ICE.",
+    "flavor": "The whole architecture seems to slow down around you."
   }
 ]

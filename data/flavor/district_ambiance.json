@@ -1,0 +1,10 @@
+[
+  {"id":"amb.watson.01","district":"Watson","text":"Megabuilding H10 hums with a thousand lives stacked in concrete. Someone's always watching."},
+  {"id":"amb.watson.02","district":"Watson","text":"Kabuki market neon bleeds across wet pavement; the smell of synth-noodles and ozone."},
+  {"id":"amb.citycenter.01","district":"City Center","text":"Corpo plaza glass throws the skyline back at you. Security drones drift like patient sharks."},
+  {"id":"amb.citycenter.02","district":"City Center","text":"Arasaka Tower scrapes the smog ceiling. Even the air up here belongs to someone."},
+  {"id":"amb.heywood.01","district":"Heywood","text":"Valentino murals watch the street. Family is everything here, and everything has a price."},
+  {"id":"amb.pacifica.01","district":"Pacifica","text":"Half-built resorts rot in the dark. The Voodoo Boys own the wires that still work."},
+  {"id":"amb.santodomingo.01","district":"Santo Domingo","text":"Factory smokestacks and power lines; the industrial heart that the corps bleed dry."},
+  {"id":"amb.badlands.01","district":"Badlands","text":"Wind, dust, and solar farms to the horizon. Out here the city's grip finally loosens."}
+]

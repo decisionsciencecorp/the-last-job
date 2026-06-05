@@ -1,0 +1,17 @@
+{
+  "id": "job.the-last-job",
+  "name": "The Last Job - Arasaka Tower",
+  "fixer": "Self-financed (no fixer; this one's yours)",
+  "payout_eddies": 40000,
+  "street_cred_reward": 10,
+  "difficulty_ticks": 24,
+  "arch": "arasaka-tower-5floor",
+  "tags": ["corp", "enemy", "endgame"],
+  "min_street_cred": 9,
+  "obstacles": [
+    {"id": "ob.insider", "name": "Turn the insider contact", "stat": "EMP", "dv": 17, "ticks": 2, "role_pref": "Fixer"},
+    {"id": "ob.blackout", "name": "Kill the floor sensors", "stat": "TECH", "dv": 18, "ticks": 3, "role_pref": "Tech"},
+    {"id": "ob.elite", "name": "Survive the Arasaka elites", "stat": "REF", "dv": 19, "ticks": 3, "role_pref": "Solo"},
+    {"id": "ob.nerve", "name": "Hold your nerve at the core", "stat": "WILL", "dv": 18, "ticks": 2, "role_pref": "Solo"}
+  ]
+}

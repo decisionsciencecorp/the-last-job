@@ -1,0 +1,16 @@
+{
+  "id": "job.militech-datafort",
+  "name": "Militech Data Fortress Raid",
+  "fixer": "Rogue Amendiares",
+  "payout_eddies": 12000,
+  "street_cred_reward": 4,
+  "difficulty_ticks": 18,
+  "arch": "militech-datafort-4floor",
+  "tags": ["corp", "enemy", "datafort"],
+  "min_street_cred": 6,
+  "obstacles": [
+    {"id": "ob.creds", "name": "Forge the entry credentials", "stat": "INT", "dv": 16, "ticks": 2, "role_pref": "Tech"},
+    {"id": "ob.smoothtalk", "name": "Smooth-talk the floor supervisor", "stat": "COOL", "dv": 16, "ticks": 2, "role_pref": "Fixer"},
+    {"id": "ob.heavies", "name": "Take down the response team", "stat": "REF", "dv": 17, "ticks": 3, "role_pref": "Solo"}
+  ]
+}

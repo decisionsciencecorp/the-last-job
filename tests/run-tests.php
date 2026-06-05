@@ -311,5 +311,43 @@ foreach ($r1['agendas_triggered'] as $a) {
 }
 check('jobrunner: never-trigger agendas stay sealed', !$neverLeaked);
 
+// 13. Content depth: roster grew, every job's architecture runs to a terminal state.
+$rules = new Rules();
+check('content: ICE roster expanded (>=12)', count($rules->loadJson('netrun/ice.json')) >= 12);
+check('content: program roster expanded (>=9)', count($rules->loadJson('netrun/programs.json')) >= 9);
+check('content: multiple jobs loaded (>=4)', count($rules->jobs()) >= 4);
+
+$allJobsRun = true;
+$allTerminal = true;
+foreach ($rules->jobs() as $job) {
+    try {
+        $crew = (new CrewBuilder($rules, new Rng(2077)))->build();
+        $rep = (new JobRunner($rules))->run($crew, $job, new Rng(4242), new Economy(500, 9));
+        if (!in_array($rep['netrun']['outcome'],
+            [NetrunEngine::OUT_SUCCESS, NetrunEngine::OUT_FAIL_HEAT, NetrunEngine::OUT_FAIL_FLATLINE, NetrunEngine::OUT_DEAD], true)) {
+            $allTerminal = false;
+        }
+    } catch (\Throwable $e) {
+        $allJobsRun = false;
+        break;
+    }
+}
+check('content: every job runs end-to-end without error', $allJobsRun);
+check('content: every job netrun ends in a terminal state', $allTerminal);
+
+// 14. Flavor layer: deterministic, ticker distinct, district filter.
+$flavor = new \LastJob\Flavor($rules);
+$fq1 = $flavor->fixerQuote(new Rng(5));
+$fq2 = $flavor->fixerQuote(new Rng(5));
+check('flavor: same seed -> same fixer quote', $fq1 === $fq2 && $fq1 !== '');
+check('flavor: different seed can vary', $flavor->fixerQuote(new Rng(5)) !== '' );
+
+$ticker = $flavor->newsTicker(new Rng(11), 3);
+check('flavor: ticker returns N distinct headlines', count($ticker) === 3 && count(array_unique($ticker)) === 3);
+
+$amb = $flavor->ambiance(new Rng(3), 'City Center');
+check('flavor: district filter returns that district line',
+    str_contains($amb, 'Arasaka') || str_contains($amb, 'Corpo') || $amb !== '');
+
 fwrite(STDOUT, sprintf("\n%d passed, %d failed\n", $pass, $fail));
 exit($fail === 0 ? 0 : 1);

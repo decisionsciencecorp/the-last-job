@@ -12,6 +12,7 @@ require __DIR__ . '/../includes/autoload.php';
 use LastJob\Rng;
 use LastJob\Rules;
 use LastJob\Economy;
+use LastJob\Flavor;
 use LastJob\JobRunner;
 use LastJob\Lifepath\CrewBuilder;
 
@@ -23,6 +24,15 @@ $rules = new Rules();
 $crew = (new CrewBuilder($rules, new Rng($seed)))->build();
 $job = $rules->job((string) $jobId);
 $economy = new Economy(eddies: 500, streetCred: 4);
+
+$flavor = new Flavor($rules);
+$frng = new Rng($seed + 9000);
+fwrite(STDOUT, "// NIGHT CITY //\n");
+foreach ($flavor->newsTicker($frng, 2) as $line) {
+    fwrite(STDOUT, "  >> {$line}\n");
+}
+fwrite(STDOUT, sprintf("  ~ %s\n", $flavor->ambiance($frng)));
+fwrite(STDOUT, sprintf("\nFIXER: \"%s\"\n\n", $flavor->fixerQuote($frng)));
 
 $report = (new JobRunner($rules))->run($crew, $job, new Rng($seed * 7 + 1), $economy);
 
