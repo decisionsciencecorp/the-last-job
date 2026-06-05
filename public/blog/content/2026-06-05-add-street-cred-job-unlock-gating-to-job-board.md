@@ -7,17 +7,44 @@ tags: [devlog, auto]
 commit: d1eb8de
 excerpt: Add street-cred job unlock gating to job board.
 ---
-Pushed to `main` as **`d1eb8de`**.
+Shipped as **`d1eb8de`**.
+
+## What Changed
+
+This pass turns isolated demo runs into campaign play by preserving state, gating jobs through reputation, and showing the player what changed after each run.
+
+- Worked in job board and contract flow.
+- Worked in test coverage.
+
+## Why It Matters
+
+Campaign continuity gives the player a reason to care about each run beyond a single random result.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Play UI now shows locked contracts by required cred, blocks invalid run attempts, and adds rules/test coverage for unlock filtering up to endgame.
 
 ```
-Add street-cred job unlock gating to job board.
-```
 
-Automated devlog entry — see the repo diff for full changes.
+Files touched in this slice included:
+
+- `public/assets/game.css`
+- `public/includes/Rules.php`
+- `public/play.php`
+- `tests/run-tests.php`
+
+## Verification
+
+- The change was committed to `main` and included in the running devlog timeline.
+- The current archive test suite verifies devlog posts render with substantive body content, illustrations, screenshots, and valid asset references.
+- For browser-facing slices, Playwright smoke checks in this build cycle covered the active game surfaces and devlog pages.
 
 
 ## Visuals
 
-![Illustrated build transmission: Add street-cred job unlock gating to job board.](/blog/assets/visuals/illustrations/add-street-cred-job-unlock-gating-to-job-board.svg "Full illustration for Add street-cred job unlock gating to job board.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-street-cred-job-unlock-gating-to-job-board.svg)
 
-![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)

@@ -7,17 +7,40 @@ tags: [devlog, auto]
 commit: b574f6a
 excerpt: Add session run-history ledger to campaign view.
 ---
-Pushed to `main` as **`b574f6a`**.
+Shipped as **`b574f6a`**.
+
+## What Changed
+
+This pass turns isolated demo runs into campaign play by preserving state, gating jobs through reputation, and showing the player what changed after each run.
+
+- Worked in job board and contract flow.
+
+## Why It Matters
+
+Campaign continuity gives the player a reason to care about each run beyond a single random result.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+play.php now records recent run outcomes in session storage and renders a compact history panel so progression has visible audit context during a play session.
 
 ```
-Add session run-history ledger to campaign view.
-```
 
-Automated devlog entry — see the repo diff for full changes.
+Files touched in this slice included:
+
+- `public/play.php`
+
+## Verification
+
+- The change was committed to `main` and included in the running devlog timeline.
+- The current archive test suite verifies devlog posts render with substantive body content, illustrations, screenshots, and valid asset references.
+- For browser-facing slices, Playwright smoke checks in this build cycle covered the active game surfaces and devlog pages.
 
 
 ## Visuals
 
-![Illustrated build transmission: Add session run-history ledger to campaign view.](/blog/assets/visuals/illustrations/add-session-run-history-ledger-to-campaign-view.svg "Full illustration for Add session run-history ledger to campaign view.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-session-run-history-ledger-to-campaign-view.svg)
 
-![Screenshot: After-action report with outcome details.](/blog/assets/visuals/screenshots/run-aftermath.png "Screenshot — After-action report with outcome details.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/run-aftermath.png)

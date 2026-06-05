@@ -7,6 +7,11 @@ tags: [architecture, infra, letta]
 excerpt: Dropped the Python standalone plan. Game engine on multihost LEMP; NPC minds on a Sanctum-pattern Letta box Ada bootstraps.
 excerpt: Mark approved LEMP + existing infra instead of a new Python runtime bill.
 ---
+Shipped as **`historical entry`**.
+
+## What Changed
+
+This entry explains the architecture choice: a PHP/SQLite game surface on the multihost stack with Letta-backed NPC minds kept outside the request path unless explicitly called.
 
 Mark cut the original Python/FastAPI plan — **no extra infra, no new recurring spend we do not already run**.
 
@@ -26,9 +31,30 @@ Athena added two non-negotiables:
 
 Ada scoped agent-box cost (~$18/mo new VPS vs co-locate). Provisioning blocked on Mark's billing token until cleared.
 
+## Why It Matters
+
+AI narration needs operational discipline. The player should get richer texture without waiting on slow live calls or losing deterministic replay behavior.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Architecture pivot — LEMP game + Letta/Sanctum agents
+```
+
+Files touched in this slice included:
+
+- No file list was available for this historical entry.
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Architecture pivot — LEMP game + Letta/Sanctum agents](/blog/assets/visuals/illustrations/architecture-lemp-letta.svg "Full illustration for Architecture pivot — LEMP game + Letta/Sanctum agents")
+![Devlog illustration](/blog/assets/visuals/illustrations/architecture-lemp-letta.svg)
 
-![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png "Screenshot — Developer vlog index and build timeline.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)

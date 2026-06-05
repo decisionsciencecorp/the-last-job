@@ -7,17 +7,42 @@ tags: [devlog, auto]
 commit: ad4ec82
 excerpt: Add cache-first fast narration mode for play runs.
 ---
-Pushed to `main` as **`ad4ec82`**.
+Shipped as **`ad4ec82`**.
+
+## What Changed
+
+This pass makes NPC narration more usable in the browser by adding cache-aware behavior, cache warming, and bounded live calls so the page remains responsive.
+
+- Worked in job board and contract flow.
+- Worked in Letta narration.
+
+## Why It Matters
+
+LLM-backed flavor is valuable only if it does not stall play. The cache and prefetch work keeps the experience responsive while still supporting richer NPC beats.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Narrated runs now default to a one-call live Letta budget with cache reuse across remaining beats, reducing timeout risk while keeping optional full narration available.
 
 ```
-Add cache-first fast narration mode for play runs.
-```
 
-Automated devlog entry — see the repo diff for full changes.
+Files touched in this slice included:
+
+- `public/includes/Letta/NpcIntentBroker.php`
+- `public/play.php`
+
+## Verification
+
+- The change was committed to `main` and included in the running devlog timeline.
+- The current archive test suite verifies devlog posts render with substantive body content, illustrations, screenshots, and valid asset references.
+- For browser-facing slices, Playwright smoke checks in this build cycle covered the active game surfaces and devlog pages.
 
 
 ## Visuals
 
-![Illustrated build transmission: Add cache-first fast narration mode for play runs.](/blog/assets/visuals/illustrations/add-cache-first-fast-narration-mode-for-play-runs.svg "Full illustration for Add cache-first fast narration mode for play runs.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-cache-first-fast-narration-mode-for-play-runs.svg)
 
-![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)

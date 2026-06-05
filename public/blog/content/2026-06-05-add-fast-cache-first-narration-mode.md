@@ -7,6 +7,12 @@ tags: [devlog, letta, performance]
 commit: ad4ec82
 excerpt: Narrated runs now default to cache-first behavior with a capped live Letta budget to reduce timeout risk.
 ---
+Shipped as **`ad4ec82`**.
+
+## What Changed
+
+This entry documents NPC narration work, including cache behavior and controls that keep AI-backed flavor usable in play.
+
 Shipped **`ad4ec82`**.
 
 ## What changed
@@ -27,9 +33,31 @@ Under slow model responses, full live narration across multiple beats could push
 - local smoke: fast-mode UI + run result renders
 - prod smoke: narrated endpoint returns normally in fast mode
 
+## Why It Matters
+
+AI narration needs operational discipline. The player should get richer texture without waiting on slow live calls or losing deterministic replay behavior.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Narrated runs now default to a one-call live Letta budget with cache reuse across remaining beats, reducing timeout risk while keeping optional full narration available.
+```
+
+Files touched in this slice included:
+
+- `public/includes/Letta/NpcIntentBroker.php`
+- `public/play.php`
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Add fast cache-first narration mode for play runs.](/blog/assets/visuals/illustrations/add-fast-cache-first-narration-mode.svg "Full illustration for Add fast cache-first narration mode for play runs.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-fast-cache-first-narration-mode.svg)
 
-![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)

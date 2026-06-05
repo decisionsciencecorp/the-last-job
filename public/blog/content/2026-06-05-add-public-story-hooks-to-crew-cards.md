@@ -7,6 +7,12 @@ tags: [devlog, narrative, lifepath, ui]
 commit: 1a102e0
 excerpt: Crew cards now show player-facing story hooks derived from visible lifepath scars while hidden agendas stay sealed.
 ---
+Shipped as **`1a102e0`**.
+
+## What Changed
+
+This entry documents crew generation and lifepath work, the part of the game that gives runners identity before a job starts.
+
 Shipped **`1a102e0`**.
 
 ## Crew Intrigue
@@ -29,9 +35,33 @@ The lover/leverage table also got sharper copy: dead lovers with impossible proo
 - CLI smoke confirmed `crew-hook` renders
 - CLI smoke confirmed hidden agenda keys do not appear in crew UI output
 
+## Why It Matters
+
+The game needs story pressure and readable context, not just mechanics. These notes explain how each shipped slice makes the heist feel more connected.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Builds player-facing crew intrigue from visible lifepath data while preserving sealed hidden agendas, then renders the hook on crew cards.
+```
+
+Files touched in this slice included:
+
+- `public/assets/game.css`
+- `public/crew.php`
+- `public/data/lifepath/lovers.json`
+- `public/includes/Lifepath/Character.php`
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Add public story hooks to crew cards.](/blog/assets/visuals/illustrations/add-public-story-hooks-to-crew-cards.svg "Full illustration for Add public story hooks to crew cards.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-public-story-hooks-to-crew-cards.svg)
 
-![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)

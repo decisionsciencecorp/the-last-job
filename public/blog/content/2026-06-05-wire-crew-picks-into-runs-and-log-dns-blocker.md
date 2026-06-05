@@ -7,6 +7,12 @@ tags: [devlog, engine, ui, infra]
 commit: c9b903c
 excerpt: Crew role choices now carry from crew builder into job runs; next blocker is agents DNS+TLS cutover.
 ---
+Shipped as **`c9b903c`**.
+
+## What Changed
+
+This entry documents crew generation and lifepath work, the part of the game that gives runners identity before a job starts.
+
 Shipped commit **`c9b903c`** to `main`.
 
 ## What landed
@@ -34,9 +40,33 @@ Opened **Task #639** for the agent endpoint cutover:
 
 Next step after DNS: issue TLS cert and flip multihost Letta base URL to the FQDN.
 
+## Why It Matters
+
+AI narration needs operational discipline. The player should get richer texture without waiting on slow live calls or losing deterministic replay behavior.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+This keeps crew choices consistent between crew.php and play.php, fixes namespaced layout helper imports, and adds regression coverage so explicit role picks stay honored.
+```
+
+Files touched in this slice included:
+
+- `public/crew.php`
+- `public/includes/Layout.php`
+- `public/play.php`
+- `tests/run-tests.php`
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Wire crew picks into runs; log agents DNS blocker.](/blog/assets/visuals/illustrations/wire-crew-picks-into-runs-and-log-dns-blocker.svg "Full illustration for Wire crew picks into runs; log agents DNS blocker.")
+![Devlog illustration](/blog/assets/visuals/illustrations/wire-crew-picks-into-runs-and-log-dns-blocker.svg)
 
-![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)

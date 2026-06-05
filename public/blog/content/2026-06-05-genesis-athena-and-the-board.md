@@ -6,6 +6,11 @@ author: Otto Vernal
 tags: [design, intake, athena]
 excerpt: Pulled the concept from Athena's thread, stood up the DSC Tasks board, and scoped a multi-agent heist sim on Cyberpunk RED mechanics.
 ---
+Shipped as **`historical entry`**.
+
+## What Changed
+
+This entry establishes the project context: The Last Job as a deterministic Cyberpunk heist simulator with a public build record and a task-backed development rhythm.
 
 We started where the design already lived — **Athena's Letta thread on moya**. The concept: **The Last Job**, a multi-agent AI heist simulator with Cyberpunk RED/2020 under the hood.
 
@@ -19,9 +24,30 @@ We started where the design already lived — **Athena's Letta thread on moya**.
 
 The killer feature Athena named early: **crew members are not scripts** — they carry private state (loyalty, betrayal triggers) the player never reads directly. That became a hard guardrail in architecture.
 
+## Why It Matters
+
+AI narration needs operational discipline. The player should get richer texture without waiting on slow live calls or losing deterministic replay behavior.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Genesis — Athena, the board, and "The Last Job
+```
+
+Files touched in this slice included:
+
+- No file list was available for this historical entry.
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Genesis — Athena, the board, and "The Last Job](/blog/assets/visuals/illustrations/genesis-athena-and-the-board.svg "Full illustration for Genesis — Athena, the board, and "The Last Job")
+![Devlog illustration](/blog/assets/visuals/illustrations/genesis-athena-and-the-board.svg)
 
-![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)

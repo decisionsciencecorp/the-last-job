@@ -7,6 +7,12 @@ tags: [devlog, engine, ui, economy]
 commit: d1eb8de
 excerpt: Contracts now lock by required street cred, with explicit run guardrails and regression coverage.
 ---
+Shipped as **`d1eb8de`**.
+
+## What Changed
+
+This entry documents campaign continuity: reputation gates, wallet state, history, and state carried between pages.
+
 Pushed **`d1eb8de`** to `main`.
 
 ## What changed
@@ -32,9 +38,33 @@ These helpers make unlock logic reusable beyond the page layer.
   - locked-run guard message appears
   - non-run navigation auto-falls back to an unlocked contract
 
+## Why It Matters
+
+Campaign state gives each run consequence. Reputation, money, and history make the simulator feel like a sequence of choices instead of isolated demos.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Play UI now shows locked contracts by required cred, blocks invalid run attempts, and adds rules/test coverage for unlock filtering up to endgame.
+```
+
+Files touched in this slice included:
+
+- `public/assets/game.css`
+- `public/includes/Rules.php`
+- `public/play.php`
+- `tests/run-tests.php`
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Add street-cred job unlock gating to job board.](/blog/assets/visuals/illustrations/add-street-cred-job-unlock-gating.svg "Full illustration for Add street-cred job unlock gating to job board.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-street-cred-job-unlock-gating.svg)
 
-![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)

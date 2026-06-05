@@ -7,17 +7,40 @@ tags: [devlog, auto]
 commit: e108df8
 excerpt: Add session-backed campaign wallet mode to job board.
 ---
-Pushed to `main` as **`e108df8`**.
+Shipped as **`e108df8`**.
+
+## What Changed
+
+This pass turns isolated demo runs into campaign play by preserving state, gating jobs through reputation, and showing the player what changed after each run.
+
+- Worked in job board and contract flow.
+
+## Why It Matters
+
+Campaign continuity gives the player a reason to care about each run beyond a single random result.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Play page now tracks eddies and street cred in-session, applies successful run rewards once per unique run key, and allows manual mode or campaign reset from the UI.
 
 ```
-Add session-backed campaign wallet mode to job board.
-```
 
-Automated devlog entry — see the repo diff for full changes.
+Files touched in this slice included:
+
+- `public/play.php`
+
+## Verification
+
+- The change was committed to `main` and included in the running devlog timeline.
+- The current archive test suite verifies devlog posts render with substantive body content, illustrations, screenshots, and valid asset references.
+- For browser-facing slices, Playwright smoke checks in this build cycle covered the active game surfaces and devlog pages.
 
 
 ## Visuals
 
-![Illustrated build transmission: Add session-backed campaign wallet mode to job board.](/blog/assets/visuals/illustrations/add-session-backed-campaign-wallet-mode-to-job-board.svg "Full illustration for Add session-backed campaign wallet mode to job board.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-session-backed-campaign-wallet-mode-to-job-board.svg)
 
-![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)

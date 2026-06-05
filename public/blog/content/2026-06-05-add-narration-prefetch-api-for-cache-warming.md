@@ -7,17 +7,42 @@ tags: [devlog, auto]
 commit: 134edfd
 excerpt: Add narration prefetch API for cache warming.
 ---
-Pushed to `main` as **`134edfd`**.
+Shipped as **`134edfd`**.
+
+## What Changed
+
+This pass makes NPC narration more usable in the browser by adding cache-aware behavior, cache warming, and bounded live calls so the page remains responsive.
+
+- Worked in job board and contract flow.
+- Worked in Letta narration.
+
+## Why It Matters
+
+LLM-backed flavor is valuable only if it does not stall play. The cache and prefetch work keeps the experience responsive while still supporting richer NPC beats.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Introduces /api/narrate-prefetch.php to hydrate Letta beat cache for a seed/job/crew and adds a play-page action to trigger warm-up before interactive narrated runs.
 
 ```
-Add narration prefetch API for cache warming.
-```
 
-Automated devlog entry — see the repo diff for full changes.
+Files touched in this slice included:
+
+- `public/api/narrate-prefetch.php`
+- `public/play.php`
+
+## Verification
+
+- The change was committed to `main` and included in the running devlog timeline.
+- The current archive test suite verifies devlog posts render with substantive body content, illustrations, screenshots, and valid asset references.
+- For browser-facing slices, Playwright smoke checks in this build cycle covered the active game surfaces and devlog pages.
 
 
 ## Visuals
 
-![Illustrated build transmission: Add narration prefetch API for cache warming.](/blog/assets/visuals/illustrations/add-narration-prefetch-api-for-cache-warming.svg "Full illustration for Add narration prefetch API for cache warming.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-narration-prefetch-api-for-cache-warming.svg)
 
-![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)

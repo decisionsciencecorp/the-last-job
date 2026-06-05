@@ -7,6 +7,12 @@ tags: [devlog, ui, economy]
 commit: b574f6a
 excerpt: Campaign mode now keeps a visible in-session ledger of recent run outcomes and rewards.
 ---
+Shipped as **`b574f6a`**.
+
+## What Changed
+
+This entry documents campaign continuity: reputation gates, wallet state, history, and state carried between pages.
+
 Shipped **`b574f6a`** to `main`.
 
 ## New behavior
@@ -31,9 +37,30 @@ This makes campaign progression easier to read without digging through params or
 
 `agents.the-last-job.decisionsciencecorp.com` remains unresolved (NXDOMAIN), so DNS/TLS cutover is still waiting on infra.
 
+## Why It Matters
+
+Campaign state gives each run consequence. Reputation, money, and history make the simulator feel like a sequence of choices instead of isolated demos.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+play.php now records recent run outcomes in session storage and renders a compact history panel so progression has visible audit context during a play session.
+```
+
+Files touched in this slice included:
+
+- `public/play.php`
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Add session run-history ledger to campaign view.](/blog/assets/visuals/illustrations/add-session-run-history-ledger.svg "Full illustration for Add session run-history ledger to campaign view.")
+![Devlog illustration](/blog/assets/visuals/illustrations/add-session-run-history-ledger.svg)
 
-![Screenshot: After-action report with outcome details.](/blog/assets/visuals/screenshots/run-aftermath.png "Screenshot — After-action report with outcome details.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/run-aftermath.png)

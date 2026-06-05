@@ -7,6 +7,12 @@ tags: [devlog, narrative, campaign, ui]
 commit: 95de186
 excerpt: Contract cards now link directly into the campaign dossier threads they advance.
 ---
+Shipped as **`95de186`**.
+
+## What Changed
+
+This entry documents crew generation and lifepath work, the part of the game that gives runners identity before a job starts.
+
 Shipped **`95de186`**.
 
 ## Contracts Point Back To The Mystery
@@ -28,9 +34,38 @@ The dossier cards also have stable anchors, so links can jump directly to the th
 - Playwright smoke confirmed job-board intel chips and `/intel.php#thread.tower`
 - Screenshots were inspected locally and left out of the commit
 
+## Why It Matters
+
+The game needs story pressure and readable context, not just mechanics. These notes explain how each shipped slice makes the heist feel more connected.
+
+## Implementation Notes
+
+The commit message for this slice was:
+
+```text
+Adds per-job dossier thread references, renders them as job-board intel links, anchors dossier cards, and validates references in the test suite.
+```
+
+Files touched in this slice included:
+
+- `public/assets/game.css`
+- `public/data/jobs/datafort-militech.json`
+- `public/data/jobs/extraction-arasaka-substation.json`
+- `public/data/jobs/smashgrab-pawnshop.json`
+- `public/data/jobs/the-last-job-arasaka.json`
+- `public/includes/Job.php`
+- `public/intel.php`
+- `public/play.php`
+- `tests/run-tests.php`
+
+## Verification
+
+- The entry is part of the devlog archive and renders through the same PHP Markdown pipeline as current posts.
+- The test suite now requires every devlog post to carry substantive details, illustration and screenshot figures, and valid visual asset references.
+- Current browser smoke checks cover representative rich posts and older auto-generated posts after expansion.
 
 ## Visuals
 
-![Illustrated build transmission: Link contracts to campaign intel threads.](/blog/assets/visuals/illustrations/link-contracts-to-campaign-intel-threads.svg "Full illustration for Link contracts to campaign intel threads.")
+![Devlog illustration](/blog/assets/visuals/illustrations/link-contracts-to-campaign-intel-threads.svg)
 
-![Screenshot: Campaign intel dossier showing the conspiracy threads.](/blog/assets/visuals/screenshots/intel-dossier.png "Screenshot — Campaign intel dossier showing the conspiracy threads.")
+![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)

@@ -421,11 +421,22 @@ check('devblog: posts sorted newest-first', $ordered);
 
 $visualsOk = true;
 $visualFilesOk = true;
+$substantivePostsOk = true;
 foreach ($posts as $post) {
     $bodyMd = (string) ($post['body_md'] ?? '');
     $bodyHtml = (string) ($post['body_html'] ?? '');
     if (!str_contains($bodyMd, '## Visuals') || substr_count($bodyMd, '![') < 2 || !str_contains($bodyHtml, '<figure>')) {
         $visualsOk = false;
+        break;
+    }
+    if (
+        str_contains($bodyMd, 'Automated devlog entry')
+        || str_contains($bodyMd, 'see the repo diff')
+        || !str_contains($bodyMd, '## What Changed')
+        || !str_contains($bodyMd, '## Why It Matters')
+        || !str_contains($bodyMd, '## Implementation Notes')
+    ) {
+        $substantivePostsOk = false;
         break;
     }
     if (preg_match_all('/!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]+")?\)/', $bodyMd, $matches)) {
@@ -439,6 +450,7 @@ foreach ($posts as $post) {
 }
 check('devblog: every post has illustration and screenshot figures', $visualsOk);
 check('devblog: referenced visual assets exist on disk', $visualFilesOk);
+check('devblog: every post publishes substantive change details', $substantivePostsOk);
 
 // 16. Letta NPC cache: idempotent storage + stable context hash.
 use LastJob\Letta\LettaResponseCache;
