@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Usage: php bin/netrun-demo.php [--seed=N] [--arch=name] [--handle=Name]
  */
 
-require __DIR__ . '/../includes/autoload.php';
+require __DIR__ . '/../public/includes/autoload.php';
 
 use LastJob\Rng;
 use LastJob\Rules;

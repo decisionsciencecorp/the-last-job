@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Usage: php bin/chrome-demo.php [--seed=N] [--emp=8]
  */
 
-require __DIR__ . '/../includes/autoload.php';
+require __DIR__ . '/../public/includes/autoload.php';
 
 use LastJob\Rng;
 use LastJob\Dice;

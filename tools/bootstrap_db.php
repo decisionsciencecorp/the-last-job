@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Safe to run on every deploy. Usage: php tools/bootstrap_db.php [db_path]
  */
 
-require __DIR__ . '/../includes/autoload.php';
+require __DIR__ . '/../public/includes/autoload.php';
 
 use LastJob\Rules;
 

@@ -9,7 +9,7 @@ declare(strict_types=1);
  * the player-facing card, exactly as the game would show it.
  */
 
-require __DIR__ . '/../includes/autoload.php';
+require __DIR__ . '/../public/includes/autoload.php';
 
 use LastJob\Rng;
 use LastJob\Rules;

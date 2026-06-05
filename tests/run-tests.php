@@ -11,7 +11,7 @@ declare(strict_types=1);
  * Usage: php tests/run-tests.php
  */
 
-require __DIR__ . '/../includes/autoload.php';
+require __DIR__ . '/../public/includes/autoload.php';
 
 use LastJob\Rng;
 use LastJob\Dice;
@@ -352,7 +352,7 @@ check('flavor: district filter returns that district line',
 // 15. Dev blog: markdown posts load, back-dated entries present.
 $blog = new \LastJob\Blog\Blog();
 $posts = $blog->allPosts();
-check('devblog: posts load from content/blog', count($posts) >= 7, 'count=' . count($posts));
+check('devblog: posts load from public/blog/content', count($posts) >= 7, 'count=' . count($posts));
 $genesis = $blog->postBySlug('genesis-athena-and-the-board');
 check('devblog: genesis post exists with HTML body', $genesis !== null && str_contains((string) $genesis['body_html'], 'Athena'));
 $ordered = true;

@@ -14,7 +14,7 @@ final class Blog
 
     public function __construct(?string $contentDir = null)
     {
-        $this->contentDir = $contentDir ?? dirname(__DIR__, 2) . '/content/blog';
+        $this->contentDir = $contentDir ?? dirname(__DIR__, 2) . '/blog/content';
     }
 
     /** @return array<int,array<string,mixed>> newest first */

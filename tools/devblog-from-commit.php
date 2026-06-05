@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 $dryRun = in_array('--dry-run', $argv ?? [], true);
 $root = dirname(__DIR__);
-$contentDir = $root . '/content/blog';
+$contentDir = $root . '/public/blog/content';
 
 $sha = trim((string) shell_exec('git rev-parse --short HEAD'));
 $fullMsg = trim((string) shell_exec('git log -1 --format=%B'));

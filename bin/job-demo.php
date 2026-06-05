@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Usage: php bin/job-demo.php [--seed=N] [--job=job.arasaka-substation]
  */
 
-require __DIR__ . '/../includes/autoload.php';
+require __DIR__ . '/../public/includes/autoload.php';
 
 use LastJob\Rng;
 use LastJob\Rules;

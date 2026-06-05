@@ -33,7 +33,7 @@ final class Rules
 
     public function __construct(?string $dataDir = null)
     {
-        $this->dataDir = $dataDir ?? dirname(__DIR__) . '/data';
+        $this->dataDir = $dataDir ?? __DIR__ . '/../data';
         $this->ice = $this->indexById($this->loadJson('netrun/ice.json'));
         $this->programs = $this->indexById($this->loadJson('netrun/programs.json'));
         foreach (self::LIFEPATH_TABLES as $table) {
