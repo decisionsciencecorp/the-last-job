@@ -7,6 +7,40 @@
     max-width: 42rem;
 }
 
+.eyebrow {
+    color: var(--accent2);
+    font: 12px/1 var(--mono);
+    letter-spacing: .14em;
+    margin: 0 0 .5rem;
+    text-transform: uppercase;
+}
+
+.hero-panel {
+    align-items: stretch;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: minmax(0, 1.5fr) minmax(17rem, .8fr);
+    margin: 1rem 0 1.5rem;
+    padding: 1.25rem;
+    background:
+        radial-gradient(circle at top left, rgba(255, 46, 136, .16), transparent 36rem),
+        var(--panel);
+}
+
+.dossier-callout {
+    border: 1px solid rgba(255, 46, 136, .35);
+    border-radius: 12px;
+    padding: 1rem;
+    background: rgba(255, 46, 136, .08);
+}
+
+.dossier-callout p {
+    color: var(--muted);
+    margin-bottom: 0;
+}
+
 .form-grid {
     display: grid;
     gap: 1rem;
@@ -56,7 +90,8 @@
 }
 
 .crew-grid,
-.job-grid {
+.job-grid,
+.intel-grid {
     display: grid;
     gap: .85rem;
     margin: 1rem 0 2rem;
@@ -65,10 +100,18 @@
 @media (min-width: 720px) {
     .crew-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .job-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .intel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 719px) {
+    .hero-panel {
+        grid-template-columns: 1fr;
+    }
 }
 
 .crew-card,
-.job-card {
+.job-card,
+.intel-card {
     border: 1px solid var(--line);
     border-radius: 10px;
     padding: 1rem 1.1rem;
@@ -79,6 +122,33 @@
 .job-card h3 {
     margin: 0 0 .35rem;
     font-size: 1.05rem;
+}
+
+.intel-card h2 {
+    color: var(--text);
+    font-size: 1.1rem;
+    margin: .2rem 0 .55rem;
+}
+
+.intel-card h3 {
+    color: var(--accent2);
+    font-size: .9rem;
+    margin: .9rem 0 .35rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.intel-card li {
+    color: var(--muted);
+    margin: .35rem 0;
+}
+
+.intel-question {
+    border-top: 1px solid var(--line);
+    color: var(--accent);
+    font-style: italic;
+    margin: 1rem 0 0;
+    padding-top: .85rem;
 }
 
 .crew-card .role {

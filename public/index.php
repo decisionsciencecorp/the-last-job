@@ -37,7 +37,7 @@ header('Content-Type: text/html; charset=utf-8');
     <div class="card">
         <h1>The Last Job</h1>
         <p>Engine online. The NET is waiting.</p>
-        <p class="muted"><a href="/crew.php">Build a crew</a> · <a href="/play.php">Job board</a> · <a href="https://dev.the-last-job.decisionsciencecorp.com/">Devlog</a></p>
+        <p class="muted"><a href="/crew.php">Build a crew</a> · <a href="/play.php">Job board</a> · <a href="/intel.php">Intel dossier</a> · <a href="https://dev.the-last-job.decisionsciencecorp.com/">Devlog</a></p>
         <p class="muted"><code>php bin/job-demo.php --seed=2077</code></p>
     </div>
 </body>

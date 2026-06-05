@@ -32,6 +32,7 @@ function layout_header(string $title, string $active = ''): void
         <?= $nav('/', 'Home', 'home') ?>
         <?= $nav('/crew.php', 'Crew', 'crew') ?>
         <?= $nav('/play.php', 'Jobs', 'play') ?>
+        <?= $nav('/intel.php', 'Intel', 'intel') ?>
         <?= $nav('/blog/', 'Devlog', 'blog') ?>
     </nav>
 </div></header>

@@ -23,6 +23,7 @@ use LastJob\JobRunner;
 use LastJob\Netrun\NetrunEngine;
 use LastJob\Netrun\Netrunner;
 use LastJob\Lifepath\CrewBuilder;
+use LastJob\Story\IntelDossier;
 
 $pass = 0;
 $fail = 0;
@@ -355,6 +356,23 @@ foreach ($rules->jobs() as $job) {
 }
 check('content: every job runs end-to-end without error', $allJobsRun);
 check('content: every job netrun ends in a terminal state', $allTerminal);
+
+$dossier = new IntelDossier(__DIR__ . '/../public/data/story/intel_threads.json');
+$threads = $dossier->threads();
+$threadIds = array_map(static fn ($t) => (string) $t['id'], $threads);
+check('content: intel dossier has core conspiracy threads',
+    count($threads) >= 4
+    && in_array('thread.engram', $threadIds, true)
+    && in_array('thread.tower', $threadIds, true)
+);
+$threadsHaveEvidence = true;
+foreach ($threads as $thread) {
+    if (empty($thread['evidence']) || !is_array($thread['evidence']) || empty($thread['question'])) {
+        $threadsHaveEvidence = false;
+        break;
+    }
+}
+check('content: intel dossier threads carry evidence and questions', $threadsHaveEvidence);
 
 // 14. Flavor layer: deterministic, ticker distinct, district filter.
 $flavor = new \LastJob\Flavor($rules);

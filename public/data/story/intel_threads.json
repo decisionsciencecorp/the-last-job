@@ -1,0 +1,54 @@
+[
+  {
+    "id": "thread.engram",
+    "title": "The dead are being trained to answer back",
+    "status": "active",
+    "threat": "Arasaka",
+    "summary": "The first shards point toward a prototype personality system built from fragments of people who did not consent, did not die cleanly, and may still be alive somewhere in the training set.",
+    "evidence": [
+      "A pawnshop shard whispers 'Arasaka' before locking itself.",
+      "The substation engineer claims living subjects were used to train the engram.",
+      "Emergency channels in Watson carry familiar voices after local brownouts."
+    ],
+    "question": "If the copy can speak, which version owns the life?"
+  },
+  {
+    "id": "thread.kill-list",
+    "title": "Militech has a list of futures it wants to buy",
+    "status": "unconfirmed",
+    "threat": "Militech",
+    "summary": "The datafort trail suggests Militech is pricing crimes before they happen, building casualty forecasts as leverage against judges, rivals, and not-yet-born names.",
+    "evidence": [
+      "Rogue's target file references people not yet dead and decisions not yet made.",
+      "Militech denies accusations before they are public.",
+      "Response teams carry casualty reports that match tomorrow's names."
+    ],
+    "question": "Is the list prediction, blackmail, or a schedule?"
+  },
+  {
+    "id": "thread.tower",
+    "title": "Arasaka Tower remembers failed legends",
+    "status": "endgame",
+    "threat": "Arasaka Tower",
+    "summary": "Every contract bends toward a vault that does not appear on blueprints. The Tower is not just guarded; it has memory, mimicry, and an appetite for crews who believe this time will be different.",
+    "evidence": [
+      "Doors open with dead voices during endgame simulations.",
+      "Security systems mark intruders as deceased before contact.",
+      "Failed crews reappear as rumors, warnings, and sometimes voices."
+    ],
+    "question": "What does the Tower keep because killing it was not enough?"
+  },
+  {
+    "id": "thread.crew",
+    "title": "The crew's private scars are part of the job",
+    "status": "volatile",
+    "threat": "Internal",
+    "summary": "The biggest runs do not only test chrome and reflexes. They press on old lovers, debts, vendettas, and the kind of promise an edgerunner makes once and spends the rest of their life trying not to break.",
+    "evidence": [
+      "Hidden agendas trigger only under pressure.",
+      "Relationship leverage follows crew members into job selection.",
+      "The Last Job's core offers each runner exactly what they lost."
+    ],
+    "question": "When the plan and the wound disagree, who gets obeyed?"
+  }
+]
