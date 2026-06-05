@@ -12,11 +12,11 @@ use function LastJob\layout_h;
 $dossier = new IntelDossier(__DIR__ . '/data/story/intel_threads.json');
 $threads = $dossier->threads();
 
-layout_header('Intel dossier', 'intel');
+layout_header('The File', 'file');
 ?>
 <section class="hero-panel">
     <div>
-        <p class="eyebrow">Campaign Dossier</p>
+        <p class="eyebrow">Shard Wall</p>
         <h1>Everything points at the Tower.</h1>
         <p class="lead">The crew is not chasing disconnected gigs anymore. Every shard, extraction, black-ICE corpse, and half-heard broadcast is part of a pattern the corps are killing to keep unfinished.</p>
     </div>
@@ -26,7 +26,7 @@ layout_header('Intel dossier', 'intel');
     </div>
 </section>
 
-<section class="intel-grid" aria-label="Active intel threads">
+<section class="intel-grid" aria-label="Active shards">
     <?php foreach ($threads as $thread): ?>
         <article class="intel-card" id="<?= layout_h((string) $thread['id']) ?>">
             <div class="meta-row">

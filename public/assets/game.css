@@ -1,3 +1,24 @@
+:root {
+    --deck-bg: #07090d;
+    --deck-panel: #0f141b;
+    --deck-panel-2: #121923;
+    --deck-line: #2a3442;
+    --deck-text: #d8e2ee;
+    --deck-muted: #7d8b9d;
+    --deck-magenta: #ff2a6d;
+    --deck-blue: #05d9e8;
+    --deck-green: #39ff14;
+    --deck-yellow: #f6c945;
+    --deck-red: #ff5a5f;
+}
+
+body {
+    background:
+        radial-gradient(circle at 12% -10%, rgba(5, 217, 232, .12), transparent 32rem),
+        radial-gradient(circle at 86% 0%, rgba(255, 42, 109, .10), transparent 30rem),
+        linear-gradient(180deg, #05070a, var(--deck-bg));
+}
+
 .game-main {
     padding: 2rem 1.25rem 3rem;
 }
@@ -85,8 +106,37 @@
     color: var(--muted);
 }
 
+.nav {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    justify-content: flex-end;
+}
+
+.nav a {
+    border: 1px solid var(--deck-line);
+    border-radius: 8px;
+    color: var(--deck-muted);
+    font: 12px/1 var(--mono);
+    letter-spacing: .08em;
+    margin-left: 0;
+    min-width: 4.2rem;
+    padding: .55rem .7rem;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.nav a:hover {
+    border-color: var(--deck-blue);
+    color: var(--deck-text);
+}
+
 .nav a.active {
-    color: var(--accent2);
+    border-color: var(--deck-magenta);
+    color: var(--deck-magenta);
+    box-shadow: 0 0 20px rgba(255, 42, 109, .16);
 }
 
 .crew-grid,
@@ -389,4 +439,225 @@
     gap: .75rem;
     align-items: center;
     margin: 1rem 0 2rem;
+}
+
+.site-footer {
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    font: 12px/1.4 var(--mono);
+    padding: 1.2rem 1.25rem 2rem;
+}
+
+.site-footer a {
+    color: var(--deck-blue);
+    text-decoration: none;
+}
+
+.deck-shell {
+    border: 1px solid var(--deck-line);
+    border-radius: 18px;
+    background:
+        linear-gradient(rgba(255, 255, 255, .025) 50%, rgba(0, 0, 0, .08) 50%),
+        radial-gradient(circle at 20% 0%, rgba(255, 42, 109, .10), transparent 28rem),
+        var(--deck-panel);
+    background-size: 100% 4px, auto, auto;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+    margin: 1rem 0 2rem;
+    overflow: hidden;
+    padding: 1.5rem;
+}
+
+.deck-kicker {
+    color: var(--deck-blue);
+    font: 12px/1 var(--mono);
+    letter-spacing: .14em;
+    margin: 0 0 .6rem;
+    text-transform: uppercase;
+}
+
+.deck-title {
+    color: var(--deck-magenta);
+    font-family: var(--mono);
+    font-size: clamp(2rem, 7vw, 4.5rem);
+    letter-spacing: .04em;
+    line-height: .95;
+    margin: 0 0 .8rem;
+    text-shadow: 0 0 22px rgba(255, 42, 109, .26);
+    text-transform: uppercase;
+}
+
+.deck-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+@media (min-width: 860px) {
+    .deck-grid {
+        grid-template-columns: minmax(18rem, .82fr) minmax(0, 1.18fr);
+    }
+}
+
+.deck-panel,
+.wire-panel {
+    border: 1px solid var(--deck-line);
+    border-radius: 14px;
+    background: rgba(7, 9, 13, .72);
+    padding: 1.25rem;
+}
+
+.deck-panel {
+    border-color: rgba(255, 42, 109, .72);
+}
+
+.wire-panel {
+    border-color: rgba(5, 217, 232, .72);
+}
+
+.terminal-lines {
+    color: var(--deck-green);
+    font: 15px/1.65 var(--mono);
+    margin: .75rem 0;
+}
+
+.terminal-lines p {
+    margin: .15rem 0;
+}
+
+.flow-rail {
+    align-items: center;
+    display: grid;
+    gap: .6rem;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    margin: 1.4rem 0;
+}
+
+.flow-step {
+    border-top: 2px solid var(--deck-line);
+    color: var(--deck-muted);
+    font: 12px/1.3 var(--mono);
+    padding-top: .55rem;
+    text-transform: uppercase;
+}
+
+.flow-step.active {
+    border-color: var(--deck-magenta);
+    color: var(--deck-magenta);
+}
+
+.flow-step.ready {
+    border-color: var(--deck-blue);
+    color: var(--deck-blue);
+}
+
+.deck-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.15rem;
+}
+
+.deck-cta {
+    border: 1px solid var(--deck-magenta);
+    border-radius: 10px;
+    background: var(--deck-magenta);
+    color: #07090d;
+    display: inline-block;
+    font: 700 14px/1 var(--mono);
+    letter-spacing: .08em;
+    padding: .9rem 1.2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.deck-cta.secondary {
+    background: transparent;
+    border-color: var(--deck-line);
+    color: var(--deck-muted);
+}
+
+.context-line {
+    border: 1px solid rgba(5, 217, 232, .28);
+    border-radius: 9px;
+    color: var(--deck-muted);
+    font: 13px/1.55 var(--mono);
+    margin-top: 1rem;
+    padding: .7rem .85rem;
+}
+
+.wire-status {
+    align-items: center;
+    color: var(--deck-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    font: 12px/1.4 var(--mono);
+    margin-bottom: .9rem;
+}
+
+.wire-status span {
+    border: 1px solid var(--deck-line);
+    border-radius: 999px;
+    padding: .25rem .55rem;
+}
+
+.waveform {
+    height: 48px;
+    margin: 1rem 0;
+    position: relative;
+}
+
+.waveform::before {
+    background:
+        linear-gradient(90deg, transparent, var(--deck-magenta), transparent),
+        repeating-linear-gradient(90deg, rgba(255, 42, 109, .18) 0 6px, transparent 6px 12px);
+    content: "";
+    display: block;
+    height: 100%;
+    opacity: .82;
+    clip-path: polygon(0 52%, 4% 45%, 8% 60%, 12% 36%, 16% 72%, 20% 46%, 24% 58%, 28% 30%, 32% 70%, 36% 50%, 40% 54%, 44% 38%, 48% 66%, 52% 42%, 56% 60%, 60% 33%, 64% 74%, 68% 48%, 72% 56%, 76% 40%, 80% 68%, 84% 45%, 88% 58%, 92% 50%, 96% 54%, 100% 49%);
+}
+
+.wire-log {
+    color: var(--deck-text);
+    font: 14px/1.7 var(--mono);
+}
+
+.wire-log p {
+    margin: .3rem 0;
+}
+
+.wire-log strong {
+    color: var(--deck-magenta);
+}
+
+.wire-contract-teaser {
+    border: 1px solid var(--deck-line);
+    border-radius: 12px;
+    margin-top: 1rem;
+    padding: .9rem;
+}
+
+.wire-contract-teaser strong {
+    color: var(--deck-yellow);
+    display: block;
+    font: 14px/1.4 var(--mono);
+    margin-bottom: .3rem;
+}
+
+.deck-debug {
+    border: 1px solid var(--deck-line);
+    border-radius: 12px;
+    margin: 1rem 0;
+    padding: .8rem 1rem;
+}
+
+.deck-debug summary {
+    color: var(--deck-muted);
+    cursor: pointer;
+    font: 12px/1.3 var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
 }

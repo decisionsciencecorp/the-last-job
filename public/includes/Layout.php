@@ -29,11 +29,13 @@ function layout_header(string $title, string $active = ''): void
 <header class="site-header"><div class="wrap">
     <a class="brand" href="/"><span class="brand-title">THE LAST JOB</span></a>
     <nav class="nav">
-        <?= $nav('/', 'Home', 'home') ?>
-        <?= $nav('/crew.php', 'Crew', 'crew') ?>
-        <?= $nav('/play.php', 'Jobs', 'play') ?>
-        <?= $nav('/intel.php', 'Intel', 'intel') ?>
-        <?= $nav('/blog/', 'Devlog', 'blog') ?>
+        <?= $nav('/', 'Deck', 'deck') ?>
+        <?= $nav('/play.php', 'Wire', 'wire') ?>
+        <?= $nav('/crew.php', 'Booth', 'booth') ?>
+        <?= $nav('/crew.php#chair', 'Chair', 'chair') ?>
+        <?= $nav('/play.php#run', 'Run', 'run') ?>
+        <?= $nav('/intel.php', 'File', 'file') ?>
+        <?= $nav('/play.php#wake', 'Wake', 'wake') ?>
     </nav>
 </div></header>
 <main class="wrap game-main">
@@ -44,6 +46,13 @@ function layout_footer(): void
 {
     ?>
 </main>
+<footer class="site-footer wrap">
+    <a href="/">Deck</a>
+    <span>·</span>
+    <a href="/blog/">Build Log</a>
+    <span>·</span>
+    <a href="https://tasks.decisionsciencecorp.com/admin/project.php?id=16">Tasks</a>
+</footer>
 </body>
 </html>
     <?php

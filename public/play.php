@@ -160,16 +160,36 @@ if (isset($_GET['run'])) {
 $selectedJob = $rules->job($jobId);
 $clock = $report['clock'] ?? null;
 
-layout_header('Job board', 'play');
+layout_header('The Wire', 'wire');
 ?>
-<h1>Job board</h1>
-<p class="lead">Pick a contract, jack in, and read the after-action report. Same seed reproduces crew and outcomes; optional Letta dialogue is cached per run.</p>
+<h1>The Wire</h1>
+<p class="lead">Fixers do not file tickets. They put a line on your deck, name the risk, and wait to see if you blink.</p>
+<?php if (isset($_GET['wire'])): ?>
+<section class="wire-panel" style="margin:1rem 0 1.5rem;" aria-label="Fixer on the line">
+    <div class="wire-status">
+        <span>signal: encrypted</span>
+        <span>fixer: ANIMAL</span>
+        <span>carrier: watson-relay-3</span>
+    </div>
+    <div class="waveform" aria-hidden="true"></div>
+    <div class="wire-log">
+        <?php if ((string) $_GET['wire'] === 'ring'): ?>
+            <p><strong>WIRE</strong> &gt; line dropped. rain fills the channel.</p>
+            <p><strong>WIRE</strong> &gt; another fixer will call. different taste, same city.</p>
+        <?php else: ?>
+            <p><strong>ANIMAL</strong> &gt; you free, or just standing around the booth?</p>
+            <p><strong>ANIMAL</strong> &gt; got a job. mid-level. waterfront district.</p>
+            <p><strong>ANIMAL</strong> &gt; bring a runner or get loud.</p>
+        <?php endif; ?>
+    </div>
+</section>
+<?php endif; ?>
 <div class="clock-panel" style="margin:1rem 0;">
-    <strong>Campaign wallet</strong>
+    <strong>Deck status</strong>
     <div class="meta-row">
         <span>Eddies <?= (int) $campaignState['eddies'] ?></span>
-        <span>Street cred <?= (int) $campaignState['street_cred'] ?></span>
-        <span>Mode: <?= $useCampaign ? 'campaign (session)' : 'manual' ?></span>
+        <span>Rep <?= (int) $campaignState['street_cred'] ?></span>
+        <span><?= $useCampaign ? 'timeline live' : 'replay mode' ?></span>
     </div>
     <?php if ($campaignNotice): ?>
         <p class="status-ok" style="margin:.35rem 0 0;"><?= layout_h($campaignNotice) ?></p>
@@ -177,7 +197,7 @@ layout_header('Job board', 'play');
 </div>
 <?php if ($runHistory !== []): ?>
 <div class="clock-panel" style="margin:1rem 0;">
-    <strong>Recent runs (session)</strong>
+    <strong>Recent wakes</strong>
     <ul class="beats" style="margin-top:.5rem;">
     <?php foreach (array_reverse($runHistory) as $row): ?>
         <li>
@@ -200,31 +220,34 @@ layout_header('Job board', 'play');
     <?php for ($i = 0; $i < 4; $i++): ?>
         <input type="hidden" name="role<?= $i ?>" value="<?= layout_h($rolePick[$i]) ?>">
     <?php endfor; ?>
-    <div class="form-grid">
-        <label>Seed
+    <details class="deck-debug">
+        <summary>Deck controls / replay setup</summary>
+        <div class="form-grid">
+        <label>Replay code
             <input type="number" name="seed" value="<?= layout_h((string) $seed) ?>" min="1">
         </label>
-        <label>Street cred
+        <label>Rep override
             <input type="number" name="street_cred" value="<?= layout_h((string) $streetCred) ?>" min="0">
         </label>
         <label>
             <input type="checkbox" name="campaign" value="1"<?= $useCampaign ? ' checked' : '' ?>>
-            Use campaign wallet (session)
+            Use live timeline
         </label>
         <label>
             <input type="checkbox" name="reset_campaign" value="1">
-            Reset campaign wallet before applying this run
+            Burn this timeline before applying this run
         </label>
         <label>
             <input type="checkbox" name="narrate" value="1"<?= $narrate ? ' checked' : '' ?>>
-            NPC dialogue (Letta — cached per run)
+            Crew text reactions
         </label>
         <input type="hidden" name="narrate_fast" value="0">
         <label>
             <input type="checkbox" name="narrate_fast" value="1"<?= $narrateFast ? ' checked' : '' ?>>
-            Fast narrate mode (cache-first; max 1 live call)
+            Fast comms mode
         </label>
-    </div>
+        </div>
+    </details>
 
     <h2>Contracts</h2>
     <div class="job-grid">
@@ -277,13 +300,16 @@ layout_header('Job board', 'play');
     <div class="actions-row">
         <button type="submit" name="run" value="1">Jack in and run</button>
         <a class="btn btn-secondary" href="/crew.php?seed=<?= (int) $seed ?>&roll=1&campaign=<?= $useCampaign ? 1 : 0 ?>&street_cred=<?= (int) $streetCred ?><?= '&amp;role0=' . layout_h($rolePick[0]) . '&amp;role1=' . layout_h($rolePick[1]) . '&amp;role2=' . layout_h($rolePick[2]) . '&amp;role3=' . layout_h($rolePick[3]) ?>">Edit crew for this seed</a>
+    </div>
+    <details class="deck-debug">
+        <summary>Comms preload / dev check</summary>
         <button
             class="btn btn-secondary"
             type="button"
             data-prefetch-url="/api/narrate-prefetch.php?seed=<?= (int) $seed ?>&job=<?= layout_h($jobId) ?>&street_cred=<?= (int) $streetCred ?>&max_live=1&role0=<?= layout_h($rolePick[0]) ?>&role1=<?= layout_h($rolePick[1]) ?>&role2=<?= layout_h($rolePick[2]) ?>&role3=<?= layout_h($rolePick[3]) ?>"
             id="warm-narration-cache"
-        >Warm narration cache</button>
-    </div>
+        >Check comms preload</button>
+    </details>
     <p id="warm-narration-status" class="muted" aria-live="polite"></p>
 </form>
 
@@ -291,7 +317,7 @@ layout_header('Job board', 'play');
     <p class="status-bad"><?= layout_h($narratorError) ?></p>
 <?php endif; ?>
 <?php if ($narrate && $narrateFast): ?>
-    <p class="muted" style="margin:.4rem 0 1rem;">Fast narrate mode is ON. Uncached beats may be deferred to keep page response fast.</p>
+    <p class="muted" style="margin:.4rem 0 1rem;">Fast comms mode is ON. Uncached beats may be deferred to keep the deck responsive.</p>
 <?php endif; ?>
 
 <script>
@@ -311,7 +337,7 @@ layout_header('Job board', 'play');
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 15000);
         button.disabled = true;
-        status.textContent = 'Warming narration cache...';
+        status.textContent = 'Checking comms preload...';
 
         try {
             const response = await fetch(url, {headers: {'Accept': 'application/json'}, signal: controller.signal});
@@ -319,11 +345,11 @@ layout_header('Job board', 'play');
             if (!response.ok || payload.status === 'error') {
                 throw new Error(payload.error || `Narration warm-up failed (${response.status}).`);
             }
-            status.textContent = `Narration cache checked: ${payload.cached_hits || 0} cached, ${payload.fresh_fetched || 0} fetched, ${payload.deferred || 0} deferred.`;
+            status.textContent = `Comms preload checked: ${payload.cached_hits || 0} ready, ${payload.fresh_fetched || 0} fetched, ${payload.deferred || 0} deferred.`;
         } catch (error) {
             status.textContent = error && error.name === 'AbortError'
-                ? 'Narration warm-up timed out. The run still works; try fast narration or run without live NPC dialogue.'
-                : (error && error.message ? error.message : 'Narration warm-up failed. The run still works without cache warming.');
+                ? 'Comms preload timed out. The run still works; use fast comms or run without live crew reactions.'
+                : (error && error.message ? error.message : 'Comms preload failed. The run still works without it.');
         } finally {
             window.clearTimeout(timeout);
             button.disabled = false;
@@ -332,7 +358,7 @@ layout_header('Job board', 'play');
 })();
 </script>
 
-<h2>Crew preview (seed <?= (int) $seed ?>)</h2>
+<h2>The Booth preview</h2>
 <div class="crew-grid">
 <?php foreach ($crew as $m): $c = $m->toPublicArray(); ?>
     <div class="crew-card">
@@ -346,11 +372,12 @@ layout_header('Job board', 'play');
 <?php if ($error): ?>
     <p class="status-bad"><?= layout_h($error) ?></p>
 <?php elseif ($report): ?>
-    <h2 class="<?= $report['success'] ? 'status-ok' : 'status-bad' ?>"><?= $report['success'] ? 'JOB SUCCESS' : 'JOB FAILED' ?></h2>
+    <section id="run">
+    <h2 class="<?= $report['success'] ? 'status-ok' : 'status-bad' ?>"><?= $report['success'] ? 'RUN CLEAN' : 'RUN BURNED' ?></h2>
     <p>Payout <strong><?= (int) $report['payout_eddies'] ?></strong> eddies · Street cred +<?= (int) $report['street_cred_gained'] ?></p>
     <?php if (!empty($report['debrief'])): ?>
-        <div class="clock-panel">
-            <strong>Aftermath</strong>
+        <div class="clock-panel" id="wake">
+            <strong>The Wake</strong>
             <p class="job-briefing"><?= layout_h((string) $report['debrief']) ?></p>
         </div>
     <?php endif; ?>
@@ -418,6 +445,7 @@ layout_header('Job board', 'play');
         <?php endforeach; ?>
         </ul>
     <?php endif; ?>
+    </section>
 <?php endif; ?>
 
 <?php layout_footer(); ?>

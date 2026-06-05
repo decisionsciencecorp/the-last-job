@@ -180,10 +180,14 @@ def run(base: str) -> None:
     base = base.rstrip("/") + "/"
 
     checks = [
-        ("", "The Last Job"),
-        ("crew.php", "Build your crew"),
+        ("", "The Deck"),
+        ("", "Take Call"),
+        ("", "Let It Ring"),
+        ("crew.php", "The Booth"),
         ("play.php", "Contracts"),
-        ("intel.php", "Active intel threads"),
+        ("play.php?wire=call", "Fixer on the line"),
+        ("play.php?wire=ring", "line dropped"),
+        ("intel.php", "Active shards"),
         ("blog/", "Devlog"),
         ("blog/?slug=how-to-approach-the-current-build", "Suggested Playtest Route"),
     ]
@@ -195,10 +199,10 @@ def run(base: str) -> None:
     submitted.extend(submit_forms(base, "play.php"))
 
     explicit_html_flows = [
-        ("crew.php?roll=1&seed=3111&campaign=1&street_cred=4&role0=role.tech&role1=role.tech&role2=role.solo&role3=role.netrunner", "Build your crew"),
+        ("crew.php?roll=1&seed=3111&campaign=1&street_cred=4&role0=role.tech&role1=role.tech&role2=role.solo&role3=role.netrunner", "The Booth"),
         ("crew.php?roll=1&seed=3111&campaign=1&street_cred=4&role0=role.solo&role1=role.netrunner&role2=role.tech&role3=role.fixer&chrome0%5B%5D=cw.neural.neurallink&chrome0%5B%5D=cw.optics.targeting", "Install log"),
         ("play.php?seed=2077&campaign=1&street_cred=4&role0=role.solo&role1=role.netrunner&role2=role.tech&role3=role.fixer&run=1&job=job.arasaka-substation", "Mission clock"),
-        ("play.php?reset_campaign=1&campaign=1&run=1&job=job.arasaka-substation", "Campaign wallet"),
+        ("play.php?reset_campaign=1&campaign=1&run=1&job=job.arasaka-substation", "Deck status"),
         ("play.php?campaign=0&street_cred=0&run=1&job=job.the-last-job", "Street cred 0 is too low"),
         ("play.php?run=1&job=job.nope", "Unknown contract"),
         ("play.php?job=job.nope", "Unknown contract"),
@@ -210,6 +214,10 @@ def run(base: str) -> None:
         assert_page(urljoin(base, path), must_contain=expected)
 
     play_body = assert_page(urljoin(base, "play.php"))
+    forbidden_wire_terms = ["Fast narrate mode", "Warm narration cache", "campaign (session)", "Job board"]
+    for term in forbidden_wire_terms:
+        if term in play_body:
+            raise AssertionError(f"play.php still exposes old player-facing term: {term!r}")
     parser = SurfaceParser()
     parser.feed(play_body)
     if not parser.prefetch_urls:

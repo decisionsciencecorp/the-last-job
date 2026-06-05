@@ -47,31 +47,34 @@ for ($i = 0; $i < 4; $i++) {
 
 $crew = (new CrewBuilder($rules, new Rng($seed)))->build($rolePick);
 
-layout_header('Build your crew', 'crew');
+layout_header('The Booth', 'booth');
 ?>
-<h1>Build your crew</h1>
-<p class="lead">Roll lifepaths, pick roles, and load chrome — humanity and EMP update deterministically from the same seed.</p>
+<h1>The Booth</h1>
+<p class="lead">Crew dossiers live here. Pick the seats, read the hooks, and decide who can carry chrome without disappearing into it.</p>
 
-<form class="form-grid" method="get">
-    <input type="hidden" name="campaign" value="<?= $campaign === 0 ? 0 : 1 ?>">
-    <input type="hidden" name="street_cred" value="<?= (int) $streetCred ?>">
-    <label>Seed
-        <input type="number" name="seed" value="<?= layout_h((string) $seed) ?>" min="1">
-    </label>
-
-    <div class="field-label">Roles (4 slots)</div>
-    <?php for ($i = 0; $i < 4; $i++): ?>
-        <label>Slot <?= $i + 1 ?>
-            <select name="role<?= $i ?>">
-                <?php foreach ($rolesCatalog as $id => $row): ?>
-                    <option value="<?= layout_h($id) ?>"<?= $rolePick[$i] === $id ? ' selected' : '' ?>><?= layout_h((string) ($row['name'] ?? $id)) ?></option>
-                <?php endforeach; ?>
-            </select>
+<details class="deck-debug">
+    <summary>Deck controls / replay setup</summary>
+    <form class="form-grid" method="get">
+        <input type="hidden" name="campaign" value="<?= $campaign === 0 ? 0 : 1 ?>">
+        <input type="hidden" name="street_cred" value="<?= (int) $streetCred ?>">
+        <label>Replay code
+            <input type="number" name="seed" value="<?= layout_h((string) $seed) ?>" min="1">
         </label>
-    <?php endfor; ?>
 
-    <button type="submit" name="roll" value="1">Roll crew</button>
-</form>
+        <div class="field-label">Seats at the Booth</div>
+        <?php for ($i = 0; $i < 4; $i++): ?>
+            <label>Seat <?= $i + 1 ?>
+                <select name="role<?= $i ?>">
+                    <?php foreach ($rolesCatalog as $id => $row): ?>
+                        <option value="<?= layout_h($id) ?>"<?= $rolePick[$i] === $id ? ' selected' : '' ?>><?= layout_h((string) ($row['name'] ?? $id)) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        <?php endfor; ?>
+
+        <button type="submit" name="roll" value="1">Pin new dossiers</button>
+    </form>
+</details>
 
 <?php if ($crew !== null): ?>
     <?php
@@ -81,8 +84,8 @@ layout_header('Build your crew', 'crew');
     }
     ?>
     <div class="actions-row">
-        <a class="btn" href="/play.php?<?= layout_h(http_build_query($playParams + ['run' => 1])) ?>">Run job with this crew</a>
-        <a class="btn btn-secondary" href="/play.php?<?= layout_h(http_build_query($playParams)) ?>">Pick a contract first</a>
+        <a class="btn" href="/play.php?<?= layout_h(http_build_query($playParams)) ?>">Go to the Wire</a>
+        <a class="btn btn-secondary" href="/play.php?<?= layout_h(http_build_query($playParams + ['run' => 1])) ?>">Jack in now</a>
     </div>
 
     <form method="get">
@@ -145,8 +148,8 @@ layout_header('Build your crew', 'crew');
                     <?php endif; ?>
                 </div>
 
-                <div class="chrome-section">
-                    <strong>Chrome shop</strong>
+                <div class="chrome-section" id="<?= $idx === 0 ? 'chair' : 'chair-' . $idx ?>">
+                    <strong>The Chair</strong>
                     <div class="humanity-bar-wrap">
                         <div class="meta-row">
                             <span>Humanity <?= (int) $h['current_humanity'] ?> / <?= (int) $h['max_humanity'] ?></span>
@@ -196,7 +199,7 @@ layout_header('Build your crew', 'crew');
         <?php endforeach; ?>
         </div>
 
-        <button type="submit" name="roll" value="1">Recalculate chrome</button>
+        <button type="submit" name="roll" value="1">Update the Chair</button>
     </form>
 <?php endif; ?>
 
