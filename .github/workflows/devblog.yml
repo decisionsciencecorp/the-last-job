@@ -1,0 +1,37 @@
+name: Devlog on push
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  devblog:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Generate devlog post from commit
+        run: php tools/devblog-from-commit.php
+
+      - name: Commit devlog post if changed
+        run: |
+          git config user.name "Otto Vernal"
+          git config user.email "otto.vernal@decisionsciencecorp.com"
+          git add content/blog/
+          if git diff --staged --quiet; then
+            echo "No new devlog post."
+            exit 0
+          fi
+          git commit -m "devblog: auto-post from ${GITHUB_SHA:0:7} [skip ci]"
+          git push

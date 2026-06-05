@@ -1,0 +1,125 @@
+:root {
+  color-scheme: dark;
+  --bg: #07080d;
+  --panel: #0f1219;
+  --line: #1f6feb44;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --accent: #ff2e88;
+  --accent2: #58a6ff;
+  --mono: ui-monospace, "Cascadia Code", "Roboto Mono", monospace;
+  --sans: Inter, system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(1200px 600px at 10% -10%, #1f6feb18, transparent),
+              radial-gradient(900px 500px at 90% 0%, #ff2e8810, transparent),
+              var(--bg);
+  color: var(--text);
+  font: 16px/1.65 var(--sans);
+}
+
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+
+.site-header {
+  border-bottom: 1px solid var(--line);
+  background: #0a0c12cc;
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4.5rem;
+}
+.brand { text-decoration: none; color: inherit; display: grid; gap: .1rem; }
+.brand-kicker { font: 11px/1 var(--mono); letter-spacing: .12em; color: var(--muted); text-transform: uppercase; }
+.brand-title { font: 700 1.35rem/1 var(--mono); color: var(--accent); letter-spacing: .08em; }
+.brand-sub { font: 12px/1 var(--mono); color: var(--accent2); text-transform: uppercase; letter-spacing: .2em; }
+.nav a { color: var(--muted); margin-left: 1rem; text-decoration: none; }
+.nav a:hover { color: var(--text); }
+
+.layout { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; padding: 2rem 1.25rem 3rem; }
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { order: 2; }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+}
+.panel h2 { margin: 0 0 .75rem; font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.panel.muted { color: var(--muted); font-size: .92rem; }
+
+.post-list { list-style: none; margin: 0; padding: 0; }
+.post-list.compact li { margin-bottom: .85rem; }
+.post-list.compact a { color: var(--text); text-decoration: none; display: block; font-weight: 600; font-size: .95rem; }
+.post-list.compact a.active, .post-list.compact a:hover { color: var(--accent2); }
+.post-list.compact time { display: block; font: 12px/1.4 var(--mono); color: var(--muted); margin-top: .2rem; }
+
+.index-intro h1 { margin: 0 0 .5rem; font-family: var(--mono); letter-spacing: .06em; }
+.lead { color: var(--muted); max-width: 52ch; }
+
+.post-card {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #ffffff10;
+}
+.post-card time { font: 12px/1 var(--mono); color: var(--muted); }
+.post-card h2 { margin: .35rem 0 .5rem; font-size: 1.35rem; }
+.post-card h2 a { color: var(--text); text-decoration: none; }
+.post-card h2 a:hover { color: var(--accent2); }
+.post-card p { margin: 0; color: var(--muted); }
+
+.post-header { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--line); }
+.post-meta { color: var(--muted); font: 13px/1.5 var(--mono); margin: 0 0 .75rem; }
+.post-header h1 { margin: 0; font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.2; }
+.tags { margin: .75rem 0 0; }
+.tag {
+  display: inline-block;
+  font: 11px/1 var(--mono);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: .25rem .55rem;
+  margin-right: .35rem;
+  color: var(--accent2);
+}
+
+.post-body h2, .post-body h3 { font-family: var(--mono); margin-top: 1.75rem; }
+.post-body p { max-width: 68ch; }
+.post-body code, .post-body pre {
+  font-family: var(--mono);
+  font-size: .92em;
+}
+.post-body code {
+  background: #161b22;
+  padding: .1rem .35rem;
+  border-radius: 4px;
+  color: #ffa657;
+}
+.post-body pre {
+  background: #0d1117;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+.post-body a { color: var(--accent2); }
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 1.25rem 2.5rem;
+  color: var(--muted);
+  font-size: .92rem;
+}
+.site-footer a { color: var(--accent2); }

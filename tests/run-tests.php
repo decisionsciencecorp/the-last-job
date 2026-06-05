@@ -349,5 +349,20 @@ $amb = $flavor->ambiance(new Rng(3), 'City Center');
 check('flavor: district filter returns that district line',
     str_contains($amb, 'Arasaka') || str_contains($amb, 'Corpo') || $amb !== '');
 
+// 15. Dev blog: markdown posts load, back-dated entries present.
+$blog = new \LastJob\Blog\Blog();
+$posts = $blog->allPosts();
+check('devblog: posts load from content/blog', count($posts) >= 7, 'count=' . count($posts));
+$genesis = $blog->postBySlug('genesis-athena-and-the-board');
+check('devblog: genesis post exists with HTML body', $genesis !== null && str_contains((string) $genesis['body_html'], 'Athena'));
+$ordered = true;
+for ($i = 1; $i < count($posts); $i++) {
+    if ($posts[$i - 1]['date'] < $posts[$i]['date']) {
+        $ordered = false;
+        break;
+    }
+}
+check('devblog: posts sorted newest-first', $ordered);
+
 fwrite(STDOUT, sprintf("\n%d passed, %d failed\n", $pass, $fail));
 exit($fail === 0 ? 0 : 1);
