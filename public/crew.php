@@ -116,6 +116,9 @@ layout_header('Build your crew', 'crew');
                 <div class="role"><?= layout_h($c['role']) ?></div>
                 <h3><?= layout_h($c['handle']) ?></h3>
                 <p class="muted"><?= layout_h((string) $c['personality']) ?> · <?= layout_h((string) $c['origin']) ?></p>
+                <?php if (!empty($c['public_hook'])): ?>
+                    <p class="crew-hook"><?= layout_h((string) $c['public_hook']) ?></p>
+                <?php endif; ?>
 
                 <div class="stat-pills">
                     <?php foreach ($member->stats as $stat => $val): ?>

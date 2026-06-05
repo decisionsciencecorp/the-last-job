@@ -61,6 +61,7 @@ final class Character
             'family_morale' => $this->family['family_morale'] ?? null,
             'life_events' => array_map(static fn ($e) => $e['result'] ?? null, $this->lifeEvents),
             'lover' => $this->lover['result'] ?? null,
+            'public_hook' => $this->publicHook(),
             'contacts' => $this->contacts,
             'enemies' => $this->enemies,
         ];
@@ -70,5 +71,21 @@ final class Character
     public function toSealedArray(): array
     {
         return $this->toPublicArray() + ['_hidden_agenda' => $this->hiddenAgenda];
+    }
+
+    private function publicHook(): string
+    {
+        $event = $this->lifeEvents[0] ?? [];
+        $pieces = array_filter([
+            (string) ($this->personality['flavor'] ?? ''),
+            (string) ($event['flavor'] ?? ''),
+            (string) ($this->lover['leverage'] ?? ''),
+        ], static fn (string $s): bool => trim($s) !== '');
+
+        if ($pieces === []) {
+            return 'They keep the important parts of their story behind their eyes.';
+        }
+
+        return implode(' ', array_slice($pieces, 0, 3));
     }
 }

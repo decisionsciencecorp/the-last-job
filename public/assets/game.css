@@ -88,6 +88,14 @@
     letter-spacing: .04em;
 }
 
+.crew-hook {
+    border-left: 3px solid var(--accent);
+    margin: .75rem 0;
+    padding-left: .75rem;
+    color: var(--text);
+    font-style: italic;
+}
+
 .meta-row {
     display: flex;
     flex-wrap: wrap;
