@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Player guide illustration for The Last Job current build">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#06070c"/>
+      <stop offset="0.48" stop-color="#101827"/>
+      <stop offset="1" stop-color="#260815"/>
+    </linearGradient>
+    <radialGradient id="neon" cx="72%" cy="24%" r="64%">
+      <stop offset="0" stop-color="#ff2bd6" stop-opacity="0.32"/>
+      <stop offset="0.48" stop-color="#58a6ff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#58a6ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#neon)"/>
+  <g opacity="0.18" stroke="#58a6ff" stroke-width="1">
+    <path d="M0 118H1200M0 236H1200M0 354H1200M0 472H1200M0 590H1200"/>
+    <path d="M96 0V675M192 0V675M288 0V675M384 0V675M480 0V675M576 0V675M672 0V675M768 0V675M864 0V675M960 0V675M1056 0V675"/>
+  </g>
+  <rect x="58" y="58" width="1084" height="559" rx="30" fill="#0d1117" opacity="0.82" stroke="#ffb000" stroke-opacity="0.55"/>
+  <path d="M150 490C238 354 350 420 430 310C512 198 644 298 724 194C818 72 966 152 1046 106" fill="none" stroke="#ff2bd6" stroke-width="6" opacity="0.55" filter="url(#glow)"/>
+  <g transform="translate(116 300)">
+    <rect x="0" y="0" width="190" height="168" rx="18" fill="#161b22" stroke="#58a6ff" stroke-opacity="0.55"/>
+    <circle cx="55" cy="58" r="28" fill="#58a6ff" opacity="0.28"/>
+    <path d="M104 40h58M104 72h44M30 118h130" stroke="#e6edf3" stroke-width="10" stroke-linecap="round" opacity="0.8"/>
+    <text x="26" y="150" fill="#ffb000" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">CREW</text>
+  </g>
+  <g transform="translate(394 300)">
+    <rect x="0" y="0" width="190" height="168" rx="18" fill="#161b22" stroke="#ffb000" stroke-opacity="0.62"/>
+    <path d="M36 52h118M36 88h82M36 124h132" stroke="#e6edf3" stroke-width="11" stroke-linecap="round" opacity="0.82"/>
+    <text x="26" y="150" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">JOBS</text>
+  </g>
+  <g transform="translate(672 300)">
+    <rect x="0" y="0" width="190" height="168" rx="18" fill="#161b22" stroke="#ff2bd6" stroke-opacity="0.55"/>
+    <circle cx="96" cy="78" r="48" fill="none" stroke="#ff2bd6" stroke-width="8" opacity="0.55"/>
+    <path d="M96 78L96 42M96 78L126 98" stroke="#ffb000" stroke-width="8" stroke-linecap="round"/>
+    <text x="26" y="150" fill="#ffb000" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">RUN</text>
+  </g>
+  <g transform="translate(950 300)">
+    <rect x="0" y="0" width="150" height="168" rx="18" fill="#161b22" stroke="#58a6ff" stroke-opacity="0.55"/>
+    <path d="M34 54h82M34 86h62M34 118h92" stroke="#e6edf3" stroke-width="10" stroke-linecap="round" opacity="0.8"/>
+    <circle cx="112" cy="50" r="14" fill="#ffb000" opacity="0.8"/>
+    <text x="24" y="150" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">INTEL</text>
+  </g>
+  <path d="M320 384H370M598 384H648M876 384H926" stroke="#ffb000" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+  <text x="82" y="124" fill="#ffb000" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="7">PLAYER ROUTE</text>
+  <text x="82" y="212" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="58" font-weight="800">Build a crew. Pull the score.</text>
+  <text x="84" y="272" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24">Do not trust them. Chase The Last Job.</text>
+  <text x="82" y="586" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="3">CURRENT BUILD FIELD GUIDE</text>
+</svg>
