@@ -24,6 +24,9 @@ final class Job
         public array $obstacles,
         public array $tags,
         public int $minRepTier = 0,
+        public string $briefing = '',
+        public string $stakes = '',
+        public string $complication = '',
     ) {
     }
 
@@ -41,6 +44,9 @@ final class Job
             obstacles: $row['obstacles'] ?? [],
             tags: $row['tags'] ?? [],
             minRepTier: (int) ($row['min_street_cred'] ?? 0),
+            briefing: (string) ($row['briefing'] ?? ''),
+            stakes: (string) ($row['stakes'] ?? ''),
+            complication: (string) ($row['complication'] ?? ''),
         );
     }
 

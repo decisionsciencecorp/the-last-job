@@ -206,6 +206,23 @@
     color: var(--muted);
 }
 
+.job-briefing,
+.job-stakes,
+.job-complication {
+    margin: .6rem 0 0;
+    font-size: .9rem;
+    color: var(--muted);
+}
+
+.job-briefing {
+    color: var(--text);
+}
+
+.job-stakes strong,
+.job-complication strong {
+    color: var(--accent2);
+}
+
 .report-grid {
     display: grid;
     gap: 1.25rem;

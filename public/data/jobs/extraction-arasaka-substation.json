@@ -8,9 +8,12 @@
   "arch": "nightcity-apt-3floor",
   "tags": ["corp", "enemy", "extraction"],
   "min_street_cred": 3,
+  "briefing": "Dexter DeShawn has a name, a floor plan, and a voice recording of an Arasaka engineer whispering that she wants out before her own project eats her alive. She is trapped inside a downtown power substation that officially does not employ anyone after midnight.",
+  "stakes": "The target knows where Arasaka buried a prototype personality engram. If she disappears clean, the crew gets paid. If she screams, half the city's black clinics start burning by dawn.",
+  "complication": "The extraction window is tied to rolling brownouts. Every minute you waste, the building wakes up one subsystem at a time.",
   "obstacles": [
-    {"id": "ob.gate", "name": "Talk past the gate auth", "stat": "COOL", "dv": 15, "ticks": 2, "role_pref": "Fixer"},
-    {"id": "ob.maglock", "name": "Bypass the maglock", "stat": "TECH", "dv": 16, "ticks": 2, "role_pref": "Tech"},
-    {"id": "ob.patrol", "name": "Drop the roving patrol quietly", "stat": "REF", "dv": 15, "ticks": 2, "role_pref": "Solo"}
+    {"id": "ob.gate", "name": "Talk past a gate-auth drone reciting credentials for people who died last week", "stat": "COOL", "dv": 15, "ticks": 2, "role_pref": "Fixer"},
+    {"id": "ob.maglock", "name": "Bypass a maglock that keeps rewriting its own access table", "stat": "TECH", "dv": 16, "ticks": 2, "role_pref": "Tech"},
+    {"id": "ob.patrol", "name": "Drop the roving patrol before their biomonitors agree they are dead", "stat": "REF", "dv": 15, "ticks": 2, "role_pref": "Solo"}
   ]
 }

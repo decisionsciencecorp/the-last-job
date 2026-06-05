@@ -8,5 +8,10 @@
   {"id":"fq.07","text":"Don't trust the quiet jobs. Quiet means somebody already paid for silence."},
   {"id":"fq.08","text":"Half up front, half on delivery, and a bonus if nobody asks who I am."},
   {"id":"fq.09","text":"You burn this run, you burn me. I don't get burned twice."},
-  {"id":"fq.10","text":"Night City pays for nerve, not for plans. Bring both, lose neither."}
+  {"id":"fq.10","text":"Night City pays for nerve, not for plans. Bring both, lose neither."},
+  {"id":"fq.11","text":"This is not a job offer. This is a warning with a payout attached."},
+  {"id":"fq.12","text":"The client asked for deniable assets. I said I knew some people already halfway erased."},
+  {"id":"fq.13","text":"If the building starts talking to you, do not answer in your real name."},
+  {"id":"fq.14","text":"You are not stealing data. You are stealing the version of tomorrow they already sold."},
+  {"id":"fq.15","text":"Everybody wants a legend until the bill arrives. Tonight, you're the bill."}
 ]

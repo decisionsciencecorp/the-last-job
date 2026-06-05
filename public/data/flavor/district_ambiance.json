@@ -6,5 +6,10 @@
   {"id":"amb.heywood.01","district":"Heywood","text":"Valentino murals watch the street. Family is everything here, and everything has a price."},
   {"id":"amb.pacifica.01","district":"Pacifica","text":"Half-built resorts rot in the dark. The Voodoo Boys own the wires that still work."},
   {"id":"amb.santodomingo.01","district":"Santo Domingo","text":"Factory smokestacks and power lines; the industrial heart that the corps bleed dry."},
-  {"id":"amb.badlands.01","district":"Badlands","text":"Wind, dust, and solar farms to the horizon. Out here the city's grip finally loosens."}
+  {"id":"amb.badlands.01","district":"Badlands","text":"Wind, dust, and solar farms to the horizon. Out here the city's grip finally loosens."},
+  {"id":"amb.watson.03","district":"Watson","text":"A kid in a cracked BD wreath mouths along to a voice no one else can hear. The ad screens call it nostalgia."},
+  {"id":"amb.citycenter.03","district":"City Center","text":"Executive AVs cross the skyline like funeral candles. Down on the street, every reflection looks like a security camera."},
+  {"id":"amb.heywood.02","district":"Heywood","text":"Somebody's abuela leaves candles for a saint with chrome eyes. The Valentinos pretend not to watch."},
+  {"id":"amb.pacifica.02","district":"Pacifica","text":"The old hotel lobbies breathe salt air and packet loss. Somewhere above you, a subnet is praying in Creole."},
+  {"id":"amb.santodomingo.02","district":"Santo Domingo","text":"Power transformers thump like tired hearts. Every brownout feels rehearsed."}
 ]

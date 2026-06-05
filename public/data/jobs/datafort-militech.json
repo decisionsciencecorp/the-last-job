@@ -8,9 +8,12 @@
   "arch": "militech-datafort-4floor",
   "tags": ["corp", "enemy", "datafort"],
   "min_street_cred": 6,
+  "briefing": "Rogue has a job with the smell of old war on it: a Militech data fortress running in a forgotten arbitration office under City Center. The client wants one file. Rogue wants to know why Militech is willing to kill a judge, a priest, and three netrunners to keep it cold.",
+  "stakes": "The file is a kill-list seed: names not yet dead, crimes not yet committed, futures already priced. Pull it and the crew can sell the truth, bury it, or use it to blackmail the kind of people who buy elections.",
+  "complication": "The fortress is baited with patriotic nostalgia and dead-soldier ghosts. The ICE does not just cut; it accuses.",
   "obstacles": [
-    {"id": "ob.creds", "name": "Forge the entry credentials", "stat": "INT", "dv": 16, "ticks": 2, "role_pref": "Tech"},
-    {"id": "ob.smoothtalk", "name": "Smooth-talk the floor supervisor", "stat": "COOL", "dv": 16, "ticks": 2, "role_pref": "Fixer"},
-    {"id": "ob.heavies", "name": "Take down the response team", "stat": "REF", "dv": 17, "ticks": 3, "role_pref": "Solo"}
+    {"id": "ob.creds", "name": "Forge entry credentials against a receptionist AI trained on court transcripts", "stat": "INT", "dv": 16, "ticks": 2, "role_pref": "Tech"},
+    {"id": "ob.smoothtalk", "name": "Convince the floor supervisor your fake subpoena outranks their fear", "stat": "COOL", "dv": 16, "ticks": 2, "role_pref": "Fixer"},
+    {"id": "ob.heavies", "name": "Take down a response team wearing yesterday's casualty reports as morale patches", "stat": "REF", "dv": 17, "ticks": 3, "role_pref": "Solo"}
   ]
 }

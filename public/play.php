@@ -218,6 +218,15 @@ layout_header('Job board', 'play');
                     <span>Clock <?= (int) $j->difficultyTicks ?> ticks</span>
                     <span>Need cred <?= (int) $j->minRepTier ?></span>
                 </div>
+                <?php if ($j->briefing !== ''): ?>
+                    <p class="job-briefing"><?= layout_h($j->briefing) ?></p>
+                <?php endif; ?>
+                <?php if ($j->stakes !== ''): ?>
+                    <p class="job-stakes"><strong>Stakes:</strong> <?= layout_h($j->stakes) ?></p>
+                <?php endif; ?>
+                <?php if ($j->complication !== ''): ?>
+                    <p class="job-complication"><strong>Complication:</strong> <?= layout_h($j->complication) ?></p>
+                <?php endif; ?>
                 <?php if ($locked): ?>
                     <p class="status-warn" style="margin:.35rem 0 0;">Locked — needs street cred <?= (int) $j->minRepTier ?></p>
                 <?php endif; ?>
