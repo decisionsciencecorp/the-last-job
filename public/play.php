@@ -15,11 +15,28 @@ use function LastJob\layout_header;
 use function LastJob\layout_footer;
 use function LastJob\layout_h;
 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
 $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $jobId = isset($_GET['job']) ? (string) $_GET['job'] : 'job.arasaka-substation';
 $narrate = isset($_GET['narrate']);
-$streetCred = isset($_GET['street_cred']) ? max(0, (int) $_GET['street_cred']) : 4;
+$useCampaign = !isset($_GET['campaign']) || (string) $_GET['campaign'] !== '0';
+$manualStreetCred = isset($_GET['street_cred']) ? max(0, (int) $_GET['street_cred']) : 4;
+$campaignNotice = null;
+$campaignState = $_SESSION['campaign_state'] ?? ['eddies' => 500, 'street_cred' => 4, 'last_run_key' => null];
+if (!is_array($campaignState) || !isset($campaignState['eddies'], $campaignState['street_cred'])) {
+    $campaignState = ['eddies' => 500, 'street_cred' => 4, 'last_run_key' => null];
+}
+if (isset($_GET['reset_campaign'])) {
+    $campaignState = ['eddies' => 500, 'street_cred' => 4, 'last_run_key' => null];
+    $_SESSION['campaign_state'] = $campaignState;
+    $campaignNotice = 'Campaign wallet reset.';
+}
+$streetCred = $useCampaign ? max(0, (int) $campaignState['street_cred']) : $manualStreetCred;
+$startingEddies = $useCampaign ? max(0, (int) $campaignState['eddies']) : 500;
 $rolesCatalog = $rules->roles();
 $roleIds = array_keys($rolesCatalog);
 $defaultRoles = CrewBuilder::DEFAULT_ROLES;
@@ -36,7 +53,7 @@ for ($i = 0; $i < 4; $i++) {
 
 $jobs = $rules->jobs();
 $crew = (new CrewBuilder($rules, new Rng($seed)))->build($rolePick);
-$economy = new Economy(500, $streetCred);
+$economy = new Economy($startingEddies, $streetCred);
 $report = null;
 $error = null;
 $narrator = null;
@@ -76,6 +93,20 @@ if (isset($_GET['run'])) {
                 $runId = NpcIntentBroker::runId($seed, $jobId);
                 $report = $narrator->enrichReport($report, $runId);
             }
+            if ($useCampaign && $report !== null && !empty($report['success'])) {
+                $runKey = sha1(json_encode([$seed, $jobId, $rolePick], JSON_UNESCAPED_SLASHES));
+                if (($campaignState['last_run_key'] ?? null) !== $runKey) {
+                    $campaignState = [
+                        'eddies' => (int) ($economy->toArray()['eddies'] ?? $startingEddies),
+                        'street_cred' => (int) ($economy->toArray()['street_cred'] ?? $streetCred),
+                        'last_run_key' => $runKey,
+                    ];
+                    $_SESSION['campaign_state'] = $campaignState;
+                    $campaignNotice = 'Campaign wallet updated from this successful run.';
+                } else {
+                    $campaignNotice = 'Run rewards already counted for this exact seed/job/crew combo.';
+                }
+            }
         } catch (Throwable $e) {
             $error = $e->getMessage();
         }
@@ -89,8 +120,20 @@ layout_header('Job board', 'play');
 ?>
 <h1>Job board</h1>
 <p class="lead">Pick a contract, jack in, and read the after-action report. Same seed reproduces crew and outcomes; optional Letta dialogue is cached per run.</p>
+<div class="clock-panel" style="margin:1rem 0;">
+    <strong>Campaign wallet</strong>
+    <div class="meta-row">
+        <span>Eddies <?= (int) $campaignState['eddies'] ?></span>
+        <span>Street cred <?= (int) $campaignState['street_cred'] ?></span>
+        <span>Mode: <?= $useCampaign ? 'campaign (session)' : 'manual' ?></span>
+    </div>
+    <?php if ($campaignNotice): ?>
+        <p class="status-ok" style="margin:.35rem 0 0;"><?= layout_h($campaignNotice) ?></p>
+    <?php endif; ?>
+</div>
 
 <form method="get">
+    <input type="hidden" name="campaign" value="0">
     <?php for ($i = 0; $i < 4; $i++): ?>
         <input type="hidden" name="role<?= $i ?>" value="<?= layout_h($rolePick[$i]) ?>">
     <?php endfor; ?>
@@ -100,6 +143,14 @@ layout_header('Job board', 'play');
         </label>
         <label>Street cred
             <input type="number" name="street_cred" value="<?= layout_h((string) $streetCred) ?>" min="0">
+        </label>
+        <label>
+            <input type="checkbox" name="campaign" value="1"<?= $useCampaign ? ' checked' : '' ?>>
+            Use campaign wallet (session)
+        </label>
+        <label>
+            <input type="checkbox" name="reset_campaign" value="1">
+            Reset campaign wallet before applying this run
         </label>
         <label>
             <input type="checkbox" name="narrate" value="1"<?= $narrate ? ' checked' : '' ?>>
