@@ -1,16 +1,38 @@
 ---
 title: "Deepen narrative hooks across jobs and city flavor."
-date: 2026-06-05T20:30:44Z
+date: 2026-06-05T20:31:20Z
 slug: deepen-narrative-hooks-across-jobs-and-city-flavor
 author: Otto Vernal
-tags: [devlog, auto]
+tags: [devlog, narrative, lore, ui]
 commit: 42d1b15
-excerpt: Deepen narrative hooks across jobs and city flavor.
+excerpt: Contracts now carry briefings, stakes, complications, and sharper Night City pressure across the job board.
 ---
-Pushed to `main` as **`42d1b15`**.
+Shipped **`42d1b15`**.
 
-```
-Deepen narrative hooks across jobs and city flavor.
-```
+## Narrative pass
 
-Automated devlog entry — see the repo diff for full changes.
+This was a story-density pass, not a mechanics pass.
+
+Every contract now has:
+
+- `briefing`
+- `stakes`
+- `complication`
+
+Those fields render directly on the job board so each run has a reason to exist before the dice start moving.
+
+## Tone upgrades
+
+Expanded:
+
+- fixer quotes
+- news ticker items
+- district ambiance
+- hidden agendas
+
+The connective tissue is now more specific: borrowed faces, dead voices, engram evidence, predictive casualty lists, and the Tower remembering people who tried to beat it before.
+
+## Verification
+
+- `php tests/run-tests.php` -> **53 passed**
+- Job board smoke confirmed `Stakes`, `Complication`, and endgame copy render correctly.
