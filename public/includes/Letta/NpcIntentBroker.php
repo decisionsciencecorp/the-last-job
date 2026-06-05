@@ -50,14 +50,16 @@ final class NpcIntentBroker
 
     /**
      * @param array<string,mixed> $report JobRunner after-action report
+     * @param int $maxLiveFetch Maximum uncached Letta calls allowed in this pass.
      * @return array<string,mixed> report with beats[*].npc_* enriched
      */
-    public function enrichReport(array $report, string $runId): array
+    public function enrichReport(array $report, string $runId, int $maxLiveFetch = PHP_INT_MAX): array
     {
         if (!isset($report['beats']) || !is_array($report['beats'])) {
             return $report;
         }
 
+        $liveFetchesUsed = 0;
         foreach ($report['beats'] as $i => $beat) {
             if (!is_array($beat)) {
                 continue;
@@ -76,7 +78,31 @@ final class NpcIntentBroker
             ];
 
             try {
-                $npc = $this->intentForBeat($runId, $beatId, $npcId, $context);
+                $safe = self::sanitizeContext($context);
+                $hash = LettaResponseCache::hashContext($safe);
+                $hit = $this->cache->get($runId, $beatId, $npcId, $hash);
+
+                if ($hit !== null) {
+                    $npc = [
+                        'intent' => $hit['intent'],
+                        'dialogue' => $hit['dialogue'],
+                        'cached' => true,
+                    ];
+                } elseif ($liveFetchesUsed >= $maxLiveFetch) {
+                    $report['beats'][$i]['npc_skipped'] = true;
+                    $report['beats'][$i]['npc_error'] = 'Narration deferred (fast mode live-call budget exhausted).';
+                    continue;
+                } else {
+                    $fresh = $this->client->npcIntent($safe);
+                    $this->cache->put($runId, $beatId, $npcId, $hash, $fresh);
+                    $liveFetchesUsed++;
+                    $npc = [
+                        'intent' => $fresh['intent'],
+                        'dialogue' => $fresh['dialogue'],
+                        'cached' => false,
+                    ];
+                }
+
                 $report['beats'][$i]['npc_intent'] = $npc['intent'];
                 $report['beats'][$i]['npc_dialogue'] = $npc['dialogue'];
                 $report['beats'][$i]['npc_cached'] = $npc['cached'];

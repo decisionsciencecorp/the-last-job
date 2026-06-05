@@ -23,6 +23,7 @@ $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $jobId = isset($_GET['job']) ? (string) $_GET['job'] : 'job.arasaka-substation';
 $narrate = isset($_GET['narrate']);
+$narrateFast = !isset($_GET['narrate_fast']) || (string) $_GET['narrate_fast'] !== '0';
 $useCampaign = !isset($_GET['campaign']) || (string) $_GET['campaign'] !== '0';
 $manualStreetCred = isset($_GET['street_cred']) ? max(0, (int) $_GET['street_cred']) : 4;
 $campaignNotice = null;
@@ -97,7 +98,7 @@ if (isset($_GET['run'])) {
             $report = (new JobRunner($rules))->run($crew, $rules->job($jobId), new Rng($seed * 7 + 1), $economy);
             if ($report !== null && $narrator !== null) {
                 $runId = NpcIntentBroker::runId($seed, $jobId);
-                $report = $narrator->enrichReport($report, $runId);
+                $report = $narrator->enrichReport($report, $runId, $narrateFast ? 1 : PHP_INT_MAX);
             }
             if ($useCampaign && $report !== null && !empty($report['success'])) {
                 $runKey = sha1(json_encode([$seed, $jobId, $rolePick], JSON_UNESCAPED_SLASHES));
@@ -194,6 +195,11 @@ layout_header('Job board', 'play');
             <input type="checkbox" name="narrate" value="1"<?= $narrate ? ' checked' : '' ?>>
             NPC dialogue (Letta — cached per run)
         </label>
+        <input type="hidden" name="narrate_fast" value="0">
+        <label>
+            <input type="checkbox" name="narrate_fast" value="1"<?= $narrateFast ? ' checked' : '' ?>>
+            Fast narrate mode (cache-first; max 1 live call)
+        </label>
     </div>
 
     <h2>Contracts</h2>
@@ -235,6 +241,9 @@ layout_header('Job board', 'play');
 
 <?php if ($narratorError): ?>
     <p class="status-bad"><?= layout_h($narratorError) ?></p>
+<?php endif; ?>
+<?php if ($narrate && $narrateFast): ?>
+    <p class="muted" style="margin:.4rem 0 1rem;">Fast narrate mode is ON. Uncached beats may be deferred to keep page response fast.</p>
 <?php endif; ?>
 
 <h2>Crew preview (seed <?= (int) $seed ?>)</h2>
