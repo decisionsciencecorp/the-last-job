@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require __DIR__ . '/includes/autoload.php';
+require __DIR__ . '/includes/Layout.php';
 
 use LastJob\Rng;
 use LastJob\Rules;
@@ -47,91 +48,141 @@ if (isset($_GET['run'])) {
     }
 }
 
-function h(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
+$selectedJob = $rules->job($jobId);
+$clock = $report['clock'] ?? null;
 
-?><!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Run a job — The Last Job</title>
-    <link rel="stylesheet" href="/blog/assets/style.css">
-    <style>
-        .form-grid { display: grid; gap: 1rem; max-width: 36rem; margin: 1.5rem 0; }
-        label { display: grid; gap: .35rem; font-size: .9rem; color: var(--muted); }
-        input, select, button {
-            font: inherit; padding: .55rem .75rem; border-radius: 8px;
-            border: 1px solid var(--line); background: #0d1117; color: var(--text);
-        }
-        button { cursor: pointer; background: #1f6feb33; color: var(--accent2); font-weight: 600; }
-        .crew-grid { display: grid; gap: .75rem; margin: 1rem 0 2rem; }
-        .crew-card { border: 1px solid var(--line); border-radius: 8px; padding: .85rem 1rem; background: var(--panel); }
-        .ok { color: #3fb950; } .bad { color: #f85149; }
-        .beats { font: 13px/1.5 var(--mono); }
-    </style>
-</head>
-<body>
-<header class="site-header"><div class="wrap">
-    <a class="brand" href="/"><span class="brand-title">THE LAST JOB</span></a>
-    <nav class="nav"><a href="/">Home</a><a href="/blog/">Devlog</a></nav>
-</div></header>
-<main class="wrap" style="padding:2rem 1.25rem 3rem;">
-    <h1>Run a job</h1>
-    <p class="lead">Deterministic browser slice — same seed reproduces the same crew and after-action report.</p>
+layout_header('Job board', 'play');
+?>
+<h1>Job board</h1>
+<p class="lead">Pick a contract, jack in, and read the after-action report. Same seed reproduces crew and outcomes; optional Letta dialogue is cached per run.</p>
 
-    <form class="form-grid" method="get">
-        <label>Seed <input type="number" name="seed" value="<?= h((string) $seed) ?>"></label>
-        <label>Contract
-            <select name="job">
-            <?php foreach ($jobs as $j): ?>
-                <option value="<?= h($j->id) ?>"<?= $j->id === $jobId ? ' selected' : '' ?>><?= h($j->name) ?></option>
-            <?php endforeach; ?>
-            </select>
+<form method="get">
+    <div class="form-grid">
+        <label>Seed
+            <input type="number" name="seed" value="<?= layout_h((string) $seed) ?>" min="1">
         </label>
-        <label><input type="checkbox" name="narrate" value="1"<?= $narrate ? ' checked' : '' ?>> NPC dialogue (Letta — cached per run)</label>
-        <button type="submit" name="run" value="1">Jack in and run</button>
-    </form>
-<?php if ($narratorError): ?>
-    <p class="bad"><?= h($narratorError) ?></p>
-<?php endif; ?>
-
-    <h2>Crew (seed <?= h((string) $seed) ?>)</h2>
-    <div class="crew-grid">
-    <?php foreach ($crew as $m): $c = $m->toPublicArray(); ?>
-        <div class="crew-card">
-            <strong><?= h($c['handle']) ?></strong> · <?= h($c['role']) ?><br>
-            <span class="muted"><?= h((string) $c['personality']) ?> — <?= h((string) $c['origin']) ?></span>
-        </div>
-    <?php endforeach; ?>
+        <label>
+            <input type="checkbox" name="narrate" value="1"<?= $narrate ? ' checked' : '' ?>>
+            NPC dialogue (Letta — cached per run)
+        </label>
     </div>
 
+    <h2>Contracts</h2>
+    <div class="job-grid">
+        <?php foreach ($jobs as $j): ?>
+            <label class="job-card">
+                <h3>
+                    <input type="radio" name="job" value="<?= layout_h($j->id) ?>"<?= $j->id === $jobId ? ' checked' : '' ?>>
+                    <?= layout_h($j->name) ?>
+                </h3>
+                <div class="meta-row">
+                    <span>Fixer: <?= layout_h($j->fixer) ?></span>
+                    <span><?= (int) $j->payoutEddies ?> eddies</span>
+                    <span>Rep +<?= (int) $j->streetCredReward ?></span>
+                    <span>Clock <?= (int) $j->difficultyTicks ?> ticks</span>
+                </div>
+                <?php if ($j->tags !== []): ?>
+                    <div class="job-tags">
+                        <?php foreach ($j->tags as $tag): ?>
+                            <span><?= layout_h($tag) ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+                <p class="muted" style="margin:.5rem 0 0;font-size:.85rem;"><?= count($j->obstacles) ?> on-site obstacles · NET <?= layout_h($j->archId) ?></p>
+            </label>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="actions-row">
+        <button type="submit" name="run" value="1">Jack in and run</button>
+        <a class="btn btn-secondary" href="/crew.php?seed=<?= (int) $seed ?>&roll=1">Edit crew for this seed</a>
+    </div>
+</form>
+
+<?php if ($narratorError): ?>
+    <p class="status-bad"><?= layout_h($narratorError) ?></p>
+<?php endif; ?>
+
+<h2>Crew preview (seed <?= (int) $seed ?>)</h2>
+<div class="crew-grid">
+<?php foreach ($crew as $m): $c = $m->toPublicArray(); ?>
+    <div class="crew-card">
+        <div class="role"><?= layout_h($c['role']) ?></div>
+        <h3><?= layout_h($c['handle']) ?></h3>
+        <p class="muted"><?= layout_h((string) $c['personality']) ?> — <?= layout_h((string) $c['origin']) ?></p>
+    </div>
+<?php endforeach; ?>
+</div>
+
 <?php if ($error): ?>
-    <p class="bad"><?= h($error) ?></p>
+    <p class="status-bad"><?= layout_h($error) ?></p>
 <?php elseif ($report): ?>
-    <h2 class="<?= $report['success'] ? 'ok' : 'bad' ?>"><?= $report['success'] ? 'JOB SUCCESS' : 'JOB FAILED' ?></h2>
-    <p>Payout: <strong><?= (int) $report['payout_eddies'] ?></strong> eddies · Street cred +<?= (int) $report['street_cred_gained'] ?></p>
-    <h3>On-site beats</h3>
-    <ul class="beats">
-    <?php foreach ($report['beats'] as $b): ?>
-        <li><?= h($b['member']) ?> — <?= h($b['obstacle']) ?> — <?= $b['success'] ? 'PASS' : 'FAIL' ?> (<?= (int) $b['total'] ?> vs <?= (int) $b['dv'] ?>)
-        <?php if (!empty($b['npc_dialogue'])): ?>
-            <br><em><?= h((string) $b['npc_dialogue']) ?></em><?= !empty($b['npc_cached']) ? ' <span class="muted">(cached)</span>' : '' ?>
-        <?php elseif (!empty($b['npc_error'])): ?>
-            <br><span class="bad"><?= h((string) $b['npc_error']) ?></span>
-        <?php endif; ?>
-        </li>
-    <?php endforeach; ?>
-    </ul>
-    <p>Netrun: <code><?= h((string) $report['netrun']['outcome']) ?></code> · <?= (int) $report['netrun']['floors_cleared'] ?> floors · deck <?= (int) $report['netrun']['deck_hp_remaining'] ?> HP</p>
+    <h2 class="<?= $report['success'] ? 'status-ok' : 'status-bad' ?>"><?= $report['success'] ? 'JOB SUCCESS' : 'JOB FAILED' ?></h2>
+    <p>Payout <strong><?= (int) $report['payout_eddies'] ?></strong> eddies · Street cred +<?= (int) $report['street_cred_gained'] ?></p>
+
+    <?php if ($clock !== null):
+        $spentPct = $clock['total'] > 0 ? (int) round(($clock['spent'] / $clock['total']) * 100) : 0;
+        $danger = ($clock['remaining'] ?? 0) <= 2;
+    ?>
+        <div class="clock-panel">
+            <strong>Mission clock</strong>
+            <div class="meta-row">
+                <span><?= (int) $clock['spent'] ?> spent</span>
+                <span><?= (int) $clock['remaining'] ?> remaining</span>
+                <span>of <?= (int) $clock['total'] ?> ticks</span>
+            </div>
+            <div class="clock-bar<?= $danger ? ' danger' : '' ?>"><span style="width:<?= max(0, min(100, $spentPct)) ?>%"></span></div>
+        </div>
+    <?php endif; ?>
+
+    <div class="report-grid">
+        <section>
+            <h3>On-site beats</h3>
+            <ul class="beats">
+            <?php foreach ($report['beats'] as $b): ?>
+                <li>
+                    <strong><?= layout_h($b['member']) ?></strong> — <?= layout_h($b['obstacle']) ?>
+                    — <?= $b['success'] ? 'PASS' : 'FAIL' ?> (<?= (int) $b['total'] ?> vs DV <?= (int) $b['dv'] ?>)
+                    <?php if (isset($b['clock_remaining'])): ?>
+                        <span class="muted">· clock <?= (int) $b['clock_remaining'] ?> left</span>
+                    <?php endif; ?>
+                    <?php if (!empty($b['npc_dialogue'])): ?>
+                        <br><em><?= layout_h((string) $b['npc_dialogue']) ?></em><?= !empty($b['npc_cached']) ? ' <span class="muted">(cached)</span>' : '' ?>
+                    <?php elseif (!empty($b['npc_error'])): ?>
+                        <br><span class="status-bad"><?= layout_h((string) $b['npc_error']) ?></span>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+            </ul>
+        </section>
+
+        <section class="netrun-panel">
+            <h3 style="margin-top:0;">Parallel NET run</h3>
+            <p>Outcome: <strong><?= layout_h((string) $report['netrun']['outcome']) ?></strong></p>
+            <p>Floors cleared: <?= (int) $report['netrun']['floors_cleared'] ?></p>
+            <p>Deck HP remaining: <?= (int) $report['netrun']['deck_hp_remaining'] ?></p>
+            <p>Architecture: <?= layout_h($selectedJob->archId) ?></p>
+            <?php if (!empty($report['netrun']['log']) && is_array($report['netrun']['log'])): ?>
+                <details>
+                    <summary>Floor log</summary>
+                    <ul>
+                        <?php foreach ($report['netrun']['log'] as $line): ?>
+                            <li><?= layout_h(is_string($line) ? $line : json_encode($line, JSON_UNESCAPED_UNICODE)) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </details>
+            <?php endif; ?>
+        </section>
+    </div>
+
     <?php if ($report['agendas_triggered']): ?>
-    <h3>Agendas surfaced</h3>
-    <ul>
-    <?php foreach ($report['agendas_triggered'] as $a): ?>
-        <li><strong><?= h($a['member']) ?></strong> — <?= h((string) $a['agenda']) ?> (<?= h(strtoupper((string) $a['type'])) ?>)</li>
-    <?php endforeach; ?>
-    </ul>
+        <h3>Agendas surfaced</h3>
+        <ul>
+        <?php foreach ($report['agendas_triggered'] as $a): ?>
+            <li><strong><?= layout_h($a['member']) ?></strong> — <?= layout_h((string) $a['agenda']) ?> (<?= layout_h(strtoupper((string) $a['type'])) ?>)</li>
+        <?php endforeach; ?>
+        </ul>
     <?php endif; ?>
 <?php endif; ?>
-</main>
-</body>
-</html>
+
+<?php layout_footer(); ?>

@@ -1,0 +1,264 @@
+.game-main {
+    padding: 2rem 1.25rem 3rem;
+}
+
+.lead {
+    color: var(--muted);
+    max-width: 42rem;
+}
+
+.form-grid {
+    display: grid;
+    gap: 1rem;
+    max-width: 40rem;
+    margin: 1.5rem 0;
+}
+
+.form-grid label,
+.field-label {
+    display: grid;
+    gap: .35rem;
+    font-size: .9rem;
+    color: var(--muted);
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid button,
+.btn {
+    font: inherit;
+    padding: .55rem .75rem;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: #0d1117;
+    color: var(--text);
+}
+
+.form-grid button,
+.btn {
+    cursor: pointer;
+    background: #1f6feb33;
+    color: var(--accent2);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-secondary {
+    background: transparent;
+    border-color: var(--line);
+    color: var(--muted);
+}
+
+.nav a.active {
+    color: var(--accent2);
+}
+
+.crew-grid,
+.job-grid {
+    display: grid;
+    gap: .85rem;
+    margin: 1rem 0 2rem;
+}
+
+@media (min-width: 720px) {
+    .crew-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .job-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.crew-card,
+.job-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    background: var(--panel);
+}
+
+.crew-card h3,
+.job-card h3 {
+    margin: 0 0 .35rem;
+    font-size: 1.05rem;
+}
+
+.crew-card .role {
+    color: var(--accent2);
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1rem;
+    font-size: .85rem;
+    color: var(--muted);
+    margin: .5rem 0;
+}
+
+.stat-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin: .65rem 0;
+}
+
+.stat-pills span {
+    font: 12px/1 var(--mono);
+    padding: .2rem .45rem;
+    border-radius: 6px;
+    background: #161b22;
+    border: 1px solid var(--line);
+}
+
+.lifepath-details {
+    margin-top: .65rem;
+    font-size: .88rem;
+    color: var(--muted);
+}
+
+.lifepath-details ul {
+    margin: .35rem 0 0 1.1rem;
+    padding: 0;
+}
+
+.chrome-section {
+    margin-top: .85rem;
+    padding-top: .85rem;
+    border-top: 1px dashed var(--line);
+}
+
+.chrome-pick {
+    display: grid;
+    gap: .35rem;
+    max-height: 11rem;
+    overflow: auto;
+    margin: .5rem 0;
+    padding: .5rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #0d1117;
+    font-size: .82rem;
+}
+
+.chrome-pick label {
+    display: flex;
+    gap: .45rem;
+    align-items: flex-start;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.humanity-bar-wrap {
+    margin: .5rem 0;
+}
+
+.humanity-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: #21262d;
+    overflow: hidden;
+}
+
+.humanity-bar > span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #3fb950, #d29922, #f85149);
+}
+
+.status-ok { color: #3fb950; }
+.status-warn { color: #d29922; }
+.status-bad { color: #f85149; }
+
+.job-card {
+    cursor: pointer;
+    transition: border-color .15s;
+}
+
+.job-card:has(input:checked) {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 1px #1f6feb55 inset;
+}
+
+.job-card input[type="radio"] {
+    margin-right: .35rem;
+}
+
+.job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .35rem;
+    margin-top: .5rem;
+}
+
+.job-tags span {
+    font-size: .75rem;
+    padding: .15rem .45rem;
+    border-radius: 999px;
+    background: #21262d;
+    color: var(--muted);
+}
+
+.report-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+}
+
+@media (min-width: 900px) {
+    .report-grid { grid-template-columns: 1.2fr .8fr; }
+}
+
+.clock-panel {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem;
+    background: var(--panel);
+}
+
+.clock-bar {
+    height: 12px;
+    border-radius: 999px;
+    background: #21262d;
+    overflow: hidden;
+    margin: .65rem 0;
+}
+
+.clock-bar > span {
+    display: block;
+    height: 100%;
+    background: #1f6feb;
+}
+
+.clock-bar.danger > span {
+    background: #f85149;
+}
+
+.beats {
+    font: 13px/1.55 var(--mono);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.beats li {
+    padding: .55rem 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.netrun-panel {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1rem;
+    background: #0d1117;
+    font: 13px/1.5 var(--mono);
+}
+
+.actions-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    align-items: center;
+    margin: 1rem 0 2rem;
+}
