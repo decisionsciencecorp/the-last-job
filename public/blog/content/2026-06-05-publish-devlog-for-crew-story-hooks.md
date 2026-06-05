@@ -14,3 +14,9 @@ Publish devlog for crew story hooks.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Publish devlog for crew story hooks.](/blog/assets/visuals/illustrations/publish-devlog-for-crew-story-hooks.svg "Full illustration for Publish devlog for crew story hooks.")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")

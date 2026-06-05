@@ -27,3 +27,9 @@ The page is driven by `public/data/story/intel_threads.json`, so future clues ca
 - `php tests/run-tests.php` -> **55 passed**
 - Playwright smoke passed for intel mobile, intel desktop, crew mobile, and jobs desktop
 - Screenshots were inspected locally and left out of the commit
+
+## Visuals
+
+![Illustrated build transmission: Add campaign intel dossier page.](/blog/assets/visuals/illustrations/add-campaign-intel-dossier-page.svg "Full illustration for Add campaign intel dossier page.")
+
+![Screenshot: Campaign intel dossier showing the conspiracy threads.](/blog/assets/visuals/screenshots/intel-dossier.png "Screenshot — Campaign intel dossier showing the conspiracy threads.")

@@ -419,6 +419,27 @@ for ($i = 1; $i < count($posts); $i++) {
 }
 check('devblog: posts sorted newest-first', $ordered);
 
+$visualsOk = true;
+$visualFilesOk = true;
+foreach ($posts as $post) {
+    $bodyMd = (string) ($post['body_md'] ?? '');
+    $bodyHtml = (string) ($post['body_html'] ?? '');
+    if (!str_contains($bodyMd, '## Visuals') || substr_count($bodyMd, '![') < 2 || !str_contains($bodyHtml, '<figure>')) {
+        $visualsOk = false;
+        break;
+    }
+    if (preg_match_all('/!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]+")?\)/', $bodyMd, $matches)) {
+        foreach ($matches[1] as $src) {
+            if (str_starts_with($src, '/blog/assets/') && !is_file(__DIR__ . '/../public' . $src)) {
+                $visualFilesOk = false;
+                break 2;
+            }
+        }
+    }
+}
+check('devblog: every post has illustration and screenshot figures', $visualsOk);
+check('devblog: referenced visual assets exist on disk', $visualFilesOk);
+
 // 16. Letta NPC cache: idempotent storage + stable context hash.
 use LastJob\Letta\LettaResponseCache;
 use LastJob\Letta\NpcIntentBroker;

@@ -14,3 +14,9 @@ Add street-cred job unlock gating to job board.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Add street-cred job unlock gating to job board.](/blog/assets/visuals/illustrations/add-street-cred-job-unlock-gating-to-job-board.svg "Full illustration for Add street-cred job unlock gating to job board.")
+
+![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")

@@ -14,3 +14,9 @@ Publish devlog for story debriefs.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Publish devlog for story debriefs.](/blog/assets/visuals/illustrations/publish-devlog-for-story-debriefs.svg "Full illustration for Publish devlog for story debriefs.")
+
+![Screenshot: Campaign intel dossier showing the conspiracy threads.](/blog/assets/visuals/screenshots/intel-dossier.png "Screenshot — Campaign intel dossier showing the conspiracy threads.")

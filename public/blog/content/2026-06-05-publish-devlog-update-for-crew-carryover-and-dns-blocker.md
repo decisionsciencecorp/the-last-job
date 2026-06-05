@@ -14,3 +14,9 @@ Publish devlog update for crew carryover and DNS blocker.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Publish devlog update for crew carryover and DNS blocker.](/blog/assets/visuals/illustrations/publish-devlog-update-for-crew-carryover-and-dns-blocker.svg "Full illustration for Publish devlog update for crew carryover and DNS blocker.")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")

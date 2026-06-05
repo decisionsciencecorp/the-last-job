@@ -28,3 +28,9 @@ The lover/leverage table also got sharper copy: dead lovers with impossible proo
 - `php tests/run-tests.php` -> **53 passed**
 - CLI smoke confirmed `crew-hook` renders
 - CLI smoke confirmed hidden agenda keys do not appear in crew UI output
+
+## Visuals
+
+![Illustrated build transmission: Add public story hooks to crew cards.](/blog/assets/visuals/illustrations/add-public-story-hooks-to-crew-cards.svg "Full illustration for Add public story hooks to crew cards.")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")

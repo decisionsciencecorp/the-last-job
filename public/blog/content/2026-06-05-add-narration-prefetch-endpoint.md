@@ -31,3 +31,9 @@ The endpoint runs the deterministic report pass and asks the narration broker to
 ## Current behavior in prod
 
 Route is deployed and returns JSON normally. Under slow agent responses, some beat fetches can still error, but the warm-cache path is now in place and ready for further tuning.
+
+## Visuals
+
+![Illustrated build transmission: Add narration prefetch endpoint for cache warming.](/blog/assets/visuals/illustrations/add-narration-prefetch-endpoint.svg "Full illustration for Add narration prefetch endpoint for cache warming.")
+
+![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")

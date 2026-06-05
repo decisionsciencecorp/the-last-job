@@ -59,6 +59,12 @@ Pushed to `main` as **`{$sha}`**.
 
 Automated devlog entry — see the repo diff for full changes.
 
+## Visuals
+
+![Illustrated build transmission: {$subject}](/blog/assets/visuals/illustrations/auto-build.svg "Full illustration for {$subject}")
+
+![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png "Screenshot — Developer vlog index and build timeline.")
+
 MD;
 
 $yaml = <<<YAML

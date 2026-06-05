@@ -36,3 +36,9 @@ The connective tissue is now more specific: borrowed faces, dead voices, engram 
 
 - `php tests/run-tests.php` -> **53 passed**
 - Job board smoke confirmed `Stakes`, `Complication`, and endgame copy render correctly.
+
+## Visuals
+
+![Illustrated build transmission: Deepen narrative hooks across jobs and city flavor.](/blog/assets/visuals/illustrations/deepen-narrative-hooks-across-jobs-and-city-flavor.svg "Full illustration for Deepen narrative hooks across jobs and city flavor.")
+
+![Screenshot: Campaign intel dossier showing the conspiracy threads.](/blog/assets/visuals/screenshots/intel-dossier.png "Screenshot — Campaign intel dossier showing the conspiracy threads.")

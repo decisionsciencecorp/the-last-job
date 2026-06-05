@@ -19,3 +19,9 @@ This devlog follows the **Technonomicon / Sanctum** pattern: PHP on multihost, c
 **Back-dated entries** cover genesis through slice #4 so the timeline matches work already shipped.
 
 Next: Ada wires DNS + multihost (`sites/*.env`, sync, cron). Game apex stays the landing page; browser UI slices follow.
+
+## Visuals
+
+![Illustrated build transmission: Devlog site live — markdown posts, auto-update on push](/blog/assets/visuals/illustrations/devlog-site-live.svg "Full illustration for Devlog site live — markdown posts, auto-update on push")
+
+![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png "Screenshot — Developer vlog index and build timeline.")

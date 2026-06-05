@@ -16,6 +16,13 @@ final class Markdown
 
         foreach ($blocks as $block) {
             if (str_starts_with($block, '```')) {
+                $lines = explode("\n", $block);
+                if (count($lines) >= 2 && trim((string) end($lines)) === '```') {
+                    array_shift($lines);
+                    array_pop($lines);
+                    $html[] = '<pre><code>' . htmlspecialchars(implode("\n", $lines), ENT_QUOTES, 'UTF-8') . '</code></pre>';
+                    continue;
+                }
                 if (!$inCode) {
                     $inCode = true;
                     $codeBuf = [];
@@ -44,6 +51,14 @@ final class Markdown
             if (preg_match('/^#{1,6}\s+(.+)$/', $trim, $m)) {
                 $level = min(6, strlen(strtok($trim, ' ')));
                 $html[] = sprintf('<h%d>%s</h%d>', $level, self::inline($m[1]), $level);
+                continue;
+            }
+            if (preg_match('/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)$/', $trim, $m)) {
+                $alt = htmlspecialchars($m[1], ENT_QUOTES, 'UTF-8');
+                $src = htmlspecialchars($m[2], ENT_QUOTES, 'UTF-8');
+                $caption = isset($m[3]) ? htmlspecialchars($m[3], ENT_QUOTES, 'UTF-8') : '';
+                $figcaption = $caption !== '' ? '<figcaption>' . $caption . '</figcaption>' : '';
+                $html[] = '<figure><img src="' . $src . '" alt="' . $alt . '" loading="lazy">' . $figcaption . '</figure>';
                 continue;
             }
             if (preg_match('/^[-*]\s+/m', $trim)) {

@@ -115,6 +115,23 @@ body {
   overflow-x: auto;
 }
 .post-body a { color: var(--accent2); }
+.post-body figure {
+  margin: 1.4rem 0;
+  max-width: 920px;
+}
+.post-body figure img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #0d1117;
+  box-shadow: 0 16px 40px #00000055;
+}
+.post-body figcaption {
+  color: var(--muted);
+  font: 12px/1.45 var(--mono);
+  margin-top: .5rem;
+}
 
 .site-footer {
   border-top: 1px solid var(--line);

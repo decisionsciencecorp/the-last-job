@@ -18,3 +18,9 @@ We started where the design already lived — **Athena's Letta thread on moya**.
 - Dispatched research subagents to locate CP RED / 2020 rulebook sources.
 
 The killer feature Athena named early: **crew members are not scripts** — they carry private state (loyalty, betrayal triggers) the player never reads directly. That became a hard guardrail in architecture.
+
+## Visuals
+
+![Illustrated build transmission: Genesis — Athena, the board, and "The Last Job](/blog/assets/visuals/illustrations/genesis-athena-and-the-board.svg "Full illustration for Genesis — Athena, the board, and "The Last Job")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")

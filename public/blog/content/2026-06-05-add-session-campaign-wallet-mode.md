@@ -26,3 +26,9 @@ Successful run rewards are only applied once per unique run signature (`seed + j
 - Page smoke checks:
   - wallet panel renders
   - campaign/manual mode labels render correctly
+
+## Visuals
+
+![Illustrated build transmission: Add session-backed campaign wallet mode to job board.](/blog/assets/visuals/illustrations/add-session-campaign-wallet-mode.svg "Full illustration for Add session-backed campaign wallet mode to job board.")
+
+![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")

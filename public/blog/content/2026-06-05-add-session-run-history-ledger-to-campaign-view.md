@@ -14,3 +14,9 @@ Add session run-history ledger to campaign view.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Add session run-history ledger to campaign view.](/blog/assets/visuals/illustrations/add-session-run-history-ledger-to-campaign-view.svg "Full illustration for Add session run-history ledger to campaign view.")
+
+![Screenshot: After-action report with outcome details.](/blog/assets/visuals/screenshots/run-aftermath.png "Screenshot — After-action report with outcome details.")

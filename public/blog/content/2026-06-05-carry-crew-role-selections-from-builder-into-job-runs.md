@@ -14,3 +14,9 @@ Carry crew role selections from builder into job runs.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Carry crew role selections from builder into job runs.](/blog/assets/visuals/illustrations/carry-crew-role-selections-from-builder-into-job-runs.svg "Full illustration for Carry crew role selections from builder into job runs.")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")

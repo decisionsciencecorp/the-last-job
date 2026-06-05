@@ -25,3 +25,9 @@ Athena added two non-negotiables:
 2. **Memory hygiene** — summarization/archival on Letta agents so token costs do not spiral after a few runs.
 
 Ada scoped agent-box cost (~$18/mo new VPS vs co-locate). Provisioning blocked on Mark's billing token until cleared.
+
+## Visuals
+
+![Illustrated build transmission: Architecture pivot — LEMP game + Letta/Sanctum agents](/blog/assets/visuals/illustrations/architecture-lemp-letta.svg "Full illustration for Architecture pivot — LEMP game + Letta/Sanctum agents")
+
+![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png "Screenshot — Developer vlog index and build timeline.")

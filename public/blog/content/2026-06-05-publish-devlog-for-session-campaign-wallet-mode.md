@@ -14,3 +14,9 @@ Publish devlog for session campaign wallet mode.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Publish devlog for session campaign wallet mode.](/blog/assets/visuals/illustrations/publish-devlog-for-session-campaign-wallet-mode.svg "Full illustration for Publish devlog for session campaign wallet mode.")
+
+![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")

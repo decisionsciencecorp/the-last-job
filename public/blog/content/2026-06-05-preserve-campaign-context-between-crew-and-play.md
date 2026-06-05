@@ -23,3 +23,9 @@ That keeps progression state coherent while iterating on crew composition.
 
 - `php tests/run-tests.php` -> **53 passed**
 - Smoke checks confirm campaign/manual and cred params are present in both navigation directions.
+
+## Visuals
+
+![Illustrated build transmission: Preserve campaign context between crew and play pages.](/blog/assets/visuals/illustrations/preserve-campaign-context-between-crew-and-play.svg "Full illustration for Preserve campaign context between crew and play pages.")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")

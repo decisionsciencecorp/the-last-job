@@ -14,3 +14,9 @@ Add narration prefetch API for cache warming.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Add narration prefetch API for cache warming.](/blog/assets/visuals/illustrations/add-narration-prefetch-api-for-cache-warming.svg "Full illustration for Add narration prefetch API for cache warming.")
+
+![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")

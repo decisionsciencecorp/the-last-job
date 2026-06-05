@@ -26,3 +26,9 @@ Content pass — the engine had a loop; now it has **a city**.
 Endgame demo (seed 4): netrunner beats the stack; crew fumbles meatspace; **Self First** betrayal surfaces on failure.
 
 Tests: **43/43**.
+
+## Visuals
+
+![Illustrated build transmission: Slice #4: deeper NET content + Night City flavor](/blog/assets/visuals/illustrations/slice-4-content-flavor.svg "Full illustration for Slice #4: deeper NET content + Night City flavor")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")

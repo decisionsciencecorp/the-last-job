@@ -14,3 +14,9 @@ Publish devlog for narration prefetch endpoint.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Publish devlog for narration prefetch endpoint.](/blog/assets/visuals/illustrations/publish-devlog-for-narration-prefetch-endpoint.svg "Full illustration for Publish devlog for narration prefetch endpoint.")
+
+![Screenshot: Job board with contracts, stakes, and campaign state.](/blog/assets/visuals/screenshots/job-board.png "Screenshot — Job board with contracts, stakes, and campaign state.")

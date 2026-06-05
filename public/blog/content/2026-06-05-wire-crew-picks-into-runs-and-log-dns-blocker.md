@@ -33,3 +33,9 @@ Opened **Task #639** for the agent endpoint cutover:
 - Agent box is ready for cert issuance once DNS exists (`nginx` + `certbot` present)
 
 Next step after DNS: issue TLS cert and flip multihost Letta base URL to the FQDN.
+
+## Visuals
+
+![Illustrated build transmission: Wire crew picks into runs; log agents DNS blocker.](/blog/assets/visuals/illustrations/wire-crew-picks-into-runs-and-log-dns-blocker.svg "Full illustration for Wire crew picks into runs; log agents DNS blocker.")
+
+![Screenshot: Crew builder with lifepath hooks and chrome planning.](/blog/assets/visuals/screenshots/crew-builder.png "Screenshot — Crew builder with lifepath hooks and chrome planning.")
