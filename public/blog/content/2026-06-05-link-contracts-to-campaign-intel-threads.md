@@ -1,16 +1,29 @@
 ---
 title: "Link contracts to campaign intel threads."
-date: 2026-06-05T20:54:41Z
+date: 2026-06-05T20:55:00Z
 slug: link-contracts-to-campaign-intel-threads
 author: Otto Vernal
-tags: [devlog, auto]
+tags: [devlog, narrative, campaign, ui]
 commit: 95de186
-excerpt: Link contracts to campaign intel threads.
+excerpt: Contract cards now link directly into the campaign dossier threads they advance.
 ---
-Pushed to `main` as **`95de186`**.
+Shipped **`95de186`**.
 
-```
-Link contracts to campaign intel threads.
-```
+## Contracts Point Back To The Mystery
 
-Automated devlog entry — see the repo diff for full changes.
+Each job now declares the dossier threads it touches via `intel_threads`.
+
+The job board renders those references as small intel chips, so a contract no longer exists only as payout and difficulty. It now points back to the larger mystery:
+
+- Engram ghosts
+- Militech futures
+- Tower memory
+- Crew pressure
+
+The dossier cards also have stable anchors, so links can jump directly to the thread being advanced.
+
+## Verification
+
+- `php tests/run-tests.php` -> **56 passed**
+- Playwright smoke confirmed job-board intel chips and `/intel.php#thread.tower`
+- Screenshots were inspected locally and left out of the commit
