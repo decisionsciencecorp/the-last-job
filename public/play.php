@@ -8,20 +8,40 @@ use LastJob\Rules;
 use LastJob\Economy;
 use LastJob\JobRunner;
 use LastJob\Lifepath\CrewBuilder;
+use LastJob\Letta\LettaServices;
+use LastJob\Letta\NpcIntentBroker;
 
 $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $jobId = isset($_GET['job']) ? (string) $_GET['job'] : 'job.arasaka-substation';
+$narrate = isset($_GET['narrate']);
 
 $jobs = $rules->jobs();
 $crew = (new CrewBuilder($rules, new Rng($seed)))->build();
 $economy = new Economy(500, 4);
 $report = null;
 $error = null;
+$narrator = null;
+$narratorError = null;
+
+if ($narrate) {
+    try {
+        $narrator = LettaServices::brokerFromEnvironment();
+        if ($narrator === null) {
+            $narratorError = 'Letta not configured on this host (see config/letta.php or LASTJOB_LETTA_* env).';
+        }
+    } catch (Throwable $e) {
+        $narratorError = $e->getMessage();
+    }
+}
 
 if (isset($_GET['run'])) {
     try {
         $report = (new JobRunner($rules))->run($crew, $rules->job($jobId), new Rng($seed * 7 + 1), $economy);
+        if ($report !== null && $narrator !== null) {
+            $runId = NpcIntentBroker::runId($seed, $jobId);
+            $report = $narrator->enrichReport($report, $runId);
+        }
     } catch (Throwable $e) {
         $error = $e->getMessage();
     }
@@ -68,8 +88,12 @@ function h(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8')
             <?php endforeach; ?>
             </select>
         </label>
+        <label><input type="checkbox" name="narrate" value="1"<?= $narrate ? ' checked' : '' ?>> NPC dialogue (Letta — cached per run)</label>
         <button type="submit" name="run" value="1">Jack in and run</button>
     </form>
+<?php if ($narratorError): ?>
+    <p class="bad"><?= h($narratorError) ?></p>
+<?php endif; ?>
 
     <h2>Crew (seed <?= h((string) $seed) ?>)</h2>
     <div class="crew-grid">
@@ -89,7 +113,13 @@ function h(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8')
     <h3>On-site beats</h3>
     <ul class="beats">
     <?php foreach ($report['beats'] as $b): ?>
-        <li><?= h($b['member']) ?> — <?= h($b['obstacle']) ?> — <?= $b['success'] ? 'PASS' : 'FAIL' ?> (<?= (int) $b['total'] ?> vs <?= (int) $b['dv'] ?>)</li>
+        <li><?= h($b['member']) ?> — <?= h($b['obstacle']) ?> — <?= $b['success'] ? 'PASS' : 'FAIL' ?> (<?= (int) $b['total'] ?> vs <?= (int) $b['dv'] ?>)
+        <?php if (!empty($b['npc_dialogue'])): ?>
+            <br><em><?= h((string) $b['npc_dialogue']) ?></em><?= !empty($b['npc_cached']) ? ' <span class="muted">(cached)</span>' : '' ?>
+        <?php elseif (!empty($b['npc_error'])): ?>
+            <br><span class="bad"><?= h((string) $b['npc_error']) ?></span>
+        <?php endif; ?>
+        </li>
     <?php endforeach; ?>
     </ul>
     <p>Netrun: <code><?= h((string) $report['netrun']['outcome']) ?></code> · <?= (int) $report['netrun']['floors_cleared'] ?> floors · deck <?= (int) $report['netrun']['deck_hp_remaining'] ?> HP</p>

@@ -364,5 +364,23 @@ for ($i = 1; $i < count($posts); $i++) {
 }
 check('devblog: posts sorted newest-first', $ordered);
 
+// 16. Letta NPC cache: idempotent storage + stable context hash.
+use LastJob\Letta\LettaResponseCache;
+use LastJob\Letta\NpcIntentBroker;
+
+$cacheTmp = sys_get_temp_dir() . '/tlj-letta-' . uniqid() . '.sqlite';
+$cache = new LettaResponseCache($cacheTmp);
+$ctx = ['job' => 'job.test', 'obstacle' => 'Gate', 'member' => 'Razor', 'success' => true, 'dv' => 15];
+$hash = LettaResponseCache::hashContext($ctx);
+$cache->put('run1', 'Gate', 'Razor', $hash, ['intent' => 'push', 'dialogue' => 'Move.', 'raw' => '{}']);
+$hit = $cache->get('run1', 'Gate', 'Razor', $hash);
+check('letta cache: round-trip hit', $hit !== null && $hit['dialogue'] === 'Move.');
+$cache->bootstrap(); // idempotent
+$hit2 = $cache->get('run1', 'Gate', 'Razor', $hash);
+check('letta cache: bootstrap idempotent', $hit2 !== null && $hit2['dialogue'] === 'Move.');
+check('letta cache: context hash stable', $hash === LettaResponseCache::hashContext($ctx));
+check('letta cache: run id stable', NpcIntentBroker::runId(2077, 'job.arasaka-substation') === NpcIntentBroker::runId(2077, 'job.arasaka-substation'));
+@unlink($cacheTmp);
+
 fwrite(STDOUT, sprintf("\n%d passed, %d failed\n", $pass, $fail));
 exit($fail === 0 ? 0 : 1);

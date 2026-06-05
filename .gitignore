@@ -1,5 +1,6 @@
 /db/*.sqlite
 /db/*.sqlite-journal
+/public/includes/config.letta.local.php
 /vendor/
 *.log
 .DS_Store
