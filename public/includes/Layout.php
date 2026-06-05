@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace LastJob;
 
-function layout_h(string $s): string
+function layout_h(string|int|float $s): string
 {
-    return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 }
 
 function layout_header(string $title, string $active = ''): void

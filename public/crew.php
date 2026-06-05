@@ -8,6 +8,9 @@ use LastJob\Rng;
 use LastJob\Rules;
 use LastJob\Lifepath\CrewBuilder;
 use LastJob\Lifepath\ChromePlanner;
+use function LastJob\layout_header;
+use function LastJob\layout_footer;
+use function LastJob\layout_h;
 
 $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
@@ -67,9 +70,15 @@ layout_header('Build your crew', 'crew');
 </form>
 
 <?php if ($crew !== null): ?>
+    <?php
+    $playParams = ['seed' => $seed];
+    for ($i = 0; $i < 4; $i++) {
+        $playParams['role' . $i] = $rolePick[$i];
+    }
+    ?>
     <div class="actions-row">
-        <a class="btn" href="/play.php?seed=<?= (int) $seed ?>&run=1">Run default job with this crew</a>
-        <a class="btn btn-secondary" href="/play.php?seed=<?= (int) $seed ?>">Pick a contract first</a>
+        <a class="btn" href="/play.php?<?= layout_h(http_build_query($playParams + ['run' => 1])) ?>">Run job with this crew</a>
+        <a class="btn btn-secondary" href="/play.php?<?= layout_h(http_build_query($playParams)) ?>">Pick a contract first</a>
     </div>
 
     <form method="get">

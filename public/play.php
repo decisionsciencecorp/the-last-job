@@ -11,14 +11,30 @@ use LastJob\JobRunner;
 use LastJob\Lifepath\CrewBuilder;
 use LastJob\Letta\LettaServices;
 use LastJob\Letta\NpcIntentBroker;
+use function LastJob\layout_header;
+use function LastJob\layout_footer;
+use function LastJob\layout_h;
 
 $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $jobId = isset($_GET['job']) ? (string) $_GET['job'] : 'job.arasaka-substation';
 $narrate = isset($_GET['narrate']);
+$rolesCatalog = $rules->roles();
+$roleIds = array_keys($rolesCatalog);
+$defaultRoles = CrewBuilder::DEFAULT_ROLES;
+
+$rolePick = [];
+for ($i = 0; $i < 4; $i++) {
+    $key = 'role' . $i;
+    $picked = isset($_GET[$key]) ? (string) $_GET[$key] : ($defaultRoles[$i] ?? $roleIds[$i % count($roleIds)]);
+    if (!isset($rolesCatalog[$picked])) {
+        $picked = $defaultRoles[$i] ?? $roleIds[0];
+    }
+    $rolePick[] = $picked;
+}
 
 $jobs = $rules->jobs();
-$crew = (new CrewBuilder($rules, new Rng($seed)))->build();
+$crew = (new CrewBuilder($rules, new Rng($seed)))->build($rolePick);
 $economy = new Economy(500, 4);
 $report = null;
 $error = null;
@@ -57,6 +73,9 @@ layout_header('Job board', 'play');
 <p class="lead">Pick a contract, jack in, and read the after-action report. Same seed reproduces crew and outcomes; optional Letta dialogue is cached per run.</p>
 
 <form method="get">
+    <?php for ($i = 0; $i < 4; $i++): ?>
+        <input type="hidden" name="role<?= $i ?>" value="<?= layout_h($rolePick[$i]) ?>">
+    <?php endfor; ?>
     <div class="form-grid">
         <label>Seed
             <input type="number" name="seed" value="<?= layout_h((string) $seed) ?>" min="1">
@@ -95,7 +114,7 @@ layout_header('Job board', 'play');
 
     <div class="actions-row">
         <button type="submit" name="run" value="1">Jack in and run</button>
-        <a class="btn btn-secondary" href="/crew.php?seed=<?= (int) $seed ?>&roll=1">Edit crew for this seed</a>
+        <a class="btn btn-secondary" href="/crew.php?seed=<?= (int) $seed ?>&roll=1<?= '&amp;role0=' . layout_h($rolePick[0]) . '&amp;role1=' . layout_h($rolePick[1]) . '&amp;role2=' . layout_h($rolePick[2]) . '&amp;role3=' . layout_h($rolePick[3]) ?>">Edit crew for this seed</a>
     </div>
 </form>
 

@@ -118,6 +118,10 @@ check('crew: different seed -> different crew', $crewA !== $crewC);
 $rolesOk = array_map(static fn ($c) => $c['role'], $crewA) === ['Solo', 'Netrunner', 'Tech', 'Fixer'];
 check('crew: default crew is the core four roles', $rolesOk);
 
+$customCrew = (new CrewBuilder($rules, new Rng(2077)))->build(['role.tech', 'role.tech', 'role.solo', 'role.netrunner']);
+$customRoles = array_map(static fn ($m) => $m->toPublicArray()['role'], $customCrew);
+check('crew: explicit role picks are honored in order', $customRoles === ['Tech', 'Tech', 'Solo', 'Netrunner']);
+
 $statsValid = true;
 foreach ($crewA as $c) {
     foreach ($c['stats'] as $v) {
