@@ -390,6 +390,17 @@ foreach ($rules->jobs() as $job) {
 }
 check('content: every job links to valid intel threads', $jobThreadRefsOk);
 
+$oldGet = $_GET;
+$_GET = ['seed' => '2077', 'street_cred' => '9', 'campaign' => '0'];
+ob_start();
+require __DIR__ . '/../public/play.php';
+$playHtml = ob_get_clean();
+$_GET = $oldGet;
+check('content: play page does not expose raw prefetch API as a link',
+    !str_contains((string) $playHtml, 'href="/api/narrate-prefetch.php')
+    && str_contains((string) $playHtml, 'data-prefetch-url="/api/narrate-prefetch.php')
+);
+
 // 14. Flavor layer: deterministic, ticker distinct, district filter.
 $flavor = new \LastJob\Flavor($rules);
 $fq1 = $flavor->fixerQuote(new Rng(5));

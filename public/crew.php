@@ -42,10 +42,7 @@ for ($i = 0; $i < 4; $i++) {
     }
 }
 
-$crew = null;
-if ($roll || isset($_GET['seed'])) {
-    $crew = (new CrewBuilder($rules, new Rng($seed)))->build($rolePick);
-}
+$crew = (new CrewBuilder($rules, new Rng($seed)))->build($rolePick);
 
 layout_header('Build your crew', 'crew');
 ?>

@@ -263,8 +263,14 @@ layout_header('Job board', 'play');
     <div class="actions-row">
         <button type="submit" name="run" value="1">Jack in and run</button>
         <a class="btn btn-secondary" href="/crew.php?seed=<?= (int) $seed ?>&roll=1&campaign=<?= $useCampaign ? 1 : 0 ?>&street_cred=<?= (int) $streetCred ?><?= '&amp;role0=' . layout_h($rolePick[0]) . '&amp;role1=' . layout_h($rolePick[1]) . '&amp;role2=' . layout_h($rolePick[2]) . '&amp;role3=' . layout_h($rolePick[3]) ?>">Edit crew for this seed</a>
-        <a class="btn btn-secondary" href="/api/narrate-prefetch.php?seed=<?= (int) $seed ?>&job=<?= layout_h($jobId) ?>&street_cred=<?= (int) $streetCred ?>&max_live=1&role0=<?= layout_h($rolePick[0]) ?>&role1=<?= layout_h($rolePick[1]) ?>&role2=<?= layout_h($rolePick[2]) ?>&role3=<?= layout_h($rolePick[3]) ?>" target="_blank" rel="noopener">Warm narration cache</a>
+        <button
+            class="btn btn-secondary"
+            type="button"
+            data-prefetch-url="/api/narrate-prefetch.php?seed=<?= (int) $seed ?>&job=<?= layout_h($jobId) ?>&street_cred=<?= (int) $streetCred ?>&max_live=1&role0=<?= layout_h($rolePick[0]) ?>&role1=<?= layout_h($rolePick[1]) ?>&role2=<?= layout_h($rolePick[2]) ?>&role3=<?= layout_h($rolePick[3]) ?>"
+            id="warm-narration-cache"
+        >Warm narration cache</button>
     </div>
+    <p id="warm-narration-status" class="muted" aria-live="polite"></p>
 </form>
 
 <?php if ($narratorError): ?>
@@ -273,6 +279,44 @@ layout_header('Job board', 'play');
 <?php if ($narrate && $narrateFast): ?>
     <p class="muted" style="margin:.4rem 0 1rem;">Fast narrate mode is ON. Uncached beats may be deferred to keep page response fast.</p>
 <?php endif; ?>
+
+<script>
+(() => {
+    const button = document.getElementById('warm-narration-cache');
+    const status = document.getElementById('warm-narration-status');
+    if (!button || !status) {
+        return;
+    }
+
+    button.addEventListener('click', async () => {
+        const url = button.getAttribute('data-prefetch-url');
+        if (!url) {
+            return;
+        }
+
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 15000);
+        button.disabled = true;
+        status.textContent = 'Warming narration cache...';
+
+        try {
+            const response = await fetch(url, {headers: {'Accept': 'application/json'}, signal: controller.signal});
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok || payload.status === 'error') {
+                throw new Error(payload.error || `Narration warm-up failed (${response.status}).`);
+            }
+            status.textContent = `Narration cache checked: ${payload.cached_hits || 0} cached, ${payload.fresh_fetched || 0} fetched, ${payload.deferred || 0} deferred.`;
+        } catch (error) {
+            status.textContent = error && error.name === 'AbortError'
+                ? 'Narration warm-up timed out. The run still works; try fast narration or run without live NPC dialogue.'
+                : (error && error.message ? error.message : 'Narration warm-up failed. The run still works without cache warming.');
+        } finally {
+            window.clearTimeout(timeout);
+            button.disabled = false;
+        }
+    });
+})();
+</script>
 
 <h2>Crew preview (seed <?= (int) $seed ?>)</h2>
 <div class="crew-grid">
