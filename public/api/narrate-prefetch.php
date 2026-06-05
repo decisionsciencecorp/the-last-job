@@ -18,6 +18,7 @@ try {
     $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
     $jobId = isset($_GET['job']) ? (string) $_GET['job'] : 'job.arasaka-substation';
     $streetCred = isset($_GET['street_cred']) ? max(0, (int) $_GET['street_cred']) : 4;
+    $maxLive = isset($_GET['max_live']) ? max(0, (int) $_GET['max_live']) : 1;
     $roleIds = [];
     for ($i = 0; $i < 4; $i++) {
         if (isset($_GET['role' . $i]) && $_GET['role' . $i] !== '') {
@@ -47,14 +48,19 @@ try {
     );
 
     $runId = NpcIntentBroker::runId($seed, $jobId);
-    $enriched = $broker->enrichReport($report, $runId, PHP_INT_MAX);
+    $enriched = $broker->enrichReport($report, $runId, $maxLive <= 0 ? 0 : $maxLive);
     $beats = is_array($enriched['beats'] ?? null) ? $enriched['beats'] : [];
     $total = count($beats);
     $cached = 0;
     $fresh = 0;
     $errors = 0;
+    $deferred = 0;
     foreach ($beats as $beat) {
         if (!is_array($beat)) {
+            continue;
+        }
+        if (!empty($beat['npc_skipped'])) {
+            $deferred++;
             continue;
         }
         if (!empty($beat['npc_error'])) {
@@ -75,9 +81,11 @@ try {
         'seed' => $seed,
         'job' => $jobId,
         'run_id' => $runId,
+        'max_live' => $maxLive,
         'beats_total' => $total,
         'cached_hits' => $cached,
         'fresh_fetched' => $fresh,
+        'deferred' => $deferred,
         'errors' => $errors,
     ], JSON_UNESCAPED_SLASHES);
 } catch (Throwable $e) {
