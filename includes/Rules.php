@@ -22,6 +22,8 @@ final class Rules
     private array $roles = [];
     /** @var array<int,array<string,mixed>> */
     private array $agendas = [];
+    /** @var array<string,array<string,mixed>> */
+    private array $cyberware = [];
 
     private const LIFEPATH_TABLES = [
         'cultural_origin', 'personality', 'family', 'key_life_event', 'lovers',
@@ -37,6 +39,22 @@ final class Rules
         }
         $this->roles = $this->loadJson('roles.json');
         $this->agendas = $this->loadJson('hidden_agendas.json');
+        $this->cyberware = $this->indexById($this->loadJson('cyberware.json'));
+    }
+
+    /** @return array<string,mixed> */
+    public function cyberwareItem(string $id): array
+    {
+        if (!isset($this->cyberware[$id])) {
+            throw new \RuntimeException("Unknown cyberware: {$id}");
+        }
+        return $this->cyberware[$id];
+    }
+
+    /** @return array<string,array<string,mixed>> */
+    public function allCyberware(): array
+    {
+        return $this->cyberware;
     }
 
     /**
@@ -253,6 +271,31 @@ final class Rules
                 ':id' => $row['id'],
                 ':type' => $row['type'] ?? null,
                 ':result' => $row['result'] ?? null,
+                ':payload' => json_encode($row, JSON_UNESCAPED_SLASHES),
+            ]);
+        }
+
+        // Cyberware tree.
+        $pdo->exec('CREATE TABLE IF NOT EXISTS cyberware (
+            id TEXT PRIMARY KEY,
+            subcategory TEXT,
+            name TEXT,
+            eddies INTEGER,
+            humanity_loss TEXT,
+            requires TEXT,
+            payload TEXT
+        )');
+        $cwStmt = $pdo->prepare('INSERT OR REPLACE INTO cyberware
+            (id,subcategory,name,eddies,humanity_loss,requires,payload)
+            VALUES (:id,:subcategory,:name,:eddies,:humanity_loss,:requires,:payload)');
+        foreach ($this->cyberware as $row) {
+            $cwStmt->execute([
+                ':id' => $row['id'],
+                ':subcategory' => $row['subcategory'] ?? null,
+                ':name' => $row['name'] ?? null,
+                ':eddies' => $row['eddies'] ?? 0,
+                ':humanity_loss' => $row['humanity_loss'] ?? '0',
+                ':requires' => $row['requires'] ?? null,
                 ':payload' => json_encode($row, JSON_UNESCAPED_SLASHES),
             ]);
         }

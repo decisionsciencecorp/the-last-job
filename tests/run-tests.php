@@ -14,7 +14,10 @@ declare(strict_types=1);
 require __DIR__ . '/../includes/autoload.php';
 
 use LastJob\Rng;
+use LastJob\Dice;
 use LastJob\Rules;
+use LastJob\SkillCheck;
+use LastJob\Humanity;
 use LastJob\Netrun\NetrunEngine;
 use LastJob\Netrun\Netrunner;
 use LastJob\Lifepath\CrewBuilder;
@@ -145,6 +148,104 @@ foreach ($crew as $m) {
     }
 }
 check('secrecy: hidden agenda never appears in the player-facing card', !$leak);
+
+// 8. Skill checks: deterministic, crit rules, valid structure.
+function checkSeq(int $seed): array
+{
+    $sc = new SkillCheck(new Dice(new Rng($seed)));
+    $out = [];
+    for ($i = 0; $i < 50; $i++) {
+        $out[] = $sc->check(6, 13);
+    }
+    return $out;
+}
+$scA = checkSeq(99);
+$scB = checkSeq(99);
+check('skillcheck: same seed -> identical results', $scA === $scB);
+check('skillcheck: different seed -> different results', $scA !== checkSeq(100));
+
+$critUpOk = true;
+$critDownOk = true;
+$rollsValid = true;
+foreach (checkSeq(99) as $r) {
+    if ($r['roll'] < 1 || $r['roll'] > 10) {
+        $rollsValid = false;
+    }
+    if ($r['crit'] === 'up' && $r['die_total'] < 11) {
+        $critUpOk = false; // 10 + 1..10 = 11..20
+    }
+    if ($r['crit'] === 'down' && $r['die_total'] > 0) {
+        $critDownOk = false; // 1 - 1..10 = 0..-9
+    }
+}
+check('skillcheck: natural rolls stay in [1,10]', $rollsValid);
+check('skillcheck: crit-up adds (die_total >= 11)', $critUpOk);
+check('skillcheck: crit-down subtracts (die_total <= 0)', $critDownOk);
+
+$sc = new SkillCheck(new Dice(new Rng(7)));
+$op = $sc->opposed(8, 8);
+check('skillcheck: opposed picks a/b correctly (tie -> defender b)',
+    ($op['winner'] === 'a') === ($op['a']['total'] > $op['b']['total']));
+
+// 9. Humanity / cyberpsychosis: deterministic, requirement gate, threshold.
+$rules = new Rules();
+function chromeRun(int $seed, Rules $rules): array
+{
+    // EMP 3 (Humanity 30): the full heavy plan drives EMP to 0 even on minimum
+    // dice, so the cyberpsychosis threshold is exercised deterministically.
+    $h = new Humanity(new Dice(new Rng($seed)), 3);
+    $plan = ['cw.neural.neurallink', 'cw.optics.cybereye', 'cw.neural.sandevistan',
+             'cw.limb.cyberarm', 'cw.body.subdermal', 'cw.borg.linearframe', 'cw.borg.fullconversion'];
+    $log = [];
+    foreach ($plan as $id) {
+        $log[] = $h->install($rules->cyberwareItem($id));
+        if ($h->status() === 'cyberpsychotic') {
+            break;
+        }
+    }
+    return [$log, $h->toArray()];
+}
+[$logA] = chromeRun(1337, $rules);
+[$logB] = chromeRun(1337, $rules);
+check('humanity: same seed -> identical chrome run', $logA === $logB);
+
+$empMonotonic = true;
+$prev = 999;
+foreach ($logA as $step) {
+    if ($step['emp_after'] > $prev) {
+        $empMonotonic = false;
+        break;
+    }
+    $prev = $step['emp_after'];
+}
+check('humanity: EMP never increases as chrome stacks', $empMonotonic);
+
+$reachedPsycho = false;
+foreach ($logA as $step) {
+    if ($step['status'] === 'cyberpsychotic') {
+        $reachedPsycho = true;
+    }
+}
+check('humanity: heavy borg load drives toward cyberpsychosis', $reachedPsycho);
+
+$gateOk = false;
+try {
+    $h = new Humanity(new Dice(new Rng(1)), 8);
+    $h->install($rules->cyberwareItem('cw.optics.targeting')); // requires cybereye, not installed
+} catch (\RuntimeException $e) {
+    $gateOk = true;
+}
+check('humanity: requirement gate blocks orphan options', $gateOk);
+
+// 10. Cyberware bootstrap idempotency.
+$tmp2 = sys_get_temp_dir() . '/tlj-cw-' . uniqid() . '.sqlite';
+$rules->bootstrapSqlite($tmp2);
+$pdo2 = $rules->bootstrapSqlite($tmp2);
+$cw1 = (int) $pdo2->query('SELECT COUNT(*) FROM cyberware')->fetchColumn();
+$rules->bootstrapSqlite($tmp2);
+$cw2 = (int) (new Rules())->bootstrapSqlite($tmp2)->query('SELECT COUNT(*) FROM cyberware')->fetchColumn();
+check('sqlite: cyberware bootstrap idempotent', $cw1 > 0 && $cw1 === $cw2, "cw1={$cw1} cw2={$cw2}");
+@unlink($tmp2);
 
 fwrite(STDOUT, sprintf("\n%d passed, %d failed\n", $pass, $fail));
 exit($fail === 0 ? 0 : 1);
