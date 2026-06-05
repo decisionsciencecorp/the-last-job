@@ -28,6 +28,7 @@ The dossier cards also have stable anchors, so links can jump directly to the th
 - Playwright smoke confirmed job-board intel chips and `/intel.php#thread.tower`
 - Screenshots were inspected locally and left out of the commit
 
+
 ## Visuals
 
 ![Illustrated build transmission: Link contracts to campaign intel threads.](/blog/assets/visuals/illustrations/link-contracts-to-campaign-intel-threads.svg "Full illustration for Link contracts to campaign intel threads.")

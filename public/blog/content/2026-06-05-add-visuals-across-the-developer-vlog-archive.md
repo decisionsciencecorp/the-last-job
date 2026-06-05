@@ -15,8 +15,9 @@ Add visuals across the developer vlog archive.
 
 Automated devlog entry — see the repo diff for full changes.
 
+
 ## Visuals
 
-![Illustrated build transmission: Add visuals across the developer vlog archive.](/blog/assets/visuals/illustrations/auto-build.svg "Full illustration for Add visuals across the developer vlog archive.")
+![Illustrated build transmission: Add visuals across the developer vlog archive.](/blog/assets/visuals/illustrations/add-visuals-across-the-developer-vlog-archive.svg "Full illustration for Add visuals across the developer vlog archive.")
 
 ![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png "Screenshot — Developer vlog index and build timeline.")

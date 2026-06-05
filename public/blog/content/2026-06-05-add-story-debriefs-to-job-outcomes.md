@@ -25,6 +25,7 @@ This means a completed run no longer lands as only payout, street cred, and mech
 - `php tests/run-tests.php` -> **53 passed**
 - CLI smoke confirmed the `Aftermath` panel and debrief copy render on `play.php`.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Add story debriefs to job outcomes.](/blog/assets/visuals/illustrations/add-story-debriefs-to-job-outcomes.svg "Full illustration for Add story debriefs to job outcomes.")

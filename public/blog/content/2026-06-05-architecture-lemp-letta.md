@@ -26,6 +26,7 @@ Athena added two non-negotiables:
 
 Ada scoped agent-box cost (~$18/mo new VPS vs co-locate). Provisioning blocked on Mark's billing token until cleared.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Architecture pivot — LEMP game + Letta/Sanctum agents](/blog/assets/visuals/illustrations/architecture-lemp-letta.svg "Full illustration for Architecture pivot — LEMP game + Letta/Sanctum agents")

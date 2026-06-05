@@ -15,6 +15,7 @@ Add crew builder UI, job board polish, and cyberpsychosis balance tool.
 
 Automated devlog entry — see the repo diff for full changes.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Add crew builder UI, job board polish, and cyberpsychosis balance tool.](/blog/assets/visuals/illustrations/add-crew-builder-ui-job-board-polish-and-cyberpsychosis-bala.svg "Full illustration for Add crew builder UI, job board polish, and cyberpsychosis balance tool.")

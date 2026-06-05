@@ -26,6 +26,7 @@ php bin/job-demo.php --seed=2077 --job=job.arasaka-substation
 
 Tests: **34/34** at this commit.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Slice #3: the job loop — crew, clock, aftermath, betrayals surface](/blog/assets/visuals/illustrations/slice-3-job-loop.svg "Full illustration for Slice #3: the job loop — crew, clock, aftermath, betrayals surface")

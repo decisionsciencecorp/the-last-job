@@ -15,6 +15,7 @@ Publish devlog for session run-history ledger.
 
 Automated devlog entry — see the repo diff for full changes.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Publish devlog for session run-history ledger.](/blog/assets/visuals/illustrations/publish-devlog-for-session-run-history-ledger.svg "Full illustration for Publish devlog for session run-history ledger.")

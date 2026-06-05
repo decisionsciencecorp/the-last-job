@@ -24,6 +24,7 @@ php bin/crew-demo.php --seed=2077 --sealed   # debug view
 
 v0 lifepath tables are Otto's draft against Athena's ingestion schema — reconciliation vs source PDFs still open on the board.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Slice #1.5: lifepath rolls up a crew (sealed agendas)](/blog/assets/visuals/illustrations/slice-1-5-lifepath-crew.svg "Full illustration for Slice #1.5: lifepath rolls up a crew (sealed agendas)")

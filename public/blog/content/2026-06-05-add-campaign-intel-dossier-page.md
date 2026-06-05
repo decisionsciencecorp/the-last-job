@@ -28,6 +28,7 @@ The page is driven by `public/data/story/intel_threads.json`, so future clues ca
 - Playwright smoke passed for intel mobile, intel desktop, crew mobile, and jobs desktop
 - Screenshots were inspected locally and left out of the commit
 
+
 ## Visuals
 
 ![Illustrated build transmission: Add campaign intel dossier page.](/blog/assets/visuals/illustrations/add-campaign-intel-dossier-page.svg "Full illustration for Add campaign intel dossier page.")

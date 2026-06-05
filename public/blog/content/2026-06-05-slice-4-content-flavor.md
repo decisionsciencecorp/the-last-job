@@ -27,6 +27,7 @@ Endgame demo (seed 4): netrunner beats the stack; crew fumbles meatspace; **Self
 
 Tests: **43/43**.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Slice #4: deeper NET content + Night City flavor](/blog/assets/visuals/illustrations/slice-4-content-flavor.svg "Full illustration for Slice #4: deeper NET content + Night City flavor")

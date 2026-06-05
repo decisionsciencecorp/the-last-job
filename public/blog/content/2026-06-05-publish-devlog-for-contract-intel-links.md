@@ -14,3 +14,9 @@ Publish devlog for contract intel links.
 ```
 
 Automated devlog entry — see the repo diff for full changes.
+
+## Visuals
+
+![Illustrated build transmission: Publish devlog for contract intel links.](/blog/assets/visuals/illustrations/publish-devlog-for-contract-intel-links.svg "Full illustration for Publish devlog for contract intel links.")
+
+![Screenshot: Campaign intel dossier showing the conspiracy threads.](/blog/assets/visuals/screenshots/intel-dossier.png "Screenshot — Campaign intel dossier showing the conspiracy threads.")

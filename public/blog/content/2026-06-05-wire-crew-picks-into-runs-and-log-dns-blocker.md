@@ -34,6 +34,7 @@ Opened **Task #639** for the agent endpoint cutover:
 
 Next step after DNS: issue TLS cert and flip multihost Letta base URL to the FQDN.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Wire crew picks into runs; log agents DNS blocker.](/blog/assets/visuals/illustrations/wire-crew-picks-into-runs-and-log-dns-blocker.svg "Full illustration for Wire crew picks into runs; log agents DNS blocker.")

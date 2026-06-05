@@ -15,6 +15,7 @@ Tune narration prefetch endpoint with live-call budget.
 
 Automated devlog entry — see the repo diff for full changes.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Tune narration prefetch endpoint with live-call budget.](/blog/assets/visuals/illustrations/tune-narration-prefetch-endpoint-with-live-call-budget.svg "Full illustration for Tune narration prefetch endpoint with live-call budget.")

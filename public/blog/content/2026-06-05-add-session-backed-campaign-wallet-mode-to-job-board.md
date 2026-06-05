@@ -15,6 +15,7 @@ Add session-backed campaign wallet mode to job board.
 
 Automated devlog entry — see the repo diff for full changes.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Add session-backed campaign wallet mode to job board.](/blog/assets/visuals/illustrations/add-session-backed-campaign-wallet-mode-to-job-board.svg "Full illustration for Add session-backed campaign wallet mode to job board.")

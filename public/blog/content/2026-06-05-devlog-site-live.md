@@ -20,6 +20,7 @@ This devlog follows the **Technonomicon / Sanctum** pattern: PHP on multihost, c
 
 Next: Ada wires DNS + multihost (`sites/*.env`, sync, cron). Game apex stays the landing page; browser UI slices follow.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Devlog site live — markdown posts, auto-update on push](/blog/assets/visuals/illustrations/devlog-site-live.svg "Full illustration for Devlog site live — markdown posts, auto-update on push")

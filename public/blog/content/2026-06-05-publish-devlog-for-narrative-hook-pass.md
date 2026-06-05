@@ -15,6 +15,7 @@ Publish devlog for narrative hook pass.
 
 Automated devlog entry — see the repo diff for full changes.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Publish devlog for narrative hook pass.](/blog/assets/visuals/illustrations/publish-devlog-for-narrative-hook-pass.svg "Full illustration for Publish devlog for narrative hook pass.")

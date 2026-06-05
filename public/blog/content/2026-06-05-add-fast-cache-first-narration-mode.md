@@ -27,6 +27,7 @@ Under slow model responses, full live narration across multiple beats could push
 - local smoke: fast-mode UI + run result renders
 - prod smoke: narrated endpoint returns normally in fast mode
 
+
 ## Visuals
 
 ![Illustrated build transmission: Add fast cache-first narration mode for play runs.](/blog/assets/visuals/illustrations/add-fast-cache-first-narration-mode.svg "Full illustration for Add fast cache-first narration mode for play runs.")

@@ -34,6 +34,7 @@ Endpoint returns 200 with the new fields present:
 - `"max_live": 1`
 - `"deferred": ...`
 
+
 ## Visuals
 
 ![Illustrated build transmission: Tune narration prefetch with max-live budget.](/blog/assets/visuals/illustrations/tune-prefetch-with-max-live-budget.svg "Full illustration for Tune narration prefetch with max-live budget.")

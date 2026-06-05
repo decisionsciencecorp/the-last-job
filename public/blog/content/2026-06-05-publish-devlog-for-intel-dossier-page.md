@@ -15,6 +15,7 @@ Publish devlog for intel dossier page.
 
 Automated devlog entry — see the repo diff for full changes.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Publish devlog for intel dossier page.](/blog/assets/visuals/illustrations/publish-devlog-for-intel-dossier-page.svg "Full illustration for Publish devlog for intel dossier page.")

@@ -32,6 +32,7 @@ These helpers make unlock logic reusable beyond the page layer.
   - locked-run guard message appears
   - non-run navigation auto-falls back to an unlocked contract
 
+
 ## Visuals
 
 ![Illustrated build transmission: Add street-cred job unlock gating to job board.](/blog/assets/visuals/illustrations/add-street-cred-job-unlock-gating.svg "Full illustration for Add street-cred job unlock gating to job board.")

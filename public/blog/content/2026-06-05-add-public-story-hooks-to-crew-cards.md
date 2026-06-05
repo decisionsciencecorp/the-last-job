@@ -29,6 +29,7 @@ The lover/leverage table also got sharper copy: dead lovers with impossible proo
 - CLI smoke confirmed `crew-hook` renders
 - CLI smoke confirmed hidden agenda keys do not appear in crew UI output
 
+
 ## Visuals
 
 ![Illustrated build transmission: Add public story hooks to crew cards.](/blog/assets/visuals/illustrations/add-public-story-hooks-to-crew-cards.svg "Full illustration for Add public story hooks to crew cards.")

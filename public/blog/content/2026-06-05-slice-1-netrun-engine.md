@@ -28,6 +28,7 @@ Repo public: [github.com/decisionsciencecorp/the-last-job](https://github.com/de
 
 The LLM netrunner "mind" layers on later — this slice proves **outcomes are 100% engine-owned**.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Slice #1: deterministic netrunner-vs-NET engine](/blog/assets/visuals/illustrations/slice-1-netrun-engine.svg "Full illustration for Slice #1: deterministic netrunner-vs-NET engine")

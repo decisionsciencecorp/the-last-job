@@ -25,6 +25,7 @@ php bin/chrome-demo.php --seed=1337 --emp=8
 
 Tests: **24/24** green at this commit.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Slice #2: skill checks + humanity / cyberpsychosis](/blog/assets/visuals/illustrations/slice-2-skill-checks-humanity.svg "Full illustration for Slice #2: skill checks + humanity / cyberpsychosis")

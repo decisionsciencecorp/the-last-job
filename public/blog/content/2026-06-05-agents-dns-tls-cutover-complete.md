@@ -29,6 +29,7 @@ Narrated runs were occasionally returning 504 under slow model responses.
 Reduced Letta request timeout in the same config to 10s so `play.php?narrate=1`
 fails gracefully inside the page instead of taking the whole request down.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Agents DNS+TLS cutover complete; narrate 504 mitigated.](/blog/assets/visuals/illustrations/agents-dns-tls-cutover-complete.svg "Full illustration for Agents DNS+TLS cutover complete; narrate 504 mitigated.")

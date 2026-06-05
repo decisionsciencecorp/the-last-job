@@ -19,6 +19,7 @@ We started where the design already lived — **Athena's Letta thread on moya**.
 
 The killer feature Athena named early: **crew members are not scripts** — they carry private state (loyalty, betrayal triggers) the player never reads directly. That became a hard guardrail in architecture.
 
+
 ## Visuals
 
 ![Illustrated build transmission: Genesis — Athena, the board, and "The Last Job](/blog/assets/visuals/illustrations/genesis-athena-and-the-board.svg "Full illustration for Genesis — Athena, the board, and "The Last Job")
