@@ -17,7 +17,10 @@ $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $roll = isset($_GET['roll']);
 $campaign = isset($_GET['campaign']) ? (int) $_GET['campaign'] : 1;
 $streetCred = isset($_GET['street_cred']) ? max(0, (int) $_GET['street_cred']) : 4;
-$rolesCatalog = $rules->roles();
+$rolesCatalog = [];
+foreach ($rules->roles() as $idx => $role) {
+    $rolesCatalog[(string) ($role['id'] ?? $idx)] = $role;
+}
 $roleIds = array_keys($rolesCatalog);
 $defaultRoles = CrewBuilder::DEFAULT_ROLES;
 $allCyber = $rules->allCyberware();

@@ -67,6 +67,22 @@ final class Rules
         return Job::fromArray($this->jobs[$id]);
     }
 
+    public function hasJob(string $id): bool
+    {
+        return isset($this->jobs[$id]);
+    }
+
+    public function firstUnlockedJobId(int $streetCred): ?string
+    {
+        foreach ($this->jobs() as $job) {
+            if ($job->minRepTier <= max(0, $streetCred)) {
+                return $job->id;
+            }
+        }
+
+        return null;
+    }
+
     /** @return Job[] */
     public function jobs(): array
     {
@@ -85,7 +101,7 @@ final class Rules
 
     public function isJobUnlocked(string $jobId, int $streetCred): bool
     {
-        return $this->job($jobId)->minRepTier <= max(0, $streetCred);
+        return $this->hasJob($jobId) && $this->job($jobId)->minRepTier <= max(0, $streetCred);
     }
 
     /** @return array<string,mixed> */

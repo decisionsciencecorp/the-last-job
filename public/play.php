@@ -32,6 +32,8 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 $rules = new Rules();
 $seed = isset($_GET['seed']) ? (int) $_GET['seed'] : 2077;
 $jobId = isset($_GET['job']) ? (string) $_GET['job'] : 'job.arasaka-substation';
+$requestedJobId = $jobId;
+$jobSelectionNotice = null;
 $narrate = isset($_GET['narrate']);
 $narrateFast = !isset($_GET['narrate_fast']) || (string) $_GET['narrate_fast'] !== '0';
 $useCampaign = !isset($_GET['campaign']) || (string) $_GET['campaign'] !== '0';
@@ -54,7 +56,10 @@ if (isset($_GET['reset_campaign'])) {
 }
 $streetCred = $useCampaign ? max(0, (int) $campaignState['street_cred']) : $manualStreetCred;
 $startingEddies = $useCampaign ? max(0, (int) $campaignState['eddies']) : 500;
-$rolesCatalog = $rules->roles();
+$rolesCatalog = [];
+foreach ($rules->roles() as $idx => $role) {
+    $rolesCatalog[(string) ($role['id'] ?? $idx)] = $role;
+}
 $roleIds = array_keys($rolesCatalog);
 $defaultRoles = CrewBuilder::DEFAULT_ROLES;
 
@@ -79,12 +84,15 @@ $jobUnlocked = [];
 foreach ($jobs as $j) {
     $jobUnlocked[$j->id] = $rules->isJobUnlocked($j->id, $streetCred);
 }
-if (!isset($_GET['run']) && empty($jobUnlocked[$jobId] ?? false)) {
-    foreach ($jobs as $candidate) {
-        if ($jobUnlocked[$candidate->id] ?? false) {
-            $jobId = $candidate->id;
-            break;
-        }
+
+if (!$rules->hasJob($jobId)) {
+    $jobSelectionNotice = "Unknown contract '{$jobId}'. Showing the first available contract instead.";
+    $jobId = $rules->firstUnlockedJobId($streetCred) ?? ($jobs[0]->id ?? '');
+} elseif (!isset($_GET['run']) && empty($jobUnlocked[$jobId] ?? false)) {
+    $fallbackJobId = $rules->firstUnlockedJobId($streetCred);
+    if ($fallbackJobId !== null) {
+        $jobSelectionNotice = "That contract is still locked at street cred {$streetCred}. Showing the first available contract instead.";
+        $jobId = $fallbackJobId;
     }
 }
 
@@ -100,10 +108,13 @@ if ($narrate) {
 }
 
 if (isset($_GET['run'])) {
-    if (empty($jobUnlocked[$jobId] ?? false)) {
-        $needed = $rules->job($jobId)->minRepTier;
+    if (!$rules->hasJob($requestedJobId)) {
+        $error = "Unknown contract '{$requestedJobId}'. Pick one of the available jobs below.";
+    } elseif (empty($jobUnlocked[$requestedJobId] ?? false)) {
+        $needed = $rules->job($requestedJobId)->minRepTier;
         $error = "Street cred {$streetCred} is too low for this contract (need {$needed}).";
     } else {
+        $jobId = $requestedJobId;
         try {
             $report = (new JobRunner($rules))->run($crew, $rules->job($jobId), new Rng($seed * 7 + 1), $economy);
             if ($report !== null && $narrator !== null) {
@@ -179,6 +190,9 @@ layout_header('Job board', 'play');
     <?php endforeach; ?>
     </ul>
 </div>
+<?php endif; ?>
+<?php if ($jobSelectionNotice): ?>
+    <p class="status-warn"><?= layout_h($jobSelectionNotice) ?></p>
 <?php endif; ?>
 
 <form method="get">

@@ -29,6 +29,24 @@ try {
         $roleIds = CrewBuilder::DEFAULT_ROLES;
     }
 
+    if (!$rules->hasJob($jobId)) {
+        http_response_code(400);
+        echo json_encode([
+            'status' => 'error',
+            'error' => "Unknown contract '{$jobId}'.",
+        ], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+
+    if (!$rules->isJobUnlocked($jobId, $streetCred)) {
+        http_response_code(403);
+        echo json_encode([
+            'status' => 'error',
+            'error' => "Street cred {$streetCred} is too low for this contract.",
+        ], JSON_UNESCAPED_SLASHES);
+        exit;
+    }
+
     $broker = LettaServices::brokerFromEnvironment();
     if ($broker === null) {
         http_response_code(503);
