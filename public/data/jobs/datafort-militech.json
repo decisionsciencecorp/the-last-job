@@ -11,6 +11,8 @@
   "briefing": "Rogue has a job with the smell of old war on it: a Militech data fortress running in a forgotten arbitration office under City Center. The client wants one file. Rogue wants to know why Militech is willing to kill a judge, a priest, and three netrunners to keep it cold.",
   "stakes": "The file is a kill-list seed: names not yet dead, crimes not yet committed, futures already priced. Pull it and the crew can sell the truth, bury it, or use it to blackmail the kind of people who buy elections.",
   "complication": "The fortress is baited with patriotic nostalgia and dead-soldier ghosts. The ICE does not just cut; it accuses.",
+  "success_debrief": "Rogue reads the first page once, then burns the display glass with her cigarette. The list includes people who have not been born yet, and one codename stamped over and over: LAST JOB.",
+  "failure_debrief": "Militech does not chase you. That is worse. Three hours later, a friend-of-a-friend starts asking what you saw in the fortress and whether you would like to forget it for money.",
   "obstacles": [
     {"id": "ob.creds", "name": "Forge entry credentials against a receptionist AI trained on court transcripts", "stat": "INT", "dv": 16, "ticks": 2, "role_pref": "Tech"},
     {"id": "ob.smoothtalk", "name": "Convince the floor supervisor your fake subpoena outranks their fear", "stat": "COOL", "dv": 16, "ticks": 2, "role_pref": "Fixer"},

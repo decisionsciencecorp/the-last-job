@@ -11,6 +11,8 @@
   "briefing": "Regina's tip sounds too small for the hour: a pawnshop in Kabuki, one nervous clerk, one locked case, one data shard hidden inside a dead rockerboy's guitar pickup. She will not say who wants it, only that two other crews asked and both stopped answering.",
   "stakes": "This is the kind of little job that buys food, ammo, and one more week of pretending the crew is not already circling something much bigger.",
   "complication": "The shop is a shrine to old Night City ghosts. Crack the wrong case and every cheap relic in the room starts screaming on the local mesh.",
+  "success_debrief": "The shard is warm when it comes free, pulsing with a half-corrupted voiceprint that says one word before the file locks itself: Arasaka. Regina pays fast and tells you not to play it twice.",
+  "failure_debrief": "The pawnshop shutters slam down and the clerk starts crying into an open channel. By morning, the shard is gone, the shop is ash, and Regina's next call starts with a long silence.",
   "obstacles": [
     {"id": "ob.distract", "name": "Keep the clerk talking while their panic alarm blinks red under the counter", "stat": "COOL", "dv": 13, "ticks": 1, "role_pref": "Fixer"},
     {"id": "ob.case", "name": "Crack the display case without waking the pawnshop's bargain-bin defense grid", "stat": "TECH", "dv": 14, "ticks": 2, "role_pref": "Tech"}

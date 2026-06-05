@@ -27,6 +27,8 @@ final class Job
         public string $briefing = '',
         public string $stakes = '',
         public string $complication = '',
+        public string $successDebrief = '',
+        public string $failureDebrief = '',
     ) {
     }
 
@@ -47,6 +49,8 @@ final class Job
             briefing: (string) ($row['briefing'] ?? ''),
             stakes: (string) ($row['stakes'] ?? ''),
             complication: (string) ($row['complication'] ?? ''),
+            successDebrief: (string) ($row['success_debrief'] ?? ''),
+            failureDebrief: (string) ($row['failure_debrief'] ?? ''),
         );
     }
 

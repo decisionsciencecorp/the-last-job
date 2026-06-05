@@ -272,6 +272,12 @@ layout_header('Job board', 'play');
 <?php elseif ($report): ?>
     <h2 class="<?= $report['success'] ? 'status-ok' : 'status-bad' ?>"><?= $report['success'] ? 'JOB SUCCESS' : 'JOB FAILED' ?></h2>
     <p>Payout <strong><?= (int) $report['payout_eddies'] ?></strong> eddies · Street cred +<?= (int) $report['street_cred_gained'] ?></p>
+    <?php if (!empty($report['debrief'])): ?>
+        <div class="clock-panel">
+            <strong>Aftermath</strong>
+            <p class="job-briefing"><?= layout_h((string) $report['debrief']) ?></p>
+        </div>
+    <?php endif; ?>
 
     <?php if ($clock !== null):
         $spentPct = $clock['total'] > 0 ? (int) round(($clock['spent'] / $clock['total']) * 100) : 0;

@@ -120,6 +120,7 @@ final class JobRunner
             'job_name' => $job->name,
             'fixer' => $job->fixer,
             'success' => $success,
+            'debrief' => $success ? $job->successDebrief : $job->failureDebrief,
             'time_ran_out' => $timeRanOut,
             'crew_member_died' => $crewDied,
             'obstacles_passed' => $obstaclesPassed,

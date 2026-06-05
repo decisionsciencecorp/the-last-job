@@ -11,6 +11,8 @@
   "briefing": "No fixer. No client. No clean exit clause. The crew has assembled enough truth, debt, and grief to point all of it at Arasaka Tower. The target is buried below executive floors in a vault that was never built on any version of the blueprints.",
   "stakes": "Inside is the thing every job has been orbiting: proof that Arasaka has been training dead minds to wear living faces. Walk out with it and Night City changes for one news cycle. Die inside and the city will sell memorial candles before breakfast.",
   "complication": "The Tower remembers everyone who ever tried this. Doors open with dead voices. Elevators stop on floors that no longer exist. The closer you get, the more the crew's private reasons for being here start fighting the plan.",
+  "success_debrief": "The crew exits under a false dawn of burning billboards while every screen in Night City plays the stolen proof for thirteen impossible seconds. Then the signal dies. Then the offers begin.",
+  "failure_debrief": "Arasaka Tower seals itself before sunrise. By noon, the news calls the crew terrorists, copycats, hallucinations. By nightfall, someone using one of their voices leaves a message asking to try again.",
   "obstacles": [
     {"id": "ob.insider", "name": "Turn the insider contact after they realize the vault knows their childhood name", "stat": "EMP", "dv": 17, "ticks": 2, "role_pref": "Fixer"},
     {"id": "ob.blackout", "name": "Kill floor sensors that keep painting the crew as already deceased", "stat": "TECH", "dv": 18, "ticks": 3, "role_pref": "Tech"},

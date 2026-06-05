@@ -11,6 +11,8 @@
   "briefing": "Dexter DeShawn has a name, a floor plan, and a voice recording of an Arasaka engineer whispering that she wants out before her own project eats her alive. She is trapped inside a downtown power substation that officially does not employ anyone after midnight.",
   "stakes": "The target knows where Arasaka buried a prototype personality engram. If she disappears clean, the crew gets paid. If she screams, half the city's black clinics start burning by dawn.",
   "complication": "The extraction window is tied to rolling brownouts. Every minute you waste, the building wakes up one subsystem at a time.",
+  "success_debrief": "The engineer makes it out shaking, clutching a dead man's access chip like a rosary. She says the engram was not copied from a corpse. It was trained from people still alive.",
+  "failure_debrief": "The brownout ends early. Lights come on across the substation, too white and too clean, and Dexter's voice goes flat when he says the target's apartment has already been emptied.",
   "obstacles": [
     {"id": "ob.gate", "name": "Talk past a gate-auth drone reciting credentials for people who died last week", "stat": "COOL", "dv": 15, "ticks": 2, "role_pref": "Fixer"},
     {"id": "ob.maglock", "name": "Bypass a maglock that keeps rewriting its own access table", "stat": "TECH", "dv": 16, "ticks": 2, "role_pref": "Tech"},
