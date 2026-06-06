@@ -15,63 +15,137 @@ if (str_starts_with($host, 'dev.')) {
 
 require __DIR__ . '/includes/Layout.php';
 
-use function LastJob\layout_header;
-use function LastJob\layout_footer;
+use function LastJob\layout_h;
 
-layout_header('The Deck', 'deck');
+$bootLines = [
+    '[00.000] power reroute: motel wall jack / unstable',
+    '[00.217] loading city map: watson, heywood, combat zone fragments',
+    '[00.409] warning: corporate mesh watching public grids',
+    '[00.633] fixer relay found: ANIMAL / encrypted / paid in advance',
+    '[00.901] context: you are not browsing jobs. you are answering a line.',
+    '[01.144] rule: no crew contact until the fixer makes the intro.',
+    '[01.388] deck ready. city breathing behind the glass.',
+];
 ?>
-<section class="terminal-screen" aria-labelledby="deck-title">
-    <div class="terminal-bar">
-        <span>tty://night-city/localdeck</span>
-        <a href="#deck-ready">skip intro</a>
-    </div>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Last Job — Deck Terminal</title>
+    <link rel="stylesheet" href="/blog/assets/style.css">
+    <link rel="stylesheet" href="/assets/game.css">
+</head>
+<body class="terminal-app-body">
+<main class="terminal-app" aria-label="The Last Job terminal application">
+    <header class="terminal-app-top">
+        <div>
+            <strong>./lastjob</strong>
+            <span>tty://night-city/localdeck</span>
+        </div>
+        <button type="button" data-terminal-command="help">help</button>
+    </header>
 
-    <pre class="boot-sequence" aria-label="Skippable intro boot sequence"><span data-boot-line>[00.000] power reroute: motel wall jack / unstable</span>
-<span data-boot-line>[00.217] loading city map: watson, heywood, combat zone fragments</span>
-<span data-boot-line>[00.409] warning: corporate mesh watching public grids</span>
-<span data-boot-line>[00.633] fixer relay found: ANIMAL / encrypted / paid in advance</span>
-<span data-boot-line>[00.901] context: you are not browsing jobs. you are answering a line.</span>
-<span data-boot-line>[01.144] rule: no crew contact until the fixer makes the intro.</span>
-<span data-boot-line>[01.388] deck ready. city breathing behind the glass.</span></pre>
+    <section class="terminal-output" id="terminal-output" aria-live="polite" aria-label="Terminal scrollback">
+        <div class="terminal-block system">
+            <?php foreach ($bootLines as $line): ?>
+                <p><?= layout_h($line) ?></p>
+            <?php endforeach; ?>
+        </div>
+        <div class="terminal-block">
+            <p><span class="system-ok">login:</span> runner</p>
+            <p>Night City does not hand you a menu. It opens a channel, names a price, and waits for you to make the first mistake.</p>
+            <p><span class="system-warn">RING</span> ANIMAL wants to assemble a crew through you.</p>
+            <p><span class="system-dim">NOTE</span> type <code>answer</code>, or use a command below.</p>
+        </div>
+    </section>
 
-    <div id="deck-ready" class="terminal-grid">
-        <section class="terminal-pane terminal-pane-primary" aria-labelledby="deck-title">
-            <p class="terminal-path">~/lastjob/deck</p>
-            <h1 id="deck-title">login: runner</h1>
-            <p class="terminal-copy">Night City does not hand you a menu. It opens a channel, names a price, and waits for you to make the first mistake.</p>
+    <section class="terminal-command-bar" aria-label="Command suggestions">
+        <button type="button" data-terminal-command="answer">answer</button>
+        <button type="button" data-terminal-command="ask fixer crew">ask fixer crew</button>
+        <button type="button" data-terminal-command="list contracts">list contracts</button>
+        <button type="button" data-terminal-command="run contract 1">run contract 1</button>
+        <button type="button" data-terminal-command="file">file</button>
+    </section>
 
-            <div class="terminal-log">
-                <p><span class="prompt">$</span> wake deck</p>
-                <p><span class="system-ok">OK</span> handshake with fixer relay</p>
-                <p><span class="system-warn">RING</span> ANIMAL wants to assemble a crew through you</p>
-                <p><span class="system-dim">NOTE</span> the team does not know you yet. the fixer does.</p>
-            </div>
+    <form class="terminal-input-row" id="terminal-form" autocomplete="off">
+        <label for="terminal-command">$</label>
+        <input id="terminal-command" name="command" type="text" inputmode="text" spellcheck="false" autofocus value="answer">
+        <button type="submit">send</button>
+    </form>
+</main>
 
-            <div class="terminal-actions" aria-label="First actions">
-                <a class="terminal-command" href="/play.php?wire=call">run take-call</a>
-                <a class="terminal-command secondary" href="/play.php?wire=ring">run let-it-ring</a>
-                <a class="terminal-command secondary" href="/crew.php?via=fixer">open fixer.roster</a>
-            </div>
-        </section>
-
-        <aside class="terminal-pane" aria-labelledby="intro-title">
-            <p class="terminal-path">incoming/world.txt</p>
-            <h2 id="intro-title">before you answer</h2>
-            <div class="terminal-log">
-                <p>Arasaka still casts a shadow even when nobody says the name.</p>
-                <p>Militech buys futures by killing the people who remember alternatives.</p>
-                <p>Your fixer is not your friend. Your fixer is the only reason the crew will pick up.</p>
-                <p>The last job is not available yet. The city has to teach you what it costs first.</p>
-            </div>
-        </aside>
-    </div>
-</section>
 <script>
 (() => {
-    const lines = document.querySelectorAll('[data-boot-line]');
-    lines.forEach((line, index) => {
-        line.style.animationDelay = `${index * 220}ms`;
+    const output = document.getElementById('terminal-output');
+    const form = document.getElementById('terminal-form');
+    const input = document.getElementById('terminal-command');
+    const commandButtons = Array.from(document.querySelectorAll('[data-terminal-command]'));
+
+    function appendBlock(lines, className = '') {
+        const block = document.createElement('div');
+        block.className = `terminal-block ${className}`.trim();
+        lines.forEach((line) => {
+            const p = document.createElement('p');
+            p.textContent = line;
+            block.appendChild(p);
+        });
+        output.appendChild(block);
+        output.scrollTop = output.scrollHeight;
+    }
+
+    function setSuggestions(suggestions) {
+        if (!Array.isArray(suggestions) || suggestions.length === 0) {
+            return;
+        }
+        commandButtons.forEach((button, index) => {
+            if (suggestions[index]) {
+                button.textContent = suggestions[index];
+                button.dataset.terminalCommand = suggestions[index];
+                button.hidden = false;
+            } else {
+                button.hidden = true;
+            }
+        });
+    }
+
+    async function runCommand(command) {
+        command = command.trim();
+        if (!command) {
+            return;
+        }
+        appendBlock([`$ ${command}`], 'input');
+        input.value = '';
+
+        try {
+            const response = await fetch('/api/terminal-command.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({command}),
+            });
+            const payload = await response.json();
+            if (payload.status !== 'ok') {
+                appendBlock(payload.lines || [payload.error || 'terminal fault'], 'error');
+                return;
+            }
+            appendBlock(payload.lines || [], 'response');
+            setSuggestions(payload.suggestions || []);
+        } catch (error) {
+            appendBlock([`terminal fault: ${error && error.message ? error.message : 'unknown error'}`], 'error');
+        } finally {
+            input.focus();
+        }
+    }
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        runCommand(input.value);
+    });
+
+    commandButtons.forEach((button) => {
+        button.addEventListener('click', () => runCommand(button.dataset.terminalCommand || button.textContent || 'help'));
     });
 })();
 </script>
-<?php layout_footer(); ?>
+</body>
+</html>

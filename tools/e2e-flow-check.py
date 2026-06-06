@@ -9,6 +9,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import http.cookiejar
 import json
 import time
 from dataclasses import dataclass, field
@@ -16,7 +17,7 @@ from html.parser import HTMLParser
 from typing import Iterable
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode, urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPCookieProcessor, Request, build_opener, urlopen
 
 
 @dataclass
@@ -176,12 +177,49 @@ def assert_json(url: str, expected_status: set[int]) -> None:
         raise AssertionError(f"{url} returned invalid JSON: {exc}") from exc
 
 
+def assert_terminal_sequence(base: str) -> None:
+    jar = http.cookiejar.CookieJar()
+    opener = build_opener(HTTPCookieProcessor(jar))
+    endpoint = urljoin(base, "api/terminal-command.php")
+    expectations = [
+        ("answer", "ANIMAL"),
+        ("ask fixer crew", "fixer.roster"),
+        ("list contracts", "contract packets"),
+        ("inspect contract 1", "contract.packet"),
+        ("run contract 1", "--- run"),
+        ("wake", "wake.after_action"),
+        ("file", "shard.wall"),
+    ]
+    for command, expected in expectations:
+        request = Request(
+            endpoint,
+            data=json.dumps({"command": command}).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "User-Agent": "TheLastJob-e2e-flow-check/1.0",
+            },
+        )
+        with opener.open(request, timeout=30) as response:
+            body = response.read(1_200_000).decode("utf-8", "replace")
+            if response.status != 200:
+                raise AssertionError(f"{endpoint} returned HTTP {response.status} for {command!r}")
+        try:
+            payload = json.loads(body)
+        except json.JSONDecodeError as exc:
+            raise AssertionError(f"{endpoint} returned invalid JSON for {command!r}: {exc}") from exc
+        if payload.get("status") != "ok":
+            raise AssertionError(f"{endpoint} returned non-ok payload for {command!r}: {payload!r}")
+        lines = "\n".join(str(line) for line in payload.get("lines", []))
+        if expected not in lines:
+            raise AssertionError(f"{command!r} did not produce expected terminal output {expected!r}")
+
+
 def run(base: str) -> None:
     base = base.rstrip("/") + "/"
 
     checks = [
-        ("", "login: runner"),
-        ("", "skip intro"),
+        ("", "The Last Job terminal application"),
+        ("", "Terminal scrollback"),
         ("", "rule: no crew contact until the fixer makes the intro"),
         ("crew.php", "crew through the fixer"),
         ("crew.php", "Fixer dialogue"),
@@ -194,6 +232,13 @@ def run(base: str) -> None:
     ]
     for path, expected in checks:
         assert_page(urljoin(base, path), must_contain=expected)
+
+    home_body = assert_page(base)
+    forbidden_home_terms = ["<nav", "Job board", "Build your crew", "Pick a contract"]
+    for term in forbidden_home_terms:
+        if term in home_body:
+            raise AssertionError(f"/ still exposes old website workflow term: {term!r}")
+    assert_terminal_sequence(base)
 
     submitted = []
     submitted.extend(submit_forms(base, "crew.php"))
