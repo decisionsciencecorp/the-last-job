@@ -56,16 +56,16 @@ $bootLines = [
             <p><span class="system-ok">login:</span> runner</p>
             <p>Night City does not hand you a menu. It opens a channel, names a price, and waits for you to make the first mistake.</p>
             <p><span class="system-warn">RING</span> ANIMAL wants to assemble a crew through you.</p>
-            <p><span class="system-dim">NOTE</span> type <code>answer</code>, or use a command below.</p>
+                <p><span class="system-dim">NOTE</span> one action at a time: <code>answer</code> or <code>let it ring</code>.</p>
         </div>
     </section>
 
     <section class="terminal-command-bar" aria-label="Command suggestions">
         <button type="button" data-terminal-command="answer">answer</button>
-        <button type="button" data-terminal-command="ask fixer crew">ask fixer crew</button>
-        <button type="button" data-terminal-command="list contracts">list contracts</button>
-        <button type="button" data-terminal-command="run contract 1">run contract 1</button>
-        <button type="button" data-terminal-command="file">file</button>
+            <button type="button" data-terminal-command="let it ring">let it ring</button>
+            <button type="button" data-terminal-command="help">help</button>
+            <button type="button" data-terminal-command="status">status</button>
+            <button type="button" data-terminal-command="reset">reset</button>
     </section>
 
     <form class="terminal-input-row" id="terminal-form" autocomplete="off">

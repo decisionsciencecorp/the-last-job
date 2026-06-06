@@ -183,12 +183,18 @@ def assert_terminal_sequence(base: str) -> None:
     endpoint = urljoin(base, "api/terminal-command.php")
     expectations = [
         ("answer", "ANIMAL"),
-        ("ask fixer crew", "fixer.roster"),
+        ("I learned in a corpo office", "who still has a piece of you"),
+        ("My sister still owns me", "what do people pay you for"),
+        ("I get people out clean", "what don't you do"),
+        ("I don't sell kids", "bring kojo"),
+        ("bring kojo", "NCART Empty Cage"),
         ("list contracts", "contract packets"),
         ("inspect contract 1", "contract.packet"),
+        ("accept", "run contract 1"),
         ("run contract 1", "--- run"),
         ("wake", "wake.after_action"),
-        ("file", "shard.wall"),
+        ("file", "shard.ncart.empty-cage"),
+        ("answer next call", "package was empty"),
     ]
     for command, expected in expectations:
         request = Request(
