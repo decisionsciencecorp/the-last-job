@@ -43,4 +43,4 @@ Files touched in this slice included:
 
 ![Devlog illustration: Fix visual reference for cooldown-mode devlog auto-post.](/blog/assets/visuals/illustrations/fix-visual-reference-for-cooldown-mode-devlog-auto-post.svg)
 
-![Devlog screenshot: verification rig.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)

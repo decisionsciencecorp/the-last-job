@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Devlog illustration for Fix visual reference for cooldown-mode devlog auto-po...">
+  <rect width="1200" height="675" fill="#05070a"/>
+  <rect x="44" y="44" width="1112" height="587" fill="#0b1015" stroke="#39ff14" stroke-opacity="0.58"/>
+  <g opacity="0.18" stroke="#ff2a6d" stroke-width="1">
+    <path d="M80 120 H1120 M80 210 H1120 M80 300 H1120 M80 390 H1120 M80 480 H1120"/>
+    <path d="M160 72 V604 M320 72 V604 M480 72 V604 M640 72 V604 M800 72 V604 M960 72 V604"/>
+  </g>
+  <path d="M70 213 C 224 210, 576 520, 1120 250" fill="none" stroke="#39ff14" stroke-width="6" opacity="0.48"/>
+  <polyline points="82,376 224,298 576,214 864,178 1118,292" fill="none" stroke="#ff2a6d" stroke-width="3" opacity="0.78"/>
+  <rect x="90" y="372" width="34" height="173" fill="#39ff14" opacity="0.28"/>
+<rect x="158" y="339" width="34" height="206" fill="#ff2a6d" opacity="0.28"/>
+<rect x="226" y="417" width="34" height="128" fill="#39ff14" opacity="0.28"/>
+<rect x="294" y="361" width="34" height="184" fill="#ff2a6d" opacity="0.28"/>
+<rect x="362" y="333" width="34" height="212" fill="#39ff14" opacity="0.28"/>
+<rect x="430" y="319" width="34" height="226" fill="#ff2a6d" opacity="0.28"/>
+<rect x="498" y="407" width="34" height="138" fill="#39ff14" opacity="0.28"/>
+<rect x="566" y="356" width="34" height="189" fill="#ff2a6d" opacity="0.28"/>
+
+  <circle cx="980" cy="170" r="86" fill="none" stroke="#39ff14" stroke-width="7" opacity="0.42"/>
+  <circle cx="980" cy="170" r="34" fill="#ff2a6d" opacity="0.24"/>
+  <text x="82" y="122" fill="#ff2a6d" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">RUN AFTERMATH</text>
+  <text x="82" y="210" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700">Fix visual reference for cooldown-mode devlog auto-po...</text>
+  <text x="84" y="272" fill="#aeb8c5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20">This slice updates the public build record so readers can understand what cha...</text>
+  <text x="82" y="588" fill="#39ff14" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="3">fix-visual-reference-for-cooldown-mode-devlog-auto-post</text>
+</svg>
