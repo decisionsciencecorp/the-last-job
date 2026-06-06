@@ -412,6 +412,7 @@ final class TerminalCommandRouter
         $isEpisodeContract = in_array($stage, ['offer', 'offer_locked'], true);
         $cooldownBefore = max(0, (int) $state->get('cooldown_runs_remaining', 0));
         $cooldownAfter = $cooldownBefore;
+        $cooldownExtended = false;
         $drift = $this->crewDriftEffect(
             max(0, min(5, (int) $state->get('heat', 0))),
             max(0, min(5, (int) $state->get('pressure', 0))),
@@ -438,6 +439,12 @@ final class TerminalCommandRouter
             } else {
                 $cooldownAfter = 0;
             }
+            if (!$report['success'] && $cooldownBefore > 0) {
+                $cooldownAfter++;
+                $cooldownExtended = true;
+                $state->set('cooldown_runs_remaining', $cooldownAfter);
+                $state->set('followup_packets', []);
+            }
         }
         $report['episode_contract'] = $isEpisodeContract;
         $report['life_axes'] = $axes;
@@ -450,6 +457,7 @@ final class TerminalCommandRouter
         $report['crew_drift'] = $drift;
         $report['cooldown_before'] = $cooldownBefore;
         $report['cooldown_after'] = $cooldownAfter;
+        $report['cooldown_extended'] = $cooldownExtended;
         $state->set('last_report', $report);
 
         $lines = ['--- run ' . $job->id . ' ---'];
@@ -495,6 +503,9 @@ final class TerminalCommandRouter
             $lines[] = $cooldownAfter > 0
                 ? 'cooldown: ' . $cooldownAfter . ' run(s) remaining before full surface restore.'
                 : 'cooldown: constraints lifted. full surfaces restored next cycle.';
+            if ($cooldownExtended) {
+                $lines[] = 'cooldown: failure under lockdown added one extra constrained run.';
+            }
         }
         if ($drift['run_line'] !== '') {
             $lines[] = $drift['run_line'];
