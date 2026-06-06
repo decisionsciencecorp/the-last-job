@@ -187,6 +187,6 @@ The goal is not to hide the complexity. The goal is to stage it. The player shou
 
 ## Visuals
 
-![Illustrated route through the current build: Crew, Jobs, Run, Intel.](/blog/assets/visuals/illustrations/player-guide-current-build.svg)
+![Devlog illustration: How to approach the current build of The Last Job](/blog/assets/visuals/illustrations/how-to-approach-the-current-build.svg)
 
-![Screenshot: Current job board and contract surface.](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: terminal deck flow.](/blog/assets/visuals/screenshots/home.png)

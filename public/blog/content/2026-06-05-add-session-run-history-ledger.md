@@ -61,6 +61,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-session-run-history-ledger.svg)
+![Devlog illustration: Add session run-history ledger to campaign view.](/blog/assets/visuals/illustrations/add-session-run-history-ledger.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/run-aftermath.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

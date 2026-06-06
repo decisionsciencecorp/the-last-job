@@ -61,6 +61,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-story-debriefs-to-job-outcomes.svg)
+![Devlog illustration: Add story debriefs to job outcomes.](/blog/assets/visuals/illustrations/add-story-debriefs-to-job-outcomes.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

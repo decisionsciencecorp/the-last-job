@@ -45,6 +45,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Illustrated build transmission: Fix broken play links and add link-check coverage.](/blog/assets/visuals/illustrations/auto-build.svg)
+![Devlog illustration: Fix broken play links and add link-check coverage.](/blog/assets/visuals/illustrations/fix-broken-play-links-and-add-link-check-coverage.svg)
 
-![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

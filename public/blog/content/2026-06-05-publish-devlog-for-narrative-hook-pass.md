@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-for-narrative-hook-pass.svg)
+![Devlog illustration: Publish devlog for narrative hook pass.](/blog/assets/visuals/illustrations/publish-devlog-for-narrative-hook-pass.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

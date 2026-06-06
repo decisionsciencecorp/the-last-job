@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-for-prefetch-max-live-tuning.svg)
+![Devlog illustration: Publish devlog for prefetch max-live tuning.](/blog/assets/visuals/illustrations/publish-devlog-for-prefetch-max-live-tuning.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

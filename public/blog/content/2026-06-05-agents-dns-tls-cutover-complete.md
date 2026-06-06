@@ -59,6 +59,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/agents-dns-tls-cutover-complete.svg)
+![Devlog illustration: Agents DNS+TLS cutover complete; narrate 504 mitigated.](/blog/assets/visuals/illustrations/agents-dns-tls-cutover-complete.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)

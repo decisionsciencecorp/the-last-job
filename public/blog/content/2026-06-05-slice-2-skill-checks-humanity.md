@@ -74,6 +74,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/slice-2-skill-checks-humanity.svg)
+![Devlog illustration: Slice #2: skill checks + humanity / cyberpsychosis](/blog/assets/visuals/illustrations/slice-2-skill-checks-humanity.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

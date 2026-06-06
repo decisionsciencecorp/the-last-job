@@ -80,6 +80,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/slice-1-netrun-engine.svg)
+![Devlog illustration: Slice #1: deterministic netrunner-vs-NET engine](/blog/assets/visuals/illustrations/slice-1-netrun-engine.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

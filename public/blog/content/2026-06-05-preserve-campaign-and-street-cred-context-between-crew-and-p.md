@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/preserve-campaign-and-street-cred-context-between-crew-and-p.svg)
+![Devlog illustration: Preserve campaign and street-cred context between crew and play pages.](/blog/assets/visuals/illustrations/preserve-campaign-and-street-cred-context-between-crew-and-p.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

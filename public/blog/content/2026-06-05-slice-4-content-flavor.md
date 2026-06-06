@@ -82,6 +82,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/slice-4-content-flavor.svg)
+![Devlog illustration: Slice #4: deeper NET content + Night City flavor](/blog/assets/visuals/illustrations/slice-4-content-flavor.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: terminal deck flow.](/blog/assets/visuals/screenshots/home.png)

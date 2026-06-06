@@ -49,6 +49,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Illustrated build transmission: Implement cyberdeck Deck and Wire UX slice.](/blog/assets/visuals/illustrations/auto-build.svg)
+![Devlog illustration: Implement cyberdeck Deck and Wire UX slice.](/blog/assets/visuals/illustrations/implement-cyberdeck-deck-and-wire-ux-slice.svg)
 
-![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: terminal deck flow.](/blog/assets/visuals/screenshots/home.png)

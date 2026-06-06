@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-for-intel-dossier-page.svg)
+![Devlog illustration: Publish devlog for intel dossier page.](/blog/assets/visuals/illustrations/publish-devlog-for-intel-dossier-page.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

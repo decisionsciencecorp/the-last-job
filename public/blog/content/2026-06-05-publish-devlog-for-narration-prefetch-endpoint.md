@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-for-narration-prefetch-endpoint.svg)
+![Devlog illustration: Publish devlog for narration prefetch endpoint.](/blog/assets/visuals/illustrations/publish-devlog-for-narration-prefetch-endpoint.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

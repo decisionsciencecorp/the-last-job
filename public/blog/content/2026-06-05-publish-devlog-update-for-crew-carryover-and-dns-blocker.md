@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-update-for-crew-carryover-and-dns-blocker.svg)
+![Devlog illustration: Publish devlog update for crew carryover and DNS blocker.](/blog/assets/visuals/illustrations/publish-devlog-update-for-crew-carryover-and-dns-blocker.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: terminal deck flow.](/blog/assets/visuals/screenshots/home.png)

@@ -55,6 +55,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-letta-npc-glue-php-client-sqlite-cache-play-php-narratio.svg)
+![Devlog illustration: Add Letta NPC glue: PHP client, SQLite cache, play.php narration](/blog/assets/visuals/illustrations/add-letta-npc-glue-php-client-sqlite-cache-play-php-narratio.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)

@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-for-session-campaign-wallet-mode.svg)
+![Devlog illustration: Publish devlog for session campaign wallet mode.](/blog/assets/visuals/illustrations/publish-devlog-for-session-campaign-wallet-mode.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

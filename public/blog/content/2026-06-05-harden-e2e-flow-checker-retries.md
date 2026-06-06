@@ -39,6 +39,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Illustrated build transmission: Harden E2E flow checker retries.](/blog/assets/visuals/illustrations/auto-build.svg)
+![Devlog illustration: Harden E2E flow checker retries.](/blog/assets/visuals/illustrations/harden-e2e-flow-checker-retries.svg)
 
-![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)

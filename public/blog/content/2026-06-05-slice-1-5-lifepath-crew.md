@@ -78,6 +78,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/slice-1-5-lifepath-crew.svg)
+![Devlog illustration: Slice #1.5: lifepath rolls up a crew (sealed agendas)](/blog/assets/visuals/illustrations/slice-1-5-lifepath-crew.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

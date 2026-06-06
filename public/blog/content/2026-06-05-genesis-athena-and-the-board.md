@@ -48,6 +48,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/genesis-athena-and-the-board.svg)
+![Devlog illustration: Genesis — Athena, the board, and "The Last Job](/blog/assets/visuals/illustrations/genesis-athena-and-the-board.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

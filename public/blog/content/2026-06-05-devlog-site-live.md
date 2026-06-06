@@ -49,6 +49,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/devlog-site-live.svg)
+![Devlog illustration: Devlog site live — markdown posts, auto-update on push](/blog/assets/visuals/illustrations/devlog-site-live.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: terminal deck flow.](/blog/assets/visuals/screenshots/home.png)

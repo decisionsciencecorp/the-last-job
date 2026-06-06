@@ -45,6 +45,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Illustrated build transmission: Fix broken controls and add E2E flow coverage.](/blog/assets/visuals/illustrations/auto-build.svg)
+![Devlog illustration: Fix broken controls and add E2E flow coverage.](/blog/assets/visuals/illustrations/fix-broken-controls-and-add-e2e-flow-coverage.svg)
 
-![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

@@ -65,6 +65,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/fix-multihost-deploy-layout-browser-play-slice.svg)
+![Devlog illustration: Fix multihost deploy layout + browser play slice](/blog/assets/visuals/illustrations/fix-multihost-deploy-layout-browser-play-slice.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

@@ -66,6 +66,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/link-contracts-to-campaign-intel-threads.svg)
+![Devlog illustration: Link contracts to campaign intel threads.](/blog/assets/visuals/illustrations/link-contracts-to-campaign-intel-threads.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

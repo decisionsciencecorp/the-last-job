@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-for-agents-dns-tls-cutover-completion.svg)
+![Devlog illustration: Publish devlog for agents DNS/TLS cutover completion.](/blog/assets/visuals/illustrations/publish-devlog-for-agents-dns-tls-cutover-completion.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

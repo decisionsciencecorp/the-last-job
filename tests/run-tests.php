@@ -432,6 +432,8 @@ check('devblog: posts sorted newest-first', $ordered);
 
 $visualsOk = true;
 $visualFilesOk = true;
+$uniqueIllustrationsOk = true;
+$illustrationSrcs = [];
 $substantivePostsOk = true;
 foreach ($posts as $post) {
     $bodyMd = (string) ($post['body_md'] ?? '');
@@ -451,16 +453,29 @@ foreach ($posts as $post) {
         break;
     }
     if (preg_match_all('/!\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]+")?\)/', $bodyMd, $matches)) {
+        $postIllustration = null;
         foreach ($matches[1] as $src) {
             if (str_starts_with($src, '/blog/assets/') && !is_file(__DIR__ . '/../public' . $src)) {
                 $visualFilesOk = false;
                 break 2;
             }
+            if (str_starts_with($src, '/blog/assets/visuals/illustrations/')) {
+                $postIllustration = $src;
+            }
         }
+        if ($postIllustration === null || str_ends_with($postIllustration, '/auto-build.svg')) {
+            $uniqueIllustrationsOk = false;
+            break;
+        }
+        $illustrationSrcs[] = $postIllustration;
     }
+}
+if (count($illustrationSrcs) !== count(array_unique($illustrationSrcs))) {
+    $uniqueIllustrationsOk = false;
 }
 check('devblog: every post has illustration and screenshot figures', $visualsOk);
 check('devblog: referenced visual assets exist on disk', $visualFilesOk);
+check('devblog: every post uses a unique illustration asset', $uniqueIllustrationsOk);
 check('devblog: every post publishes substantive change details', $substantivePostsOk);
 
 // 16. Letta NPC cache: idempotent storage + stable context hash.

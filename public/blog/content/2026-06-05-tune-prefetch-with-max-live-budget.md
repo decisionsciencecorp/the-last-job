@@ -65,6 +65,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/tune-prefetch-with-max-live-budget.svg)
+![Devlog illustration: Tune narration prefetch with max-live budget.](/blog/assets/visuals/illustrations/tune-prefetch-with-max-live-budget.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: verification rig.](/blog/assets/visuals/screenshots/devlog-index.png)

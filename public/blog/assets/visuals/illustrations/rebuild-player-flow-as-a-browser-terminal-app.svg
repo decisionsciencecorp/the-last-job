@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Devlog illustration for Rebuild player flow as a browser terminal app.">
+  <rect width="1200" height="675" fill="#05070a"/>
+  <rect x="44" y="44" width="1112" height="587" fill="#0b1015" stroke="#9b5cff" stroke-opacity="0.58"/>
+  <g opacity="0.18" stroke="#05d9e8" stroke-width="1">
+    <path d="M80 120 H1120 M80 210 H1120 M80 300 H1120 M80 390 H1120 M80 480 H1120"/>
+    <path d="M160 72 V604 M320 72 V604 M480 72 V604 M640 72 V604 M800 72 V604 M960 72 V604"/>
+  </g>
+  <path d="M70 238 C 201 210, 490 520, 1120 250" fill="none" stroke="#9b5cff" stroke-width="6" opacity="0.48"/>
+  <polyline points="82,376 201,298 490,411 964,292 1118,292" fill="none" stroke="#05d9e8" stroke-width="3" opacity="0.78"/>
+  <rect x="90" y="464" width="34" height="81" fill="#9b5cff" opacity="0.28"/>
+<rect x="158" y="480" width="34" height="65" fill="#05d9e8" opacity="0.28"/>
+<rect x="226" y="393" width="34" height="152" fill="#9b5cff" opacity="0.28"/>
+<rect x="294" y="444" width="34" height="101" fill="#05d9e8" opacity="0.28"/>
+<rect x="362" y="375" width="34" height="170" fill="#9b5cff" opacity="0.28"/>
+<rect x="430" y="435" width="34" height="110" fill="#05d9e8" opacity="0.28"/>
+<rect x="498" y="370" width="34" height="175" fill="#9b5cff" opacity="0.28"/>
+<rect x="566" y="338" width="34" height="207" fill="#05d9e8" opacity="0.28"/>
+
+  <circle cx="980" cy="170" r="86" fill="none" stroke="#9b5cff" stroke-width="7" opacity="0.42"/>
+  <circle cx="980" cy="170" r="34" fill="#05d9e8" opacity="0.24"/>
+  <text x="82" y="122" fill="#05d9e8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">TERMINAL DECK FLOW</text>
+  <text x="82" y="210" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700">Rebuild player flow as a browser terminal app.</text>
+  <text x="84" y="272" fill="#aeb8c5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20">This slice moves the project forward across automation/tooling.</text>
+  <text x="82" y="588" fill="#9b5cff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="3">rebuild-player-flow-as-a-browser-terminal-app</text>
+</svg>

@@ -1,10 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Illustration for Add cache-first fast narration mode for play runs.">
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07080d"/><stop offset="0.54" stop-color="#101827"/><stop offset="1" stop-color="#1b0b1d"/></linearGradient><radialGradient id="pulse" cx="72%" cy="28%" r="58%"><stop offset="0" stop-color="#a371f7" stop-opacity="0.34"/><stop offset="1" stop-color="#a371f7" stop-opacity="0"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-  <rect width="1200" height="675" fill="url(#bg)"/><rect width="1200" height="675" fill="url(#pulse)"/>
-  <g opacity="0.18" stroke="#58a6ff" stroke-width="1"><line x1="80" y1="0" x2="80" y2="675"/><line x1="160" y1="0" x2="160" y2="675"/><line x1="240" y1="0" x2="240" y2="675"/><line x1="320" y1="0" x2="320" y2="675"/><line x1="400" y1="0" x2="400" y2="675"/><line x1="480" y1="0" x2="480" y2="675"/><line x1="560" y1="0" x2="560" y2="675"/><line x1="640" y1="0" x2="640" y2="675"/><line x1="720" y1="0" x2="720" y2="675"/><line x1="800" y1="0" x2="800" y2="675"/><line x1="880" y1="0" x2="880" y2="675"/><line x1="960" y1="0" x2="960" y2="675"/><line x1="1040" y1="0" x2="1040" y2="675"/><line x1="1120" y1="0" x2="1120" y2="675"/><line x1="0" y1="75" x2="1200" y2="75"/><line x1="0" y1="150" x2="1200" y2="150"/><line x1="0" y1="225" x2="1200" y2="225"/><line x1="0" y1="300" x2="1200" y2="300"/><line x1="0" y1="375" x2="1200" y2="375"/><line x1="0" y1="450" x2="1200" y2="450"/><line x1="0" y1="525" x2="1200" y2="525"/><line x1="0" y1="600" x2="1200" y2="600"/></g>
-  <rect x="54" y="58" width="1092" height="559" rx="28" fill="#0d1117" opacity="0.76" stroke="#58a6ff" stroke-opacity="0.5"/>
-  <path d="M72 455 C230 338 330 552 482 384 S760 238 1128 304" fill="none" stroke="#a371f7" stroke-width="5" opacity="0.5" filter="url(#glow)"/>
-  <polyline points="60,208 155,160 250,273 345,237 440,156 535,219 630,254 725,193 820,235 915,168" fill="none" stroke="#58a6ff" stroke-width="3" opacity="0.72"/><rect x="76" y="470" width="34" height="66" rx="4" fill="#a371f7" opacity="0.34"/><rect x="148" y="488" width="34" height="48" rx="4" fill="#58a6ff" opacity="0.34"/><rect x="220" y="480" width="34" height="56" rx="4" fill="#a371f7" opacity="0.34"/><rect x="292" y="411" width="34" height="125" rx="4" fill="#58a6ff" opacity="0.34"/><rect x="364" y="417" width="34" height="119" rx="4" fill="#a371f7" opacity="0.34"/><rect x="436" y="429" width="34" height="107" rx="4" fill="#58a6ff" opacity="0.34"/><rect x="508" y="394" width="34" height="142" rx="4" fill="#a371f7" opacity="0.34"/><rect x="580" y="485" width="34" height="51" rx="4" fill="#58a6ff" opacity="0.34"/><rect x="652" y="413" width="34" height="123" rx="4" fill="#a371f7" opacity="0.34"/><rect x="724" y="480" width="34" height="56" rx="4" fill="#58a6ff" opacity="0.34"/><rect x="796" y="472" width="34" height="64" rx="4" fill="#a371f7" opacity="0.34"/><rect x="868" y="440" width="34" height="96" rx="4" fill="#58a6ff" opacity="0.34"/>
-  <circle cx="982" cy="160" r="86" fill="none" stroke="#a371f7" stroke-width="7" opacity="0.45"/><circle cx="982" cy="160" r="44" fill="none" stroke="#58a6ff" stroke-width="3" opacity="0.75"/>
-  <text x="82" y="125" fill="#58a6ff" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="7">SIGNAL</text><text x="82" y="220" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="54" font-weight="700">Add cache-first fast narration mode for play runs.</text><text x="84" y="277" fill="#8b949e" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">commit ad4ec82 · The Last Job devlog</text><text x="82" y="586" fill="#a371f7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="3">NIGHT CITY BUILD TRANSMISSION</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Devlog illustration for Add cache-first fast narration mode for play runs.">
+  <rect width="1200" height="675" fill="#05070a"/>
+  <rect x="44" y="44" width="1112" height="587" fill="#0b1015" stroke="#05d9e8" stroke-opacity="0.58"/>
+  <g opacity="0.18" stroke="#ff2a6d" stroke-width="1">
+    <path d="M80 120 H1120 M80 210 H1120 M80 300 H1120 M80 390 H1120 M80 480 H1120"/>
+    <path d="M160 72 V604 M320 72 V604 M480 72 V604 M640 72 V604 M800 72 V604 M960 72 V604"/>
+  </g>
+  <path d="M70 195 C 102 210, 425 520, 1120 250" fill="none" stroke="#05d9e8" stroke-width="6" opacity="0.48"/>
+  <polyline points="82,376 102,298 425,327 840,336 1118,292" fill="none" stroke="#ff2a6d" stroke-width="3" opacity="0.78"/>
+  <rect x="90" y="323" width="34" height="222" fill="#05d9e8" opacity="0.28"/>
+<rect x="158" y="314" width="34" height="231" fill="#ff2a6d" opacity="0.28"/>
+<rect x="226" y="310" width="34" height="235" fill="#05d9e8" opacity="0.28"/>
+<rect x="294" y="403" width="34" height="142" fill="#ff2a6d" opacity="0.28"/>
+<rect x="362" y="354" width="34" height="191" fill="#05d9e8" opacity="0.28"/>
+<rect x="430" y="330" width="34" height="215" fill="#ff2a6d" opacity="0.28"/>
+<rect x="498" y="413" width="34" height="132" fill="#05d9e8" opacity="0.28"/>
+<rect x="566" y="454" width="34" height="91" fill="#ff2a6d" opacity="0.28"/>
+
+  <circle cx="980" cy="170" r="86" fill="none" stroke="#05d9e8" stroke-width="7" opacity="0.42"/>
+  <circle cx="980" cy="170" r="34" fill="#ff2a6d" opacity="0.24"/>
+  <text x="82" y="122" fill="#ff2a6d" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">RUN AFTERMATH</text>
+  <text x="82" y="210" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700">Add cache-first fast narration mode for play runs.</text>
+  <text x="84" y="272" fill="#aeb8c5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20">This pass makes NPC narration more usable in the browser by adding cache-awar...</text>
+  <text x="82" y="588" fill="#05d9e8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="3">add-cache-first-fast-narration-mode-for-play-runs</text>
 </svg>

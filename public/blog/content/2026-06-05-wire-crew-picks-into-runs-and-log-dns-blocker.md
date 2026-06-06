@@ -67,6 +67,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/wire-crew-picks-into-runs-and-log-dns-blocker.svg)
+![Devlog illustration: Wire crew picks into runs; log agents DNS blocker.](/blog/assets/visuals/illustrations/wire-crew-picks-into-runs-and-log-dns-blocker.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: terminal deck flow.](/blog/assets/visuals/screenshots/home.png)

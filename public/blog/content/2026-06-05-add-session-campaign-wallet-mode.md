@@ -57,6 +57,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-session-campaign-wallet-mode.svg)
+![Devlog illustration: Add session-backed campaign wallet mode to job board.](/blog/assets/visuals/illustrations/add-session-campaign-wallet-mode.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

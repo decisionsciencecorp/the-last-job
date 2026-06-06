@@ -46,6 +46,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/carry-crew-role-selections-from-builder-into-job-runs.svg)
+![Devlog illustration: Carry crew role selections from builder into job runs.](/blog/assets/visuals/illustrations/carry-crew-role-selections-from-builder-into-job-runs.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

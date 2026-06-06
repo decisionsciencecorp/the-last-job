@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Devlog illustration for Harden E2E flow checker retries.">
+  <rect width="1200" height="675" fill="#05070a"/>
+  <rect x="44" y="44" width="1112" height="587" fill="#0b1015" stroke="#f6c945" stroke-opacity="0.58"/>
+  <g opacity="0.18" stroke="#f6c945" stroke-width="1">
+    <path d="M80 120 H1120 M80 210 H1120 M80 300 H1120 M80 390 H1120 M80 480 H1120"/>
+    <path d="M160 72 V604 M320 72 V604 M480 72 V604 M640 72 V604 M800 72 V604 M960 72 V604"/>
+  </g>
+  <path d="M70 190 C 158 210, 459 520, 1120 250" fill="none" stroke="#f6c945" stroke-width="6" opacity="0.48"/>
+  <polyline points="82,376 158,298 459,213 853,373 1118,292" fill="none" stroke="#f6c945" stroke-width="3" opacity="0.78"/>
+  <rect x="90" y="320" width="34" height="225" fill="#f6c945" opacity="0.28"/>
+<rect x="158" y="313" width="34" height="232" fill="#f6c945" opacity="0.28"/>
+<rect x="226" y="309" width="34" height="236" fill="#f6c945" opacity="0.28"/>
+<rect x="294" y="307" width="34" height="238" fill="#f6c945" opacity="0.28"/>
+<rect x="362" y="306" width="34" height="239" fill="#f6c945" opacity="0.28"/>
+<rect x="430" y="306" width="34" height="239" fill="#f6c945" opacity="0.28"/>
+<rect x="498" y="306" width="34" height="239" fill="#f6c945" opacity="0.28"/>
+<rect x="566" y="401" width="34" height="144" fill="#f6c945" opacity="0.28"/>
+
+  <circle cx="980" cy="170" r="86" fill="none" stroke="#f6c945" stroke-width="7" opacity="0.42"/>
+  <circle cx="980" cy="170" r="34" fill="#f6c945" opacity="0.24"/>
+  <text x="82" y="122" fill="#f6c945" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">RUN AFTERMATH</text>
+  <text x="82" y="210" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700">Harden E2E flow checker retries.</text>
+  <text x="84" y="272" fill="#aeb8c5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20">This slice moves the project forward across automation/tooling.</text>
+  <text x="82" y="588" fill="#f6c945" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="3">harden-e2e-flow-checker-retries</text>
+</svg>

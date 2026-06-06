@@ -55,6 +55,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/preserve-campaign-context-between-crew-and-play.svg)
+![Devlog illustration: Preserve campaign context between crew and play pages.](/blog/assets/visuals/illustrations/preserve-campaign-context-between-crew-and-play.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

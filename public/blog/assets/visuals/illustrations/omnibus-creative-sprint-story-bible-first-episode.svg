@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Devlog illustration for Omnibus creative sprint: story bible, first episode,...">
+  <rect width="1200" height="675" fill="#05070a"/>
+  <rect x="44" y="44" width="1112" height="587" fill="#0b1015" stroke="#ff2a6d" stroke-opacity="0.58"/>
+  <g opacity="0.18" stroke="#ff2a6d" stroke-width="1">
+    <path d="M80 120 H1120 M80 210 H1120 M80 300 H1120 M80 390 H1120 M80 480 H1120"/>
+    <path d="M160 72 V604 M320 72 V604 M480 72 V604 M640 72 V604 M800 72 V604 M960 72 V604"/>
+  </g>
+  <path d="M70 363 C 151 210, 597 520, 1120 250" fill="none" stroke="#ff2a6d" stroke-width="6" opacity="0.48"/>
+  <polyline points="82,376 151,298 597,402 913,355 1118,292" fill="none" stroke="#ff2a6d" stroke-width="3" opacity="0.78"/>
+  <rect x="90" y="432" width="34" height="113" fill="#ff2a6d" opacity="0.28"/>
+<rect x="158" y="369" width="34" height="176" fill="#ff2a6d" opacity="0.28"/>
+<rect x="226" y="432" width="34" height="113" fill="#ff2a6d" opacity="0.28"/>
+<rect x="294" y="464" width="34" height="81" fill="#ff2a6d" opacity="0.28"/>
+<rect x="362" y="480" width="34" height="65" fill="#ff2a6d" opacity="0.28"/>
+<rect x="430" y="488" width="34" height="57" fill="#ff2a6d" opacity="0.28"/>
+<rect x="498" y="397" width="34" height="148" fill="#ff2a6d" opacity="0.28"/>
+<rect x="566" y="351" width="34" height="194" fill="#ff2a6d" opacity="0.28"/>
+
+  <circle cx="980" cy="170" r="86" fill="none" stroke="#ff2a6d" stroke-width="7" opacity="0.42"/>
+  <circle cx="980" cy="170" r="34" fill="#ff2a6d" opacity="0.24"/>
+  <text x="82" y="122" fill="#ff2a6d" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="5">TERMINAL DECK FLOW</text>
+  <text x="82" y="210" fill="#e6edf3" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700">Omnibus creative sprint: story bible, first episode,...</text>
+  <text x="84" y="272" fill="#aeb8c5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20">This was not a code-heavy slice. It was the work that makes the code worth bu...</text>
+  <text x="82" y="588" fill="#ff2a6d" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="3">omnibus-creative-sprint-story-bible-first-episode</text>
+</svg>

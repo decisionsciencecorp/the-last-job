@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/publish-devlog-for-session-run-history-ledger.svg)
+![Devlog illustration: Publish devlog for session run-history ledger.](/blog/assets/visuals/illustrations/publish-devlog-for-session-run-history-ledger.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/run-aftermath.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

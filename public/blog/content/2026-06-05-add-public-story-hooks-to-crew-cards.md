@@ -62,6 +62,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-public-story-hooks-to-crew-cards.svg)
+![Devlog illustration: Add public story hooks to crew cards.](/blog/assets/visuals/illustrations/add-public-story-hooks-to-crew-cards.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

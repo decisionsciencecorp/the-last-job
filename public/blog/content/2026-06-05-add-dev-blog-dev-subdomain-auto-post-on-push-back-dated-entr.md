@@ -63,6 +63,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-dev-blog-dev-subdomain-auto-post-on-push-back-dated-entr.svg)
+![Devlog illustration: Add dev blog (dev subdomain) + auto-post on push + back-dated entries](/blog/assets/visuals/illustrations/add-dev-blog-dev-subdomain-auto-post-on-push-back-dated-entr.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

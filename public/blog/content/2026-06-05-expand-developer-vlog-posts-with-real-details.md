@@ -54,6 +54,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Illustrated build transmission: Expand developer vlog posts with real details.](/blog/assets/visuals/illustrations/auto-build.svg)
+![Devlog illustration: Expand developer vlog posts with real details.](/blog/assets/visuals/illustrations/expand-developer-vlog-posts-with-real-details.svg)
 
-![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/tune-narration-prefetch-endpoint-with-live-call-budget.svg)
+![Devlog illustration: Tune narration prefetch endpoint with live-call budget.](/blog/assets/visuals/illustrations/tune-narration-prefetch-endpoint-with-live-call-budget.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)

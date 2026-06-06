@@ -77,6 +77,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/deepen-narrative-hooks-across-jobs-and-city-flavor.svg)
+![Devlog illustration: Deepen narrative hooks across jobs and city flavor.](/blog/assets/visuals/illustrations/deepen-narrative-hooks-across-jobs-and-city-flavor.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: campaign dossier.](/blog/assets/visuals/screenshots/intel-dossier.png)

@@ -46,6 +46,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Illustrated build transmission: Make the first session terminal native.](/blog/assets/visuals/illustrations/auto-build.svg)
+![Devlog illustration: Make the first session terminal native.](/blog/assets/visuals/illustrations/make-the-first-session-terminal-native.svg)
 
-![Screenshot: Developer vlog index and build timeline.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: terminal deck flow.](/blog/assets/visuals/screenshots/home.png)

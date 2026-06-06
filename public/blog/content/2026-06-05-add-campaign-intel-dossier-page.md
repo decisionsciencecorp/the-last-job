@@ -64,6 +64,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-campaign-intel-dossier-page.svg)
+![Devlog illustration: Add campaign intel dossier page.](/blog/assets/visuals/illustrations/add-campaign-intel-dossier-page.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

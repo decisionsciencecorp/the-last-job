@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-narration-prefetch-api-for-cache-warming.svg)
+![Devlog illustration: Add narration prefetch API for cache warming.](/blog/assets/visuals/illustrations/add-narration-prefetch-api-for-cache-warming.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

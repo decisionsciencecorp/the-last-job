@@ -56,6 +56,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/backfill-visuals-for-latest-auto-devlogs.svg)
+![Devlog illustration: Backfill visuals for latest auto devlogs.](/blog/assets/visuals/illustrations/backfill-visuals-for-latest-auto-devlogs.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/intel-dossier.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

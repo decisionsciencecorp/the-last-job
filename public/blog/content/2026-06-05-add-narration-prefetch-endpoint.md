@@ -63,6 +63,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-narration-prefetch-endpoint.svg)
+![Devlog illustration: Add narration prefetch endpoint for cache warming.](/blog/assets/visuals/illustrations/add-narration-prefetch-endpoint.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

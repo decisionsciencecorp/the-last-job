@@ -85,6 +85,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/slice-3-job-loop.svg)
+![Devlog illustration: Slice #3: the job loop — crew, clock, aftermath, betrayals surface](/blog/assets/visuals/illustrations/slice-3-job-loop.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

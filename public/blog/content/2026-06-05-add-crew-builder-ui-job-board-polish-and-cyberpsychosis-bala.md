@@ -49,6 +49,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-crew-builder-ui-job-board-polish-and-cyberpsychosis-bala.svg)
+![Devlog illustration: Add crew builder UI, job board polish, and cyberpsychosis balance tool.](/blog/assets/visuals/illustrations/add-crew-builder-ui-job-board-polish-and-cyberpsychosis-bala.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/crew-builder.png)
+![Devlog screenshot: crew dossier surface.](/blog/assets/visuals/screenshots/crew-builder.png)

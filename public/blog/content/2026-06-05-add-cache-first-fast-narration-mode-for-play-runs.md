@@ -43,6 +43,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration](/blog/assets/visuals/illustrations/add-cache-first-fast-narration-mode-for-play-runs.svg)
+![Devlog illustration: Add cache-first fast narration mode for play runs.](/blog/assets/visuals/illustrations/add-cache-first-fast-narration-mode-for-play-runs.svg)
 
-![Devlog screenshot](/blog/assets/visuals/screenshots/job-board.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)
