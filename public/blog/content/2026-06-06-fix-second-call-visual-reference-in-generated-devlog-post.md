@@ -43,4 +43,4 @@ Files touched in this slice included:
 
 ![Devlog illustration: Fix second-call visual reference in generated devlog post.](/blog/assets/visuals/illustrations/fix-second-call-visual-reference-in-generated-devlog-post.svg)
 
-![Devlog screenshot: verification rig.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)
