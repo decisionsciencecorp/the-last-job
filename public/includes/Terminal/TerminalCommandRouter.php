@@ -560,6 +560,14 @@ final class TerminalCommandRouter
     /** @return string[] */
     private function file(TerminalState $state): array
     {
+        $stage = (string) $state->get('episode_stage', 'boot');
+        if ($stage === 'open_play' && $this->isCooldownActive($state)) {
+            return [
+                'FILE LOCK> cooldown protocol active. archive surface temporarily restricted.',
+                'next: `list contracts` or `status`',
+            ];
+        }
+
         $lines = ['--- shard.wall ---'];
         if ((bool) $state->get('first_shard_seen')) {
             $axes = $this->lifeAxes($state);
@@ -709,6 +717,9 @@ final class TerminalCommandRouter
     /** @return string[] */
     private function openPlaySuggestions(TerminalState $state): array
     {
+        if ($this->isCooldownActive($state)) {
+            return ['list contracts', 'inspect contract 1', 'status'];
+        }
         if (!$state->get('answered')) {
             return ['answer', 'let it ring', 'help'];
         }
