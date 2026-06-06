@@ -371,6 +371,15 @@ final class TerminalCommandRouter
         if (($stage === 'offer' || $stage === 'offer_locked') && (string) $state->get('first_contract_state', 'none') === 'none') {
             return ['choose `accept` or `negotiate` first.'];
         }
+        if ($stage === 'open_play') {
+            $packet = $this->followupPacketFromCommand($state, $command);
+            if (!$this->isPacketAllowedUnderCooldown($state, $packet)) {
+                return [
+                    'CHANNEL LIMIT> heat ceiling breached. only cooldown packets are authorized.',
+                    'next: `list contracts`',
+                ];
+            }
+        }
 
         $job = $this->resolveContract($state, $command);
         if (!$job instanceof Job) {
@@ -419,6 +428,11 @@ final class TerminalCommandRouter
             $state->set('episode_stage', 'wake_ready');
         } else {
             $state->set('episode_stage', 'open_play');
+            $remaining = max(0, (int) $state->get('cooldown_runs_remaining', 0));
+            if ($remaining > 0) {
+                $state->set('cooldown_runs_remaining', $remaining - 1);
+                $state->set('followup_packets', []);
+            }
         }
         $report['episode_contract'] = $isEpisodeContract;
         $report['life_axes'] = $axes;
@@ -571,12 +585,14 @@ final class TerminalCommandRouter
         $followupCount = is_array($followups) ? count($followups) : 0;
         $heat = max(0, min(5, (int) $state->get('heat', 0)));
         $pressure = max(0, min(5, (int) $state->get('pressure', 0)));
+        $cooldown = max(0, (int) $state->get('cooldown_runs_remaining', 0));
         return [
             'deck: awake',
             'episode stage: ' . (string) $state->get('episode_stage', 'boot'),
             'life axes: ' . implode(' / ', array_values($this->lifeAxes($state))),
             'second-call packets: ' . $followupCount,
             'risk track: heat ' . $heat . '/5, pressure ' . $pressure . '/5',
+            'cooldown runs remaining: ' . $cooldown,
             'fixer line: ' . ($state->get('answered') ? 'answered' : 'ringing'),
             'crew files: ' . ($state->get('crew_requested') ? 'received' : 'not requested'),
             'cash: ' . $state->eddies() . 'eb',
@@ -812,7 +828,13 @@ final class TerminalCommandRouter
     private function followupContractLines(TerminalState $state): array
     {
         $packets = $this->buildFollowupPackets($state, $this->lifeAxes($state));
-        $lines = ['--- second-call packets ---', 'VOICE> pick one. prove the first run was not luck.'];
+        $cooldown = $this->isCooldownActive($state);
+        $lines = ['--- second-call packets ---'];
+        if ($cooldown) {
+            $lines[] = 'VOICE> cooldown protocol active. keep your head down.';
+        } else {
+            $lines[] = 'VOICE> pick one. prove the first run was not luck.';
+        }
         foreach ($packets as $packet) {
             if (!is_array($packet)) {
                 continue;
@@ -827,7 +849,9 @@ final class TerminalCommandRouter
             );
             $lines[] = '    ' . (string) ($packet['brief'] ?? 'packet summary redacted');
         }
-        $lines[] = 'next: `inspect contract 1` or `run contract 1`';
+        $lines[] = $cooldown
+            ? 'next: `inspect contract 1` or `run contract 1` (cooldown lanes only)'
+            : 'next: `inspect contract 1` or `run contract 1`';
         return $lines;
     }
 
@@ -849,9 +873,12 @@ final class TerminalCommandRouter
 
         $heat = max(0, min(5, (int) $state->get('heat', 0)));
         $pressure = max(0, min(5, (int) $state->get('pressure', 0)));
+        if ($heat >= 5 && $pressure >= 4) {
+            $state->set('cooldown_runs_remaining', max(2, (int) $state->get('cooldown_runs_remaining', 0)));
+        }
         $axisTag = $axes['roots'] . '-' . $axes['method'] . '-' . $axes['bond'];
         $offset = (int) ((crc32($axisTag) + ($heat * 17) + ($pressure * 31)) % count($jobs));
-        $profiles = $this->followupProfiles($axes);
+        $profiles = $this->isCooldownActive($state) ? $this->cooldownProfiles() : $this->followupProfiles($axes);
         if ($heat >= 4) {
             $profiles[0]['name'] = 'Cooling Burn Sweep';
             $profiles[0]['brief'] = 'Lower-signature cleanup run while half the city is watching your wake.';
@@ -881,6 +908,7 @@ final class TerminalCommandRouter
                 'brief' => (string) ($profile['brief'] ?? $job->briefing),
                 'stakes' => (string) ($profile['stakes'] ?? $job->stakes),
                 'complication' => (string) ($profile['complication'] ?? $job->complication) . ' [heat ' . $heat . '/5 pressure ' . $pressure . '/5]',
+                'mode' => (string) ($profile['mode'] ?? 'normal'),
             ];
         }
 
@@ -929,6 +957,7 @@ final class TerminalCommandRouter
                 'complication' => 'Packet metadata rewrites every six minutes.',
                 'payout' => 4200,
                 'rep' => 1,
+                'mode' => 'normal',
             ],
             [
                 'name' => $methodName,
@@ -938,6 +967,7 @@ final class TerminalCommandRouter
                 'complication' => 'Counter-team expects your preferred style.',
                 'payout' => 4800,
                 'rep' => 2,
+                'mode' => 'normal',
             ],
             [
                 'name' => $bondName,
@@ -947,6 +977,34 @@ final class TerminalCommandRouter
                 'complication' => 'Someone in channel knows your intake answers.',
                 'payout' => 5200,
                 'rep' => 2,
+                'mode' => 'normal',
+            ],
+        ];
+    }
+
+    /** @return array<int,array<string,mixed>> */
+    private function cooldownProfiles(): array
+    {
+        return [
+            [
+                'name' => 'Dead Channel Sweep',
+                'fixer' => 'Unknown Voice',
+                'brief' => 'Burn disposable lines and wipe trace pivots before sunrise.',
+                'stakes' => 'If this fails, every old call path lights up at once.',
+                'complication' => 'One contact in the chain is already compromised.',
+                'payout' => 3000,
+                'rep' => 1,
+                'mode' => 'cooldown',
+            ],
+            [
+                'name' => 'Ghost Route Reset',
+                'fixer' => 'Unknown Voice',
+                'brief' => 'Move the team through three safehouse hops with zero repeat vectors.',
+                'stakes' => 'Lose one hop and your next week of work is burned.',
+                'complication' => 'Courier shows late; route clocks start anyway.',
+                'payout' => 3400,
+                'rep' => 1,
+                'mode' => 'cooldown',
             ],
         ];
     }
@@ -1127,6 +1185,11 @@ final class TerminalCommandRouter
         $pressure = max(0, min(5, $pressure + $deltaPressure));
         $state->set('heat', $heat);
         $state->set('pressure', $pressure);
+        if ($heat >= 5 && $pressure >= 4) {
+            $state->set('cooldown_runs_remaining', max(2, (int) $state->get('cooldown_runs_remaining', 0)));
+        } elseif ($heat <= 2) {
+            $state->set('cooldown_runs_remaining', 0);
+        }
         $state->set('followup_packets', []);
 
         return [
@@ -1135,6 +1198,23 @@ final class TerminalCommandRouter
             'delta_heat' => $deltaHeat,
             'delta_pressure' => $deltaPressure,
         ];
+    }
+
+    private function isCooldownActive(TerminalState $state): bool
+    {
+        return (int) $state->get('cooldown_runs_remaining', 0) > 0;
+    }
+
+    /** @param array<string,mixed>|null $packet */
+    private function isPacketAllowedUnderCooldown(TerminalState $state, ?array $packet): bool
+    {
+        if (!$this->isCooldownActive($state)) {
+            return true;
+        }
+        if (!is_array($packet)) {
+            return false;
+        }
+        return (string) ($packet['mode'] ?? 'normal') === 'cooldown';
     }
 
     private function openPlayWakeRiskLine(int $heat, int $pressure): string

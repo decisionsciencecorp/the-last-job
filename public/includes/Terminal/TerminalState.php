@@ -36,6 +36,7 @@ final class TerminalState
             'selected_followup_contract' => null,
             'heat' => 0,
             'pressure' => 0,
+            'cooldown_runs_remaining' => 0,
             'history' => [],
         ]);
     }
