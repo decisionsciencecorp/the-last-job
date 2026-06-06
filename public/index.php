@@ -20,51 +20,58 @@ use function LastJob\layout_footer;
 
 layout_header('The Deck', 'deck');
 ?>
-<section class="deck-shell" aria-labelledby="deck-title">
-    <p class="deck-kicker">Runner cyberdeck / first contact</p>
-    <h1 id="deck-title" class="deck-title">The Deck</h1>
-
-    <div class="flow-rail" aria-label="First-session flow">
-        <div class="flow-step active">Boot Deck</div>
-        <div class="flow-step ready">Take Call</div>
-        <div class="flow-step">Answer Intake</div>
-        <div class="flow-step">Read Contract</div>
-        <div class="flow-step">Jack In</div>
+<section class="terminal-screen" aria-labelledby="deck-title">
+    <div class="terminal-bar">
+        <span>tty://night-city/localdeck</span>
+        <a href="#deck-ready">skip intro</a>
     </div>
 
-    <div class="deck-grid">
-        <section class="deck-panel" aria-labelledby="deck-boot">
-            <p class="deck-kicker" id="deck-boot">Deck status</p>
-            <div class="terminal-lines">
-                <p>&gt; deck online. checking the wire.</p>
-                <p>&gt; 1 new call — fixer: ANIMAL</p>
+    <pre class="boot-sequence" aria-label="Skippable intro boot sequence"><span data-boot-line>[00.000] power reroute: motel wall jack / unstable</span>
+<span data-boot-line>[00.217] loading city map: watson, heywood, combat zone fragments</span>
+<span data-boot-line>[00.409] warning: corporate mesh watching public grids</span>
+<span data-boot-line>[00.633] fixer relay found: ANIMAL / encrypted / paid in advance</span>
+<span data-boot-line>[00.901] context: you are not browsing jobs. you are answering a line.</span>
+<span data-boot-line>[01.144] rule: no crew contact until the fixer makes the intro.</span>
+<span data-boot-line>[01.388] deck ready. city breathing behind the glass.</span></pre>
+
+    <div id="deck-ready" class="terminal-grid">
+        <section class="terminal-pane terminal-pane-primary" aria-labelledby="deck-title">
+            <p class="terminal-path">~/lastjob/deck</p>
+            <h1 id="deck-title">login: runner</h1>
+            <p class="terminal-copy">Night City does not hand you a menu. It opens a channel, names a price, and waits for you to make the first mistake.</p>
+
+            <div class="terminal-log">
+                <p><span class="prompt">$</span> wake deck</p>
+                <p><span class="system-ok">OK</span> handshake with fixer relay</p>
+                <p><span class="system-warn">RING</span> ANIMAL wants to assemble a crew through you</p>
+                <p><span class="system-dim">NOTE</span> the team does not know you yet. the fixer does.</p>
             </div>
-            <p class="lead">The city already sold you out. Take the line, read the contract, and decide who you trust least.</p>
-            <div class="deck-cta-row">
-                <a class="deck-cta" href="/play.php?wire=call">Take Call</a>
-                <a class="deck-cta secondary" href="/play.php?wire=ring">Let It Ring</a>
+
+            <div class="terminal-actions" aria-label="First actions">
+                <a class="terminal-command" href="/play.php?wire=call">run take-call</a>
+                <a class="terminal-command secondary" href="/play.php?wire=ring">run let-it-ring</a>
+                <a class="terminal-command secondary" href="/crew.php?via=fixer">open fixer.roster</a>
             </div>
-            <p class="context-line">Context line: calls are text comms in the Wire. No audio pipeline, no generated voice files, no dashboard setup.</p>
         </section>
 
-        <section class="wire-panel" aria-labelledby="wire-preview">
-            <p class="deck-kicker" id="wire-preview">The Wire / active line</p>
-            <div class="wire-status">
-                <span>signal: encrypted</span>
-                <span>carrier: watson-relay-3</span>
-                <span>ambient: rain / jukebox</span>
+        <aside class="terminal-pane" aria-labelledby="intro-title">
+            <p class="terminal-path">incoming/world.txt</p>
+            <h2 id="intro-title">before you answer</h2>
+            <div class="terminal-log">
+                <p>Arasaka still casts a shadow even when nobody says the name.</p>
+                <p>Militech buys futures by killing the people who remember alternatives.</p>
+                <p>Your fixer is not your friend. Your fixer is the only reason the crew will pick up.</p>
+                <p>The last job is not available yet. The city has to teach you what it costs first.</p>
             </div>
-            <div class="waveform" aria-hidden="true"></div>
-            <div class="wire-log">
-                <p><strong>ANIMAL</strong> &gt; you free, or just standing around the booth?</p>
-                <p><strong>ANIMAL</strong> &gt; got a mid-level job on the waterfront.</p>
-                <p><strong>ANIMAL</strong> &gt; bring a runner or get loud.</p>
-            </div>
-            <div class="wire-contract-teaser">
-                <strong>Contract teaser: NCART waterfront / 8k / heat low</strong>
-                <span class="muted">Next: open the contract packet, not a table of rows.</span>
-            </div>
-        </section>
+        </aside>
     </div>
 </section>
+<script>
+(() => {
+    const lines = document.querySelectorAll('[data-boot-line]');
+    lines.forEach((line, index) => {
+        line.style.animationDelay = `${index * 220}ms`;
+    });
+})();
+</script>
 <?php layout_footer(); ?>

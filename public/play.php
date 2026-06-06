@@ -162,30 +162,45 @@ $clock = $report['clock'] ?? null;
 
 layout_header('The Wire', 'wire');
 ?>
-<h1>The Wire</h1>
-<p class="lead">Fixers do not file tickets. They put a line on your deck, name the risk, and wait to see if you blink.</p>
-<?php if (isset($_GET['wire'])): ?>
-<section class="wire-panel" style="margin:1rem 0 1.5rem;" aria-label="Fixer on the line">
-    <div class="wire-status">
-        <span>signal: encrypted</span>
-        <span>fixer: ANIMAL</span>
-        <span>carrier: watson-relay-3</span>
+<section class="terminal-screen" aria-labelledby="wire-title">
+    <div class="terminal-bar">
+        <span>tty://fixer-relay/wire</span>
+        <a href="/crew.php?via=fixer">request crew files</a>
     </div>
-    <div class="waveform" aria-hidden="true"></div>
-    <div class="wire-log">
-        <?php if ((string) $_GET['wire'] === 'ring'): ?>
-            <p><strong>WIRE</strong> &gt; line dropped. rain fills the channel.</p>
-            <p><strong>WIRE</strong> &gt; another fixer will call. different taste, same city.</p>
-        <?php else: ?>
-            <p><strong>ANIMAL</strong> &gt; you free, or just standing around the booth?</p>
-            <p><strong>ANIMAL</strong> &gt; got a job. mid-level. waterfront district.</p>
-            <p><strong>ANIMAL</strong> &gt; bring a runner or get loud.</p>
-        <?php endif; ?>
+    <div class="terminal-grid">
+        <section class="terminal-pane terminal-pane-primary" aria-label="Fixer on the line">
+            <p class="terminal-path">~/wire/session</p>
+            <h1 id="wire-title">fixer line</h1>
+            <div class="terminal-log">
+                <?php if (isset($_GET['wire']) && (string) $_GET['wire'] === 'ring'): ?>
+                    <p><span class="system-warn">RING</span> line dropped. rain fills the channel.</p>
+                    <p><span class="system-dim">WIRE</span> another fixer will call. different taste, same city.</p>
+                <?php else: ?>
+                    <p><span class="system-ok">LINK</span> encrypted relay / watson-relay-3</p>
+                    <p><strong>ANIMAL</strong> &gt; you free, or just standing around the booth?</p>
+                    <p><strong>ANIMAL</strong> &gt; got a job. mid-level. waterfront district.</p>
+                    <p><strong>ANIMAL</strong> &gt; bring a runner or get loud.</p>
+                    <p><strong>YOU</strong> &gt; i need files on the crew first.</p>
+                    <p><strong>ANIMAL</strong> &gt; then ask for files. don't call them direct.</p>
+                <?php endif; ?>
+            </div>
+            <div class="terminal-actions">
+                <a class="terminal-command" href="/crew.php?via=fixer&seed=<?= (int) $seed ?>&campaign=<?= $useCampaign ? 1 : 0 ?>&street_cred=<?= (int) $streetCred ?>">request crew files</a>
+                <a class="terminal-command secondary" href="#contract-packets">list contract packets</a>
+            </div>
+        </section>
+        <aside class="terminal-pane">
+            <p class="terminal-path">session/state</p>
+            <div class="terminal-log">
+                <p><span class="system-ok">cred</span> <?= (int) $campaignState['street_cred'] ?></p>
+                <p><span class="system-ok">cash</span> <?= (int) $campaignState['eddies'] ?>eb</p>
+                <p><span class="system-dim">mode</span> <?= $useCampaign ? 'live timeline' : 'replay sandbox' ?></p>
+            </div>
+        </aside>
     </div>
 </section>
-<?php endif; ?>
-<div class="clock-panel" style="margin:1rem 0;">
-    <strong>Deck status</strong>
+<details class="deck-debug">
+    <summary>wallet / timeline readout</summary>
     <div class="meta-row">
         <span>Eddies <?= (int) $campaignState['eddies'] ?></span>
         <span>Rep <?= (int) $campaignState['street_cred'] ?></span>
@@ -194,7 +209,7 @@ layout_header('The Wire', 'wire');
     <?php if ($campaignNotice): ?>
         <p class="status-ok" style="margin:.35rem 0 0;"><?= layout_h($campaignNotice) ?></p>
     <?php endif; ?>
-</div>
+</details>
 <?php if ($runHistory !== []): ?>
 <div class="clock-panel" style="margin:1rem 0;">
     <strong>Recent wakes</strong>
@@ -249,7 +264,7 @@ layout_header('The Wire', 'wire');
         </div>
     </details>
 
-    <h2>Contracts</h2>
+    <h2 id="contract-packets">contract packets</h2>
     <div class="job-grid">
         <?php foreach ($jobs as $j): ?>
             <?php $locked = !($jobUnlocked[$j->id] ?? false); ?>

@@ -27,15 +27,16 @@ function layout_header(string $title, string $active = ''): void
 </head>
 <body>
 <header class="site-header"><div class="wrap">
-    <a class="brand" href="/"><span class="brand-title">THE LAST JOB</span></a>
+    <a class="brand" href="/"><span class="brand-title">./lastjob</span></a>
     <nav class="nav">
-        <?= $nav('/', 'Deck', 'deck') ?>
-        <?= $nav('/play.php', 'Wire', 'wire') ?>
-        <?= $nav('/crew.php', 'Booth', 'booth') ?>
-        <?= $nav('/crew.php#chair', 'Chair', 'chair') ?>
-        <?= $nav('/play.php#run', 'Run', 'run') ?>
-        <?= $nav('/intel.php', 'File', 'file') ?>
-        <?= $nav('/play.php#wake', 'Wake', 'wake') ?>
+        <span class="nav-prefix">cmd:</span>
+        <?= $nav('/', 'deck', 'deck') ?>
+        <?= $nav('/play.php', 'wire', 'wire') ?>
+        <?= $nav('/crew.php', 'fixer.roster', 'booth') ?>
+        <?= $nav('/crew.php#chair', 'chair', 'chair') ?>
+        <?= $nav('/play.php#run', 'run', 'run') ?>
+        <?= $nav('/intel.php', 'file', 'file') ?>
+        <?= $nav('/play.php#wake', 'wake', 'wake') ?>
     </nav>
 </div></header>
 <main class="wrap game-main">

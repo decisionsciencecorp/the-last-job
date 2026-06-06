@@ -49,11 +49,36 @@ $crew = (new CrewBuilder($rules, new Rng($seed)))->build($rolePick);
 
 layout_header('The Booth', 'booth');
 ?>
-<h1>The Booth</h1>
-<p class="lead">Crew dossiers live here. Pick the seats, read the hooks, and decide who can carry chrome without disappearing into it.</p>
+<section class="terminal-screen" aria-labelledby="booth-title">
+    <div class="terminal-bar">
+        <span>tty://fixer-relay/crew-intake</span>
+        <a href="/play.php?wire=call">return to wire</a>
+    </div>
+    <div class="terminal-grid">
+        <section class="terminal-pane terminal-pane-primary">
+            <p class="terminal-path">~/wire/fixer.roster</p>
+            <h1 id="booth-title">crew through the fixer</h1>
+            <p class="terminal-copy">You do not cold-call solos and netrunners. The fixer vouches, filters, lies by omission, and slides you the CVs that will not get everyone killed tonight.</p>
+            <div class="fixer-dialogue" aria-label="Fixer dialogue">
+                <p><strong>ANIMAL</strong> &gt; you want a team? i make the introductions.</p>
+                <p><strong>ANIMAL</strong> &gt; you get dossiers first. names, tells, debts, heat. no direct line until they say yes.</p>
+                <p><strong>YOU</strong> &gt; send the files.</p>
+                <p><strong>ANIMAL</strong> &gt; already did. read before you trust anybody.</p>
+            </div>
+        </section>
+        <aside class="terminal-pane">
+            <p class="terminal-path">rules/current</p>
+            <div class="terminal-log">
+                <p><span class="system-ok">OK</span> fixer-mediated contact only</p>
+                <p><span class="system-dim">HIDDEN</span> raw stat blocks are mechanical readouts</p>
+                <p><span class="system-warn">WARN</span> chrome history changes how people break</p>
+            </div>
+        </aside>
+    </div>
+</section>
 
 <details class="deck-debug">
-    <summary>Deck controls / replay setup</summary>
+    <summary>Ask fixer for a different roster</summary>
     <form class="form-grid" method="get">
         <input type="hidden" name="campaign" value="<?= $campaign === 0 ? 0 : 1 ?>">
         <input type="hidden" name="street_cred" value="<?= (int) $streetCred ?>">
@@ -72,7 +97,7 @@ layout_header('The Booth', 'booth');
             </label>
         <?php endfor; ?>
 
-        <button type="submit" name="roll" value="1">Pin new dossiers</button>
+        <button type="submit" name="roll" value="1">Ask fixer again</button>
     </form>
 </details>
 
@@ -84,8 +109,8 @@ layout_header('The Booth', 'booth');
     }
     ?>
     <div class="actions-row">
-        <a class="btn" href="/play.php?<?= layout_h(http_build_query($playParams)) ?>">Go to the Wire</a>
-        <a class="btn btn-secondary" href="/play.php?<?= layout_h(http_build_query($playParams + ['run' => 1])) ?>">Jack in now</a>
+        <a class="btn" href="/play.php?<?= layout_h(http_build_query($playParams + ['wire' => 'call'])) ?>">Answer through fixer</a>
+        <a class="btn btn-secondary" href="/play.php?<?= layout_h(http_build_query($playParams)) ?>">Open contract packets</a>
     </div>
 
     <form method="get">
@@ -115,24 +140,18 @@ layout_header('The Booth', 'booth');
                 default => 'status-bad',
             };
         ?>
-            <article class="crew-card">
-                <div class="role"><?= layout_h($c['role']) ?></div>
+            <article class="crew-card dossier-card">
+                <div class="role">file <?= $idx + 1 ?> / <?= layout_h($c['role']) ?></div>
                 <h3><?= layout_h($c['handle']) ?></h3>
-                <p class="muted"><?= layout_h((string) $c['personality']) ?> · <?= layout_h((string) $c['origin']) ?></p>
+                <p class="muted">CV extract: <?= layout_h((string) $c['personality']) ?>. Last stable origin trace: <?= layout_h((string) $c['origin']) ?>.</p>
                 <?php if (!empty($c['public_hook'])): ?>
                     <p class="crew-hook"><?= layout_h((string) $c['public_hook']) ?></p>
                 <?php endif; ?>
 
-                <div class="stat-pills">
-                    <?php foreach ($member->stats as $stat => $val): ?>
-                        <span><?= layout_h(strtoupper($stat)) ?> <?= (int) $val ?></span>
-                    <?php endforeach; ?>
-                </div>
-
-                <div class="lifepath-details">
+                <div class="intel-fragments">
                     <div><strong>Family:</strong> <?= layout_h((string) $c['family']) ?></div>
                     <?php if (!empty($c['life_events'])): ?>
-                        <div><strong>Life events</strong>
+                        <div><strong>Fixer notes</strong>
                             <ul>
                                 <?php foreach ($c['life_events'] as $ev): ?>
                                     <li><?= layout_h((string) $ev) ?></li>
@@ -141,15 +160,24 @@ layout_header('The Booth', 'booth');
                         </div>
                     <?php endif; ?>
                     <?php if (!empty($c['contacts'])): ?>
-                        <div><strong>Contacts:</strong> <?= layout_h(implode(', ', $c['contacts'])) ?></div>
+                        <div><strong>People who still answer:</strong> <?= layout_h(implode(', ', $c['contacts'])) ?></div>
                     <?php endif; ?>
                     <?php if (!empty($c['enemies'])): ?>
-                        <div><strong>Enemies:</strong> <?= layout_h(implode(', ', $c['enemies'])) ?></div>
+                        <div><strong>People who might show up:</strong> <?= layout_h(implode(', ', $c['enemies'])) ?></div>
                     <?php endif; ?>
                 </div>
 
-                <div class="chrome-section" id="<?= $idx === 0 ? 'chair' : 'chair-' . $idx ?>">
-                    <strong>The Chair</strong>
+                <details class="mechanical-readout">
+                    <summary>mechanical readout</summary>
+                    <div class="stat-pills">
+                        <?php foreach ($member->stats as $stat => $val): ?>
+                            <span><?= layout_h(strtoupper($stat)) ?> <?= (int) $val ?></span>
+                        <?php endforeach; ?>
+                    </div>
+                </details>
+
+                <details class="chrome-section" id="<?= $idx === 0 ? 'chair' : 'chair-' . $idx ?>">
+                    <summary>ripperdoc appendix / mechanical loadout</summary>
                     <div class="humanity-bar-wrap">
                         <div class="meta-row">
                             <span>Humanity <?= (int) $h['current_humanity'] ?> / <?= (int) $h['max_humanity'] ?></span>
@@ -194,7 +222,7 @@ layout_header('The Booth', 'booth');
                             </ul>
                         </details>
                     <?php endif; ?>
-                </div>
+                </details>
             </article>
         <?php endforeach; ?>
         </div>

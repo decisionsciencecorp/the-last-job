@@ -17,6 +17,7 @@ body {
         radial-gradient(circle at 12% -10%, rgba(5, 217, 232, .12), transparent 32rem),
         radial-gradient(circle at 86% 0%, rgba(255, 42, 109, .10), transparent 30rem),
         linear-gradient(180deg, #05070a, var(--deck-bg));
+    font-family: var(--mono);
 }
 
 .game-main {
@@ -83,7 +84,7 @@ body {
 .btn {
     font: inherit;
     padding: .55rem .75rem;
-    border-radius: 8px;
+    border-radius: 0;
     border: 1px solid var(--line);
     background: #0d1117;
     color: var(--text);
@@ -163,7 +164,7 @@ body {
 .job-card,
 .intel-card {
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 0;
     padding: 1rem 1.1rem;
     background: var(--panel);
 }
@@ -257,6 +258,12 @@ body {
     border-top: 1px dashed var(--line);
 }
 
+.chrome-section > summary {
+    color: var(--deck-muted);
+    cursor: pointer;
+    font: 12px/1.4 var(--mono);
+}
+
 .chrome-pick {
     display: grid;
     gap: .35rem;
@@ -302,6 +309,8 @@ body {
 .job-card {
     cursor: pointer;
     transition: border-color .15s;
+    background: rgba(2, 4, 5, .86);
+    border-color: rgba(57, 255, 20, .18);
 }
 
 .job-card.locked {
@@ -311,8 +320,8 @@ body {
 }
 
 .job-card:has(input:checked) {
-    border-color: var(--accent2);
-    box-shadow: 0 0 0 1px #1f6feb55 inset;
+    border-color: var(--deck-green);
+    box-shadow: 0 0 0 1px rgba(57, 255, 20, .22) inset;
 }
 
 .job-card input[type="radio"] {
@@ -329,7 +338,7 @@ body {
 .job-tags span {
     font-size: .75rem;
     padding: .15rem .45rem;
-    border-radius: 999px;
+    border-radius: 0;
     background: #21262d;
     color: var(--muted);
 }
@@ -390,7 +399,7 @@ body {
 
 .clock-panel {
     border: 1px solid var(--line);
-    border-radius: 10px;
+    border-radius: 0;
     padding: 1rem;
     background: var(--panel);
 }
@@ -454,6 +463,236 @@ body {
 .site-footer a {
     color: var(--deck-blue);
     text-decoration: none;
+}
+
+.site-header {
+    background: rgba(2, 4, 5, .94);
+    border-bottom-color: rgba(57, 255, 20, .22);
+}
+
+.site-header .wrap {
+    min-height: 3.65rem;
+}
+
+.brand-title {
+    color: var(--deck-green);
+    font-size: 1rem;
+    letter-spacing: .02em;
+    text-transform: none;
+}
+
+.nav-prefix {
+    color: var(--deck-muted);
+    font: 12px/1 var(--mono);
+}
+
+.nav a {
+    border: 0;
+    border-radius: 0;
+    min-width: 0;
+    padding: .25rem .4rem;
+}
+
+.nav a::before {
+    content: "./";
+    color: var(--deck-muted);
+}
+
+.nav a.active {
+    background: rgba(57, 255, 20, .08);
+    box-shadow: none;
+    color: var(--deck-green);
+}
+
+.terminal-screen {
+    border: 1px solid rgba(57, 255, 20, .28);
+    background:
+        linear-gradient(rgba(57, 255, 20, .025) 50%, rgba(0, 0, 0, .1) 50%),
+        #020405;
+    background-size: 100% 4px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .025), 0 0 42px rgba(57, 255, 20, .07);
+    color: var(--deck-text);
+    font-family: var(--mono);
+    margin: .75rem 0 2rem;
+    min-height: calc(100vh - 9rem);
+    padding: 0;
+}
+
+.terminal-bar {
+    align-items: center;
+    border-bottom: 1px solid rgba(57, 255, 20, .24);
+    color: var(--deck-muted);
+    display: flex;
+    font-size: .78rem;
+    justify-content: space-between;
+    padding: .65rem .85rem;
+}
+
+.terminal-bar a {
+    color: var(--deck-blue);
+    text-decoration: none;
+}
+
+.boot-sequence {
+    border-bottom: 1px solid rgba(57, 255, 20, .18);
+    color: var(--deck-green);
+    font: 13px/1.65 var(--mono);
+    margin: 0;
+    min-height: 12rem;
+    overflow: hidden;
+    padding: 1rem;
+    white-space: pre-wrap;
+}
+
+.boot-sequence span {
+    display: block;
+    opacity: 0;
+    transform: translateY(.2rem);
+    animation: bootLine .18s steps(1, end) forwards;
+}
+
+@keyframes bootLine {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.terminal-grid {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+@media (min-width: 900px) {
+    .terminal-grid {
+        grid-template-columns: minmax(0, 1.35fr) minmax(18rem, .65fr);
+    }
+}
+
+.terminal-pane {
+    border: 1px solid rgba(57, 255, 20, .22);
+    background: rgba(1, 8, 8, .75);
+    padding: 1rem;
+}
+
+.terminal-pane-primary {
+    border-color: rgba(57, 255, 20, .42);
+}
+
+.terminal-path {
+    color: var(--deck-blue);
+    font: 12px/1 var(--mono);
+    margin: 0 0 .65rem;
+}
+
+.terminal-pane h1,
+.terminal-pane h2 {
+    color: var(--deck-green);
+    font-family: var(--mono);
+    font-size: clamp(1.3rem, 5vw, 2rem);
+    letter-spacing: .02em;
+    margin: 0 0 .85rem;
+    text-transform: none;
+}
+
+.terminal-copy {
+    color: var(--deck-text);
+    max-width: 62ch;
+}
+
+.terminal-log {
+    color: var(--deck-text);
+    font: 13px/1.7 var(--mono);
+    margin: 1rem 0;
+}
+
+.terminal-log p {
+    margin: .2rem 0;
+}
+
+.prompt,
+.system-ok {
+    color: var(--deck-green);
+}
+
+.system-warn {
+    color: var(--deck-yellow);
+}
+
+.system-dim {
+    color: var(--deck-muted);
+}
+
+.terminal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-top: 1rem;
+}
+
+.terminal-command {
+    border: 1px solid rgba(57, 255, 20, .42);
+    color: var(--deck-green);
+    display: inline-block;
+    font: 13px/1 var(--mono);
+    padding: .75rem .9rem;
+    text-decoration: none;
+}
+
+.terminal-command::before {
+    content: "$ ";
+    color: var(--deck-muted);
+}
+
+.terminal-command.secondary {
+    border-color: rgba(5, 217, 232, .28);
+    color: var(--deck-blue);
+}
+
+.fixer-dialogue {
+    border: 1px solid rgba(57, 255, 20, .28);
+    background: #020405;
+    font-family: var(--mono);
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+.fixer-dialogue p {
+    margin: .25rem 0;
+}
+
+.fixer-dialogue strong {
+    color: var(--deck-yellow);
+}
+
+.dossier-card {
+    border-color: rgba(57, 255, 20, .20);
+    background: rgba(2, 4, 5, .86);
+    border-radius: 0;
+}
+
+.dossier-card .role {
+    color: var(--deck-blue);
+}
+
+.dossier-card h3 {
+    color: var(--deck-green);
+    font-family: var(--mono);
+}
+
+.intel-fragments {
+    border-top: 1px dashed rgba(57, 255, 20, .2);
+    color: var(--deck-muted);
+    font: 13px/1.55 var(--mono);
+    margin-top: .8rem;
+    padding-top: .8rem;
+}
+
+.mechanical-readout summary {
+    color: var(--deck-muted);
+    cursor: pointer;
+    font: 12px/1.3 var(--mono);
 }
 
 .deck-shell {
@@ -649,9 +888,9 @@ body {
 
 .deck-debug {
     border: 1px solid var(--deck-line);
-    border-radius: 12px;
     margin: 1rem 0;
     padding: .8rem 1rem;
+    background: rgba(2, 4, 5, .72);
 }
 
 .deck-debug summary {
