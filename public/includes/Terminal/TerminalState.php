@@ -32,6 +32,8 @@ final class TerminalState
             'walked_once' => false,
             'first_shard_seen' => false,
             'second_call_seen' => false,
+            'followup_packets' => [],
+            'selected_followup_contract' => null,
             'history' => [],
         ]);
     }

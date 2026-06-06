@@ -195,6 +195,10 @@ def assert_terminal_sequence(base: str) -> None:
         ("wake", "wake.after_action"),
         ("file", "shard.ncart.empty-cage"),
         ("answer next call", "package was empty"),
+        ("list contracts", "second-call packets"),
+        ("inspect contract 2", "contract.packet fup.2"),
+        ("run contract 2", "second-call channel open"),
+        ("wake", "wake.after_action"),
     ]
     for command, expected in expectations:
         request = Request(

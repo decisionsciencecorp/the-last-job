@@ -247,6 +247,9 @@ final class TerminalCommandRouter
         if ($stage === 'offer' || $stage === 'offer_locked') {
             return $this->episodeOfferLines();
         }
+        if ($stage === 'open_play') {
+            return $this->followupContractLines($state);
+        }
 
         $lines = ['--- contract packets visible to current rep ---'];
         $jobs = $this->availableJobs($state);
@@ -281,6 +284,25 @@ final class TerminalCommandRouter
                 'stakes: package in a Faraday cage. no listed weight.',
                 'complication: camera loop is six seconds. guard change is too clean.',
                 'next: `accept` | `negotiate` | `walk`',
+            ];
+        }
+        if ($stage === 'open_play') {
+            $packet = $this->followupPacketFromCommand($state, $command);
+            if (!is_array($packet)) {
+                return ['no such second-call packet. try `list contracts`.'];
+            }
+            $state->set('selected_contract', (string) $packet['id']);
+            $state->set('selected_followup_contract', (string) $packet['id']);
+            return [
+                '--- contract.packet ' . (string) $packet['id'] . ' ---',
+                'name: ' . (string) $packet['name'],
+                'fixer: ' . (string) $packet['fixer'],
+                'payout: ' . (int) ($packet['payout'] ?? 0) . 'eb',
+                'rep gate: ' . (int) ($packet['rep'] ?? 0),
+                'brief: ' . (string) ($packet['brief'] ?? 'redacted'),
+                'stakes: ' . (string) ($packet['stakes'] ?? 'unknown'),
+                'complication: ' . (string) ($packet['complication'] ?? 'none reported'),
+                'next: `run contract ' . (int) ($packet['number'] ?? 1) . '`',
             ];
         }
 
@@ -377,19 +399,27 @@ final class TerminalCommandRouter
         if ($axisBonus['rep'] > 0) {
             $state->set('street_cred', $state->streetCred() + $axisBonus['rep']);
         }
-        $state->set('first_shard_seen', true);
-        $state->set('episode_stage', 'wake_ready');
-        $report['episode_contract'] = true;
+        $isEpisodeContract = in_array($stage, ['offer', 'offer_locked'], true);
+        if ($isEpisodeContract) {
+            $state->set('first_shard_seen', true);
+            $state->set('episode_stage', 'wake_ready');
+        } else {
+            $state->set('episode_stage', 'open_play');
+        }
+        $report['episode_contract'] = $isEpisodeContract;
         $report['life_axes'] = $axes;
         $report['axis_bonus_eddies'] = $axisBonus['eddies'];
         $report['axis_bonus_rep'] = $axisBonus['rep'];
         $state->set('last_report', $report);
 
-        $lines = ['--- run episode.ncart ---'];
-        if (($report['episode_contract'] ?? false) === true) {
+        $lines = ['--- run ' . $job->id . ' ---'];
+        if ($isEpisodeContract) {
             $lines[] = '> ncart platform 6 smells like rain and brake dust.';
             $lines[] = '> cage sits under a bench where cameras pretend not to look.';
             $lines[] = 'TILDE> loop is six seconds. maybe seven if kojo is right.';
+            $lines[] = $this->runMethodLine($axes);
+        } else {
+            $lines[] = '> second-call channel open. no fixer watermark.';
             $lines[] = $this->runMethodLine($axes);
         }
         $lines = array_merge($lines, [
@@ -406,10 +436,15 @@ final class TerminalCommandRouter
         if ($axisBonus['eddies'] > 0 || $axisBonus['rep'] > 0) {
             $lines[] = 'edge: lifepath read paid out (' . $axisBonus['eddies'] . 'eb / rep+' . $axisBonus['rep'] . ').';
         }
-        $lines[] = '> you lift the cage.';
-        $lines[] = '> it is lighter than it should be.';
-        $lines[] = "TILDE> don't open it there.";
-        $lines[] = 'next: `wake` or `file`';
+        if ($isEpisodeContract) {
+            $lines[] = '> you lift the cage.';
+            $lines[] = '> it is lighter than it should be.';
+            $lines[] = "TILDE> don't open it there.";
+            $lines[] = 'next: `wake` or `file`';
+        } else {
+            $lines[] = 'VOICE> you still breathing? good.';
+            $lines[] = 'next: `wake` or `list contracts`';
+        }
         return $lines;
     }
 
@@ -481,10 +516,13 @@ final class TerminalCommandRouter
     /** @return string[] */
     private function status(TerminalState $state): array
     {
+        $followups = $state->get('followup_packets', []);
+        $followupCount = is_array($followups) ? count($followups) : 0;
         return [
             'deck: awake',
             'episode stage: ' . (string) $state->get('episode_stage', 'boot'),
             'life axes: ' . implode(' / ', array_values($this->lifeAxes($state))),
+            'second-call packets: ' . $followupCount,
             'fixer line: ' . ($state->get('answered') ? 'answered' : 'ringing'),
             'crew files: ' . ($state->get('crew_requested') ? 'received' : 'not requested'),
             'cash: ' . $state->eddies() . 'eb',
@@ -510,6 +548,12 @@ final class TerminalCommandRouter
     private function resolveContract(TerminalState $state, string $command): ?Job
     {
         $stage = (string) $state->get('episode_stage', 'boot');
+        if ($stage === 'open_play') {
+            $packet = $this->followupPacketFromCommand($state, $command);
+            if (is_array($packet) && isset($packet['job_id']) && is_string($packet['job_id'])) {
+                return $this->rules->job($packet['job_id']);
+            }
+        }
         if ($stage === 'offer' || $stage === 'offer_locked' || (string) $state->get('selected_contract') === 'episode.ncart') {
             $token = trim((string) preg_replace('/^(inspect|run) contract\s*/', '', $command));
             if ($token === '' || $token === '1' || $token === 'episode.ncart') {
@@ -700,6 +744,7 @@ final class TerminalCommandRouter
         $axes = $this->lifeAxes($state);
         $state->set('episode_stage', 'open_play');
         $state->set('second_call_seen', true);
+        $state->set('followup_packets', $this->buildFollowupPackets($state, $axes));
         return [
             '> you do not recognize the number.',
             '> you answer anyway.',
@@ -707,6 +752,157 @@ final class TerminalCommandRouter
             'VOICE> we like how you work: ' . $axes['method'] . '. keep it that way.',
             'next: `list contracts`',
         ];
+    }
+
+    /** @return string[] */
+    private function followupContractLines(TerminalState $state): array
+    {
+        $packets = $this->buildFollowupPackets($state, $this->lifeAxes($state));
+        $lines = ['--- second-call packets ---', 'VOICE> pick one. prove the first run was not luck.'];
+        foreach ($packets as $packet) {
+            if (!is_array($packet)) {
+                continue;
+            }
+            $lines[] = sprintf(
+                '[%d] %s / fixer:%s / %deb / rep+%d',
+                (int) ($packet['number'] ?? 1),
+                (string) ($packet['name'] ?? 'unknown'),
+                (string) ($packet['fixer'] ?? 'unknown'),
+                (int) ($packet['payout'] ?? 0),
+                (int) ($packet['rep'] ?? 0),
+            );
+            $lines[] = '    ' . (string) ($packet['brief'] ?? 'packet summary redacted');
+        }
+        $lines[] = 'next: `inspect contract 1` or `run contract 1`';
+        return $lines;
+    }
+
+    /**
+     * @param array{roots:string,method:string,bond:string} $axes
+     * @return array<int,array<string,mixed>>
+     */
+    private function buildFollowupPackets(TerminalState $state, array $axes): array
+    {
+        $existing = $state->get('followup_packets', []);
+        if (is_array($existing) && $existing !== []) {
+            return array_values(array_filter($existing, 'is_array'));
+        }
+
+        $jobs = $this->availableJobs($state);
+        if ($jobs === []) {
+            return [];
+        }
+
+        $axisTag = $axes['roots'] . '-' . $axes['method'] . '-' . $axes['bond'];
+        $offset = (int) (crc32($axisTag) % count($jobs));
+        $profiles = $this->followupProfiles($axes);
+
+        $packets = [];
+        foreach ($profiles as $idx => $profile) {
+            $job = $jobs[($offset + $idx) % count($jobs)];
+            $packets[] = [
+                'id' => 'fup.' . ($idx + 1),
+                'number' => $idx + 1,
+                'job_id' => $job->id,
+                'name' => (string) ($profile['name'] ?? $job->name),
+                'fixer' => (string) ($profile['fixer'] ?? 'Unknown Voice'),
+                'payout' => max($job->payoutEddies, (int) ($profile['payout'] ?? $job->payoutEddies)),
+                'rep' => max($job->streetCredReward, (int) ($profile['rep'] ?? $job->streetCredReward)),
+                'brief' => (string) ($profile['brief'] ?? $job->briefing),
+                'stakes' => (string) ($profile['stakes'] ?? $job->stakes),
+                'complication' => (string) ($profile['complication'] ?? $job->complication),
+            ];
+        }
+
+        $state->set('followup_packets', $packets);
+        return $packets;
+    }
+
+    /** @param array{roots:string,method:string,bond:string} $axes @return array<int,array<string,mixed>> */
+    private function followupProfiles(array $axes): array
+    {
+        $rootsName = match ($axes['roots']) {
+            'coast' => 'Tide Relay Ghost',
+            'road' => 'Convoy Echo Lift',
+            'corporate' => 'Tower Ghost Ledger',
+            default => 'Watson Ghost Relay',
+        };
+        $rootsBrief = match ($axes['roots']) {
+            'coast' => 'Dockside relay handoff with half-burned manifests and no customs trail.',
+            'road' => 'Hijack a moving ledger before convoy routing rotates at dawn.',
+            'corporate' => 'Pull a dead badge trail before tower auditors scrub the floor.',
+            default => 'Lift a neighborhood relay key before the block goes dark.',
+        };
+
+        $methodName = match ($axes['method']) {
+            'loud' => 'Hammerline Breach',
+            'chair' => 'Chairline Mirage',
+            default => 'Quietline Cut',
+        };
+        $methodBrief = match ($axes['method']) {
+            'loud' => 'Forced entry on a guarded node. fast and obvious.',
+            'chair' => 'Chair-only extraction with thin latency budget and no field rerolls.',
+            default => 'Silent splice through two watchers and one bad camera angle.',
+        };
+
+        $bondName = $axes['bond'] === 'solo' ? 'Solo Debt Sweep' : 'Crew Debt Sweep';
+        $bondBrief = $axes['bond'] === 'solo'
+            ? 'Personal pickup. no backup, no witness, no retries.'
+            : 'Shared pickup with split liability and three synchronized exits.';
+
+        return [
+            [
+                'name' => $rootsName,
+                'fixer' => 'Unknown Voice',
+                'brief' => $rootsBrief,
+                'stakes' => 'If missed, your first shard trail collapses.',
+                'complication' => 'Packet metadata rewrites every six minutes.',
+                'payout' => 4200,
+                'rep' => 1,
+            ],
+            [
+                'name' => $methodName,
+                'fixer' => 'Unknown Voice',
+                'brief' => $methodBrief,
+                'stakes' => 'Method becomes your signature if this goes sideways.',
+                'complication' => 'Counter-team expects your preferred style.',
+                'payout' => 4800,
+                'rep' => 2,
+            ],
+            [
+                'name' => $bondName,
+                'fixer' => 'Unknown Voice',
+                'brief' => $bondBrief,
+                'stakes' => 'This decides who owns the next wake.',
+                'complication' => 'Someone in channel knows your intake answers.',
+                'payout' => 5200,
+                'rep' => 2,
+            ],
+        ];
+    }
+
+    /** @return array<string,mixed>|null */
+    private function followupPacketFromCommand(TerminalState $state, string $command): ?array
+    {
+        $token = trim((string) preg_replace('/^(inspect|run) contract\s*/', '', $command));
+        if ($token === '') {
+            $selected = $state->get('selected_followup_contract');
+            $token = is_string($selected) ? $selected : '1';
+        }
+
+        $packets = $this->buildFollowupPackets($state, $this->lifeAxes($state));
+        if (ctype_digit($token)) {
+            return $packets[((int) $token) - 1] ?? null;
+        }
+        foreach ($packets as $packet) {
+            if (!is_array($packet)) {
+                continue;
+            }
+            if ((string) ($packet['id'] ?? '') === $token) {
+                return $packet;
+            }
+        }
+        return null;
     }
 
     /** @return array{roots:string,method:string,bond:string} */
