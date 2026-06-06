@@ -410,6 +410,8 @@ final class TerminalCommandRouter
         }
         $risk = $this->updateRiskTrack($state, !empty($report['success']), $axes['method']);
         $isEpisodeContract = in_array($stage, ['offer', 'offer_locked'], true);
+        $cooldownBefore = max(0, (int) $state->get('cooldown_runs_remaining', 0));
+        $cooldownAfter = $cooldownBefore;
         $drift = $this->crewDriftEffect(
             max(0, min(5, (int) $state->get('heat', 0))),
             max(0, min(5, (int) $state->get('pressure', 0))),
@@ -430,8 +432,11 @@ final class TerminalCommandRouter
             $state->set('episode_stage', 'open_play');
             $remaining = max(0, (int) $state->get('cooldown_runs_remaining', 0));
             if ($remaining > 0) {
-                $state->set('cooldown_runs_remaining', $remaining - 1);
+                $cooldownAfter = $remaining - 1;
+                $state->set('cooldown_runs_remaining', $cooldownAfter);
                 $state->set('followup_packets', []);
+            } else {
+                $cooldownAfter = 0;
             }
         }
         $report['episode_contract'] = $isEpisodeContract;
@@ -443,6 +448,8 @@ final class TerminalCommandRouter
         $report['risk_delta_heat'] = $risk['delta_heat'];
         $report['risk_delta_pressure'] = $risk['delta_pressure'];
         $report['crew_drift'] = $drift;
+        $report['cooldown_before'] = $cooldownBefore;
+        $report['cooldown_after'] = $cooldownAfter;
         $state->set('last_report', $report);
 
         $lines = ['--- run ' . $job->id . ' ---'];
@@ -484,6 +491,11 @@ final class TerminalCommandRouter
             $risk['pressure'],
             $risk['delta_pressure'],
         );
+        if (!$isEpisodeContract && $cooldownBefore > 0) {
+            $lines[] = $cooldownAfter > 0
+                ? 'cooldown: ' . $cooldownAfter . ' run(s) remaining before full surface restore.'
+                : 'cooldown: constraints lifted. full surfaces restored next cycle.';
+        }
         if ($drift['run_line'] !== '') {
             $lines[] = $drift['run_line'];
         }
