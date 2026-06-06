@@ -41,4 +41,4 @@ Files touched in this slice included:
 
 ![Devlog illustration: Add generated illustration for second-call packet devlog post.](/blog/assets/visuals/illustrations/add-generated-illustration-for-second-call-packet-devlog-pos.svg)
 
-![Devlog screenshot: verification rig.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)
