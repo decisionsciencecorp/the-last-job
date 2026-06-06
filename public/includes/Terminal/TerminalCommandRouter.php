@@ -401,6 +401,19 @@ final class TerminalCommandRouter
         }
         $risk = $this->updateRiskTrack($state, !empty($report['success']), $axes['method']);
         $isEpisodeContract = in_array($stage, ['offer', 'offer_locked'], true);
+        $drift = $this->crewDriftEffect(
+            max(0, min(5, (int) $state->get('heat', 0))),
+            max(0, min(5, (int) $state->get('pressure', 0))),
+            $axes['bond'],
+            !empty($report['success']),
+            $isEpisodeContract,
+        );
+        if ($drift['payout_delta'] !== 0) {
+            $state->set('eddies', max(0, $state->eddies() + $drift['payout_delta']));
+        }
+        if ($drift['rep_delta'] !== 0) {
+            $state->set('street_cred', max(0, $state->streetCred() + $drift['rep_delta']));
+        }
         if ($isEpisodeContract) {
             $state->set('first_shard_seen', true);
             $state->set('episode_stage', 'wake_ready');
@@ -415,6 +428,7 @@ final class TerminalCommandRouter
         $report['risk_pressure'] = $risk['pressure'];
         $report['risk_delta_heat'] = $risk['delta_heat'];
         $report['risk_delta_pressure'] = $risk['delta_pressure'];
+        $report['crew_drift'] = $drift;
         $state->set('last_report', $report);
 
         $lines = ['--- run ' . $job->id . ' ---'];
@@ -441,6 +455,14 @@ final class TerminalCommandRouter
         if ($axisBonus['eddies'] > 0 || $axisBonus['rep'] > 0) {
             $lines[] = 'edge: lifepath read paid out (' . $axisBonus['eddies'] . 'eb / rep+' . $axisBonus['rep'] . ').';
         }
+        if ($drift['payout_delta'] !== 0 || $drift['rep_delta'] !== 0) {
+            $lines[] = sprintf(
+                'crew drift: %s (%+deb / rep%+d)',
+                $drift['label'],
+                $drift['payout_delta'],
+                $drift['rep_delta'],
+            );
+        }
         $lines[] = sprintf(
             'risk: heat %d (%+d) / pressure %d (%+d)',
             $risk['heat'],
@@ -448,6 +470,9 @@ final class TerminalCommandRouter
             $risk['pressure'],
             $risk['delta_pressure'],
         );
+        if ($drift['run_line'] !== '') {
+            $lines[] = $drift['run_line'];
+        }
         if ($isEpisodeContract) {
             $lines[] = '> you lift the cage.';
             $lines[] = '> it is lighter than it should be.';
@@ -498,6 +523,17 @@ final class TerminalCommandRouter
         $heat = max(0, min(5, (int) $state->get('heat', 0)));
         $pressure = max(0, min(5, (int) $state->get('pressure', 0)));
         $lines[] = $this->openPlayWakeRiskLine($heat, $pressure);
+        $drift = $report['crew_drift'] ?? null;
+        if (is_array($drift)) {
+            $wakeLines = $drift['wake_lines'] ?? [];
+            if (is_array($wakeLines)) {
+                foreach ($wakeLines as $line) {
+                    if (is_string($line) && $line !== '') {
+                        $lines[] = $line;
+                    }
+                }
+            }
+        }
         $agendas = is_array($report['agendas_triggered'] ?? null) ? $report['agendas_triggered'] : [];
         foreach ($agendas as $agenda) {
             if (is_array($agenda)) {
@@ -1116,5 +1152,97 @@ final class TerminalCommandRouter
             return 'WAKE> low-signature window. you can still choose your ground.';
         }
         return 'WAKE> city still tolerating you, for now.';
+    }
+
+    /**
+     * @return array{
+     *   label:string,
+     *   payout_delta:int,
+     *   rep_delta:int,
+     *   run_line:string,
+     *   wake_lines:array<int,string>
+     * }
+     */
+    private function crewDriftEffect(int $heat, int $pressure, string $bond, bool $success, bool $isEpisodeContract): array
+    {
+        if ($isEpisodeContract) {
+            return [
+                'label' => 'intro discipline',
+                'payout_delta' => 0,
+                'rep_delta' => 0,
+                'run_line' => '',
+                'wake_lines' => [],
+            ];
+        }
+
+        if (!$success && $pressure >= 4) {
+            return [
+                'label' => 'fracture',
+                'payout_delta' => 0,
+                'rep_delta' => -1,
+                'run_line' => 'TILDE> channel buckled. everyone talked, nobody listened.',
+                'wake_lines' => [
+                    'WAKE> voices overlap until the room goes quiet on purpose.',
+                    'ANIMAL> next run gets one caller, not five.',
+                ],
+            ];
+        }
+
+        if ($pressure >= 4 && $heat >= 3) {
+            return [
+                'label' => 'tight-frayed',
+                'payout_delta' => -450,
+                'rep_delta' => -1,
+                'run_line' => 'TILDE> timing held, trust did not.',
+                'wake_lines' => [
+                    'WAKE> every chair creaks like an accusation.',
+                    'KOJO> we still breathing. that is the whole win tonight.',
+                ],
+            ];
+        }
+
+        if ($pressure >= 4) {
+            return [
+                'label' => 'friction',
+                'payout_delta' => -300,
+                'rep_delta' => 0,
+                'run_line' => 'ANIMAL> pressure made the crew sharp and mean.',
+                'wake_lines' => [
+                    'WAKE> short tempers, short sentences, fast exits.',
+                ],
+            ];
+        }
+
+        if ($heat <= 1 && $pressure <= 2) {
+            return [
+                'label' => 'sync',
+                'payout_delta' => 250,
+                'rep_delta' => 1,
+                'run_line' => 'TILDE> channel synced clean. no wasted words.',
+                'wake_lines' => [
+                    'WAKE> clean rhythm in the booth. everyone lands on the same beat.',
+                ],
+            ];
+        }
+
+        if ($bond === 'solo' && $heat >= 4) {
+            return [
+                'label' => 'isolation drag',
+                'payout_delta' => -200,
+                'rep_delta' => 0,
+                'run_line' => 'VOICE> running solo while hot costs more every block.',
+                'wake_lines' => [
+                    'WAKE> one set of footsteps in the hall, none coming back.',
+                ],
+            ];
+        }
+
+        return [
+            'label' => 'steady',
+            'payout_delta' => 0,
+            'rep_delta' => 0,
+            'run_line' => '',
+            'wake_lines' => [],
+        ];
     }
 }
