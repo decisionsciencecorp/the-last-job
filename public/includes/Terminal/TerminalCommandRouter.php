@@ -399,6 +399,7 @@ final class TerminalCommandRouter
         if ($axisBonus['rep'] > 0) {
             $state->set('street_cred', $state->streetCred() + $axisBonus['rep']);
         }
+        $risk = $this->updateRiskTrack($state, !empty($report['success']), $axes['method']);
         $isEpisodeContract = in_array($stage, ['offer', 'offer_locked'], true);
         if ($isEpisodeContract) {
             $state->set('first_shard_seen', true);
@@ -410,6 +411,10 @@ final class TerminalCommandRouter
         $report['life_axes'] = $axes;
         $report['axis_bonus_eddies'] = $axisBonus['eddies'];
         $report['axis_bonus_rep'] = $axisBonus['rep'];
+        $report['risk_heat'] = $risk['heat'];
+        $report['risk_pressure'] = $risk['pressure'];
+        $report['risk_delta_heat'] = $risk['delta_heat'];
+        $report['risk_delta_pressure'] = $risk['delta_pressure'];
         $state->set('last_report', $report);
 
         $lines = ['--- run ' . $job->id . ' ---'];
@@ -436,6 +441,13 @@ final class TerminalCommandRouter
         if ($axisBonus['eddies'] > 0 || $axisBonus['rep'] > 0) {
             $lines[] = 'edge: lifepath read paid out (' . $axisBonus['eddies'] . 'eb / rep+' . $axisBonus['rep'] . ').';
         }
+        $lines[] = sprintf(
+            'risk: heat %d (%+d) / pressure %d (%+d)',
+            $risk['heat'],
+            $risk['delta_heat'],
+            $risk['pressure'],
+            $risk['delta_pressure'],
+        );
         if ($isEpisodeContract) {
             $lines[] = '> you lift the cage.';
             $lines[] = '> it is lighter than it should be.';
@@ -483,6 +495,9 @@ final class TerminalCommandRouter
         $lines[] = 'job: ' . (string) ($report['job_name'] ?? 'unknown');
         $lines[] = !empty($report['success']) ? 'status: paid' : 'status: burned';
         $lines[] = 'debrief: ' . (string) (($report['debrief'] ?? '') ?: 'nobody wants to talk about it yet.');
+        $heat = max(0, min(5, (int) $state->get('heat', 0)));
+        $pressure = max(0, min(5, (int) $state->get('pressure', 0)));
+        $lines[] = $this->openPlayWakeRiskLine($heat, $pressure);
         $agendas = is_array($report['agendas_triggered'] ?? null) ? $report['agendas_triggered'] : [];
         foreach ($agendas as $agenda) {
             if (is_array($agenda)) {
@@ -518,11 +533,14 @@ final class TerminalCommandRouter
     {
         $followups = $state->get('followup_packets', []);
         $followupCount = is_array($followups) ? count($followups) : 0;
+        $heat = max(0, min(5, (int) $state->get('heat', 0)));
+        $pressure = max(0, min(5, (int) $state->get('pressure', 0)));
         return [
             'deck: awake',
             'episode stage: ' . (string) $state->get('episode_stage', 'boot'),
             'life axes: ' . implode(' / ', array_values($this->lifeAxes($state))),
             'second-call packets: ' . $followupCount,
+            'risk track: heat ' . $heat . '/5, pressure ' . $pressure . '/5',
             'fixer line: ' . ($state->get('answered') ? 'answered' : 'ringing'),
             'crew files: ' . ($state->get('crew_requested') ? 'received' : 'not requested'),
             'cash: ' . $state->eddies() . 'eb',
@@ -793,24 +811,40 @@ final class TerminalCommandRouter
             return [];
         }
 
+        $heat = max(0, min(5, (int) $state->get('heat', 0)));
+        $pressure = max(0, min(5, (int) $state->get('pressure', 0)));
         $axisTag = $axes['roots'] . '-' . $axes['method'] . '-' . $axes['bond'];
-        $offset = (int) (crc32($axisTag) % count($jobs));
+        $offset = (int) ((crc32($axisTag) + ($heat * 17) + ($pressure * 31)) % count($jobs));
         $profiles = $this->followupProfiles($axes);
+        if ($heat >= 4) {
+            $profiles[0]['name'] = 'Cooling Burn Sweep';
+            $profiles[0]['brief'] = 'Lower-signature cleanup run while half the city is watching your wake.';
+            $profiles[0]['complication'] = 'Any loud move spikes heat into open pursuit.';
+        }
+        if ($pressure >= 4) {
+            $profiles[2]['name'] = 'Deadline Debt Sprint';
+            $profiles[2]['brief'] = 'Two clocks, one carrier, no spare route if timing slips.';
+            $profiles[2]['complication'] = 'Delay penalties compound every tick after first miss.';
+        }
 
         $packets = [];
         foreach ($profiles as $idx => $profile) {
             $job = $jobs[($offset + $idx) % count($jobs)];
+            $basePayout = max($job->payoutEddies, (int) ($profile['payout'] ?? $job->payoutEddies));
+            $baseRep = max($job->streetCredReward, (int) ($profile['rep'] ?? $job->streetCredReward));
+            $payout = max(1200, $basePayout - ($heat * 120) + ($pressure * 80));
+            $rep = max(1, $baseRep + (int) floor($pressure / 2));
             $packets[] = [
                 'id' => 'fup.' . ($idx + 1),
                 'number' => $idx + 1,
                 'job_id' => $job->id,
                 'name' => (string) ($profile['name'] ?? $job->name),
                 'fixer' => (string) ($profile['fixer'] ?? 'Unknown Voice'),
-                'payout' => max($job->payoutEddies, (int) ($profile['payout'] ?? $job->payoutEddies)),
-                'rep' => max($job->streetCredReward, (int) ($profile['rep'] ?? $job->streetCredReward)),
+                'payout' => $payout,
+                'rep' => $rep,
                 'brief' => (string) ($profile['brief'] ?? $job->briefing),
                 'stakes' => (string) ($profile['stakes'] ?? $job->stakes),
-                'complication' => (string) ($profile['complication'] ?? $job->complication),
+                'complication' => (string) ($profile['complication'] ?? $job->complication) . ' [heat ' . $heat . '/5 pressure ' . $pressure . '/5]',
             ];
         }
 
@@ -1035,5 +1069,52 @@ final class TerminalCommandRouter
             ? 'YOU CARRY THIS ALONE. KEEP MOVING.'
             : 'YOU DO NOT CARRY THIS ALONE. KEEP THEM CLOSE.';
         return 'CAGE EMPTY BY DESIGN. LIVE SIGNAL CONFIRMED. ' . $voice;
+    }
+
+    /** @return array{heat:int,pressure:int,delta_heat:int,delta_pressure:int} */
+    private function updateRiskTrack(TerminalState $state, bool $success, string $method): array
+    {
+        $heat = max(0, min(5, (int) $state->get('heat', 0)));
+        $pressure = max(0, min(5, (int) $state->get('pressure', 0)));
+
+        $deltaHeat = $success ? -1 : 1;
+        $deltaPressure = $success ? 1 : 2;
+        if ($method === 'loud') {
+            $deltaHeat += 1;
+        } elseif ($method === 'quiet') {
+            $deltaHeat -= 1;
+        } elseif ($method === 'chair') {
+            $deltaPressure += 1;
+        }
+
+        $heat = max(0, min(5, $heat + $deltaHeat));
+        $pressure = max(0, min(5, $pressure + $deltaPressure));
+        $state->set('heat', $heat);
+        $state->set('pressure', $pressure);
+        $state->set('followup_packets', []);
+
+        return [
+            'heat' => $heat,
+            'pressure' => $pressure,
+            'delta_heat' => $deltaHeat,
+            'delta_pressure' => $deltaPressure,
+        ];
+    }
+
+    private function openPlayWakeRiskLine(int $heat, int $pressure): string
+    {
+        if ($heat >= 4 && $pressure >= 4) {
+            return 'WAKE> too hot and too late. every call sounds like a trap.';
+        }
+        if ($heat >= 4) {
+            return 'WAKE> heat spiking. faces on the street keep looking twice.';
+        }
+        if ($pressure >= 4) {
+            return 'WAKE> pressure stacking. deadlines arrive faster than sleep.';
+        }
+        if ($heat <= 1 && $pressure <= 2) {
+            return 'WAKE> low-signature window. you can still choose your ground.';
+        }
+        return 'WAKE> city still tolerating you, for now.';
     }
 }

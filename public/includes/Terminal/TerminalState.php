@@ -34,6 +34,8 @@ final class TerminalState
             'second_call_seen' => false,
             'followup_packets' => [],
             'selected_followup_contract' => null,
+            'heat' => 0,
+            'pressure' => 0,
             'history' => [],
         ]);
     }
