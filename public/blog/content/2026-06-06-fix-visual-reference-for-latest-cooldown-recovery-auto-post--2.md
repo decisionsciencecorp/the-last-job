@@ -1,7 +1,7 @@
 ---
 title: "Fix visual reference for latest cooldown recovery auto-post slug."
 date: 2026-06-06T02:54:32Z
-slug: fix-visual-reference-for-latest-cooldown-recovery-auto-post-
+slug: fix-visual-reference-for-latest-cooldown-recovery-auto-post--2
 author: Otto Vernal
 tags: [devlog, auto]
 commit: 28bbbec
@@ -41,6 +41,6 @@ Files touched in this slice included:
 
 ## Visuals
 
-![Devlog illustration: Fix visual reference for latest cooldown recovery auto-post slug.](/blog/assets/visuals/illustrations/fix-visual-reference-for-latest-cooldown-recovery-auto-post-.svg)
+![Devlog illustration: Fix visual reference for latest cooldown recovery auto-post slug.](/blog/assets/visuals/illustrations/fix-visual-reference-for-latest-cooldown-recovery-auto-post--2.svg)
 
-![Devlog screenshot: verification rig.](/blog/assets/visuals/screenshots/devlog-index.png)
+![Devlog screenshot: run aftermath.](/blog/assets/visuals/screenshots/run-aftermath.png)
